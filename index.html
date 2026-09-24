@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!--
+  index.html — 版面骨架
+  ---------------------------------------------------------------------------
+  這裡刻意「不放任何內容」：所有文字、連結、遊戲卡片都由 script.js 讀取
+  data.js 後自動生成。要改內容請改 data.js，不要改這個檔案。
+
+  為什麼用傳統 <script> 而不是 type="module"？
+    因為這樣你直接雙擊 index.html（file:// 開啟）也能正常運作；
+    ES module 在 file:// 下會被瀏覽器的 CORS 規則擋住。
+-->
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>載入中…</title>
+  <meta name="description" content="Steam 風格的個人遊戲主頁">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 分區導覽列（由 script.js 依實際存在的區塊生成） -->
+  <nav id="section-nav" class="section-nav" aria-label="區塊導覽"></nav>
+
+  <div class="page">
+
+    <!-- ① 頂部個人資料橫幅 -->
+    <header id="banner" class="banner">
+      <div class="banner__bg" id="banner-bg"></div>
+      <div class="banner__overlay"></div>
+      <div class="banner__content" id="banner-content"></div>
+    </header>
+
+    <main class="main">
+
+      <!-- ② 遊戲展示櫃（核心） -->
+      <section id="sec-favorites" class="section">
+        <div class="section__head">
+          <h2 class="section__title"><span class="section__icon" aria-hidden="true">★</span>最愛遊戲</h2>
+          <p class="section__desc">點卡片可以直接開 Steam 商店頁</p>
+        </div>
+        <div class="grid grid--games" id="favorites-grid"></div>
+      </section>
+
+      <section id="sec-recent" class="section">
+        <div class="section__head">
+          <h2 class="section__title"><span class="section__icon" aria-hidden="true">◷</span>最近在玩</h2>
+          <p class="section__desc">Steam 的「最近兩週」統計</p>
+        </div>
+        <div class="grid grid--recent" id="recent-grid"></div>
+      </section>
+
+      <section id="sec-perfect" class="section">
+        <div class="section__head">
+          <h2 class="section__title"><span class="section__icon section__icon--gold" aria-hidden="true">✦</span>全成就</h2>
+          <p class="section__desc">成就 100% 的遊戲</p>
+        </div>
+        <div class="grid grid--perfect" id="perfect-grid"></div>
+      </section>
+
+      <section id="sec-wishlist" class="section">
+        <div class="section__head">
+          <h2 class="section__title"><span class="section__icon" aria-hidden="true">♡</span>願望清單</h2>
+          <p class="section__desc">總有一天會買的（大概）</p>
+        </div>
+        <div class="grid grid--wishlist" id="wishlist-grid"></div>
+      </section>
+
+      <!-- ④ 其他連結 -->
+      <section id="sec-links" class="section">
+        <div class="section__head">
+          <h2 class="section__title"><span class="section__icon" aria-hidden="true">⚯</span>其他連結</h2>
+          <p class="section__desc">想找我可以在這些地方</p>
+        </div>
+        <div class="grid grid--links" id="links-grid"></div>
+      </section>
+
+      <!-- ⑤ 關於我／留言板 -->
+      <section id="sec-about" class="section">
+        <div class="section__head">
+          <h2 class="section__title"><span class="section__icon" aria-hidden="true">◈</span>關於我</h2>
+        </div>
+        <div class="about" id="about-content"></div>
+      </section>
+
+      <section id="sec-guestbook" class="section">
+        <div class="section__head">
+          <h2 class="section__title"><span class="section__icon" aria-hidden="true">✎</span>留言板</h2>
+          <p class="section__desc" id="guestbook-desc"></p>
+        </div>
+        <div id="guestbook-content"></div>
+      </section>
+
+    </main>
+
+    <!-- ⑥ 頁尾 -->
+    <footer class="footer" id="footer"></footer>
+  </div>
+
+  <!-- 彩蛋彈窗（內容由 script.js 從 data.js 生成） -->
+  <div class="modal" id="egg-modal" hidden>
+    <div class="modal__backdrop" data-close-egg></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="egg-title">
+      <button class="modal__close" type="button" data-close-egg aria-label="關閉">×</button>
+      <div id="egg-content"></div>
+    </div>
+  </div>
+
+  <!--
+    彩蛋提示：在頁面上任何位置「連續輸入」ciallo 試試看。
+    觸發後會出現「廣告位招租」。
+  -->
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

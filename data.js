@@ -1,0 +1,245 @@
+/* ============================================================================
+ *  data.js — 全站內容設定
+ * ----------------------------------------------------------------------------
+ *  這個檔案是「內容」與「版面」分離的關鍵：你只需要改這裡。
+ *  script.js 會讀取 SITE_DATA 自動生成所有卡片，style.css 只負責外觀。
+ *
+ *  標記說明：
+ *    ✅ 已填真實資料（從 Steam API 抓的，來源見 tools/steam-data.json）
+ *    ✏️ 需要你自己填——這是我留的空位，不是我做好的決定
+ *
+ *  改完直接重新整理瀏覽器即可，不需要重新啟動任何東西。
+ * ========================================================================== */
+
+const SITE_DATA = {
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  網站基本資料
+   * ──────────────────────────────────────────────────────────────────── */
+  meta: {
+    siteName: 'ciallo 的遊戲主頁',
+    tagline: '柚子廚・Galgame・偶爾打槍',
+    lang: 'zh-Hant',
+    lastUpdated: '2026-09-23',
+    // 給搜尋引擎與分享連結用的描述
+    description: 'Steam 風格的個人遊戲主頁，記錄我玩過的遊戲與一點自我介紹。'
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  頂部橫幅
+   * ──────────────────────────────────────────────────────────────────── */
+  banner: {
+    // ✏️ 你自己放圖：把圖命名為 banner.jpg 丟進 images/，就會自動使用。
+    //    檔案不存在（或載入失敗）時會自動退回下面的動態漸層，不會破圖。
+    image: 'images/banner.jpg',
+
+    // 動態漸層的三個顏色（左 → 中 → 右），會緩慢流動。
+    gradient: ['#1b2838', '#2a475e', '#1b6ca8'],
+
+    // 橫幅高度（像素）
+    height: 340
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  個人資料
+   *  ✅ 以下為 Steam 公開資料，我已用 API 核對過
+   * ──────────────────────────────────────────────────────────────────── */
+  profile: {
+    personaName: 'ciallo (∠・ ω )⌒☆',
+    realName: 'ushehm',
+
+    // 頭像：預設用 images/avatar.jpg（我已幫你抓好放進去了）。
+    // 想換成 Steam 原始網址，就填下面的 remote。
+    avatar: 'images/avatar.jpg',
+    remoteAvatar: 'https://avatars.steamstatic.com/50685cb4a4e06be764ae4735b5c201256c71935e_full.jpg',
+
+    // 頭像框：true 會畫一圈會發光的漸層外框，null 代表沒有。
+    avatarFrame: true,
+
+    level: 83,
+    country: 'China',
+    memberSince: '2023-09-06',
+    profileUrl: 'https://steamcommunity.com/id/ciaII0/',
+
+    // 目前狀態。Steam API 的數值對照：
+    // 0 離線 / 1 線上 / 2 忙碌 / 3 離開 / 4 打瞌睡 / 5 想交易 / 6 想玩
+    personaState: 3,
+
+    // ✏️ 一句話標語，顯示在名字下方
+    headline: '千戀萬花？我沒玩過啊（心虛）',
+
+    // Steam 個人簡介（我從你的公開檔案抓的，已移除表情符號的 img 標籤）。
+    // ✏️ 太長或想換掉都可以直接改。
+    steamSummary:
+      '什么千恋万花（慌乱）（把笔记本熄屏）（四处张望）我不玩千恋万花（把笔记本藏到身后）' +
+      '（假装冷静）（试图走近解释）（摔倒）（狼狈爬起）（再次摔倒）（着急）（抓你们裤脚）' +
+      '我不玩千恋万花啊求求你们别鄙视我，求求你们不要不和我玩……' +
+      '我真的不是柚子厨啊，我才不会表演那个的，就是那个…… ciallo (∠・ ω )⌒☆'
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  其他連結
+   *  ✏️ 除了 Steam，其餘我都留成範例網址——請換成你自己的帳號。
+   *     不想顯示某個平台，把整個 { ... } 刪掉，或在該項加 enabled: false。
+   *     icon 可用值：steam / discord / x / instagram / youtube / twitch /
+   *                  bilibili / github / email
+   * ──────────────────────────────────────────────────────────────────── */
+  links: [
+    { icon: 'steam',     label: 'Steam',     url: 'https://steamcommunity.com/id/ciaII0/', note: '加好友一起玩' },  // ✅
+    { icon: 'discord',   label: 'Discord',   url: 'https://discord.gg/7hVD65tb' },
+    { icon: 'x',         label: 'X',         url: 'https://x.com/ushehm', },
+    { icon: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/qaq4009?stkn=MWswNnJ5Zm1nOTIycQ==',  },
+    { icon: 'youtube',   label: 'YouTube',   url: 'https://youtube.com/@ushehm1?si=McTIk4uwz9MjqyhM', },
+    { icon: 'bilibili',  label: 'Bilibili',  url: 'https://space.bilibili.com/1456418761', },
+    { icon: 'github',    label: 'GitHub',    url: 'https://github.com/ushehm', },
+     ],
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  遊戲展示櫃
+   * ----------------------------------------------------------------------
+   *  封面圖不用自己上傳 —— script.js 會用 appid 自動組出 Steam 官方封面：
+   *    https://cdn.cloudflare.steamstatic.com/steam/apps/<appid>/library_600x900.jpg
+   *  想換成自己的圖，在該遊戲加一行 cover: 'images/xxx.jpg' 即可覆蓋。
+   * ──────────────────────────────────────────────────────────────────── */
+  games: {
+
+    /* ── 最愛遊戲 ──────────────────────────────────────────────────────
+     * ✅ appid / 名稱 / 時數 皆為真實資料
+     * ✏️ 這一區「請自己挑」：目前是我按時數先排的，陣列順序就是顯示順序，
+     *    直接搬動或刪除整行即可。
+     * ✏️ rating：你自己的評分，0～5，可小數（4.5）。填 null 就不顯示星星。
+     * ✏️ tags：標籤陣列，想加幾個都行。
+     * ✏️ why：一句「為什麼喜歡」，留空字串就不會顯示那一行。
+     * ────────────────────────────────────────────────────────────────── */
+    favorites: [
+      { appid: 2458530, name: '魔女的夜宴',                          hours: 61.6,  rating: 5, tags: ['柚子社', 'Galgame', '劇情'], why: '' },
+      { appid: 730,     name: 'Counter-Strike 2',                    hours: 238.1, rating: 3, tags: ['FPS', '競技', '常駐'],   why: '' },
+      { appid: 394360,  name: 'Hearts of Iron IV',                   hours: 97.6,  rating: 4, tags: ['策略', '二戰', '精神時光屋'], why: '' },
+      { appid: 1044620, name: 'Aokana - Four Rhythms Across the Blue', hours: 47.6, rating: 5, tags: ['Galgame', '青春', '全成就'], why: '我要宣佈一件很重要的事，我喜歡真白(=・ω・=)' },
+      { appid: 1829980, name: 'Cafe Stella',                         hours: 43.4,  rating: 5, tags: ['柚子社', 'Galgame', '全成就'], why: '' },
+      { appid: 1277930, name: 'Riddle Joker',                        hours: 34.8,  rating: 3.8, tags: ['柚子社', 'Galgame'],    why: '' },
+      { appid: 1144400, name: 'Senren＊Banka',                       hours: 32.3,  rating: 4.7, tags: ['柚子社', 'Galgame', '和風'], why: '' },
+      { appid: 413410,  name: 'Danganronpa: Trigger Happy Havoc',    hours: 24.5,  rating: 4, tags: ['推理', '劇情', '全成就'], why: '' },
+      { appid: 1293830, name: 'Forza Horizon 4',                     hours: 57.2,  rating: 4, tags: ['競速', '開放世界'],     why: '' }
+    ],
+
+    /* ── 最近在玩 ──────────────────────────────────────────────────────
+     * ✅ 真實資料（Steam 的「最近兩週」統計）
+     *    這個區塊可以手動改；想完全自動，就用 tools/fetch-steam.mjs 重抓。
+     * ────────────────────────────────────────────────────────────────── */
+    recentlyPlayed: [
+      { appid: 730,     name: 'Counter-Strike 2',  minutes2Weeks: 371, hoursTotal: 238.1 },
+      { appid: 1426210, name: 'It Takes Two',      minutes2Weeks: 100, hoursTotal: 32 },
+      { appid: 431960,  name: 'Wallpaper Engine',  minutes2Weeks: 9,   hoursTotal: 6.9 },
+      { appid: 3357650, name: 'PRAGMATA',          minutes2Weeks: 1,   hoursTotal: 9.9 }
+    ],
+
+    /* ── 全成就遊戲 ────────────────────────────────────────────────────
+     * ✅ 真實資料（Steam API 逐款查詢的結果）
+     *    註：Counter-Strike 2 被排除了——API 只回報它 1 個成就，
+     *        那是資料假象，不是真的全成就。
+     * ────────────────────────────────────────────────────────────────── */
+    perfect: [
+      { appid: 2458530, name: '魔女的夜宴',                            unlocked: 50, total: 50 },
+      { appid: 413420,  name: 'Danganronpa 2: Goodbye Despair',        unlocked: 47, total: 47 },
+      { appid: 413410,  name: 'Danganronpa: Trigger Happy Havoc',      unlocked: 38, total: 38 },
+      { appid: 1044620, name: 'Aokana - Four Rhythms Across the Blue', unlocked: 22, total: 22 },
+      { appid: 431960,  name: 'Wallpaper Engine',                      unlocked: 17, total: 17 },
+      { appid: 2206340, name: 'Aokana - EXTRA2',                       unlocked: 16, total: 16 },
+      { appid: 1829980, name: 'Cafe Stella',                           unlocked: 12, total: 12 },
+      { appid: 3446120, name: 'Kira☆Kano',                             unlocked: 11, total: 11 },
+      { appid: 3027600, name: 'Love, Elections, and Chocolate',        unlocked: 10, total: 10 },
+      { appid: 1340130, name: 'Aokana - EXTRA1',                       unlocked: 8,  total: 8 }
+    ],
+
+    /* ── 願望清單 ──────────────────────────────────────────────────────
+     * ✅ 真實資料（從你的 Steam 願望清單抓的）
+     * ────────────────────────────────────────────────────────────────── */
+    wishlist: [
+      { appid: 1850570, name: "DEATH STRANDING DIRECTOR'S CUT" },
+      { appid: 3280350, name: '死亡搁浅2' },
+      { appid: 3751230, name: '超级枪弹辩驳２×２' },
+      { appid: 2981340, name: '缘之空' },
+      { appid: 3130110, name: '悠之空' }
+    ]
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  關於我
+   *  ✏️ 全部需要你自己填（我無法替你決定這些）
+   * ──────────────────────────────────────────────────────────────────── */
+  about: {
+    intro: '真羡慕那些觉得旮旯game好玩的人啊，因为我的生活已经跟旮旯game一样了，上课时不经意摘下眼镜，同桌就被我惊世容颜所迷住，下课被一堆追求者围着转，问我有没有恋爱状况。平日里我也不敢跟其他人对视，怕一不小心就给他们攻略。不说了，学妹找我去公园约会，你们就继续玩旮旯game吧。',
+
+    // 喜歡的遊戲類型
+    genres: ['Galgame', '視覺小說', 'FPS', '大戰略', '競速'],
+
+    // 你的設備（✅ 已填）
+    hardware: [
+      { label: '顯示卡', value: 'RTX 5060' },
+      { label: '處理器', value: 'Intel Core i5-12400F' },
+      { label: '記憶體', value: '光威天策 8G DDR4 3200' },
+      { label: '硬碟',   value: '威剛 XPG 翼龍 S60 PRO 1TB' }
+    ],
+
+    // 遊玩習慣
+    habits: [
+      '喜歡一次破完一款，不喜歡同時開很多遊戲'
+    ]
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  留言板
+   * ----------------------------------------------------------------------
+   *  mode 可選三種：
+   *    'static'  — 純前端表單，按送出只會顯示「示範模式」訊息，不會真的送出
+   *    'discord' — 送出時 POST 到 Discord Webhook（真的能收到留言）
+   *    'google'  — 用 iframe 嵌入 Google 表單
+   *
+   *  ✏️ 你還沒決定要用哪一種，所以我預設 static（最安全，不會壞）。
+   *     要換的話把 mode 改掉並填對應欄位即可，程式碼不用動。
+   *     注意：Discord 與 Google 都需要訪客的瀏覽器連得上才行。
+   * ──────────────────────────────────────────────────────────────────── */
+  guestbook: {
+    mode: 'static',
+    discordWebhook: '',   // ✏️ mode 用 'discord' 時填這裡
+    googleFormUrl: '',    // ✏️ mode 用 'google' 時填「嵌入用」網址（結尾是 /viewform?embedded=true）
+    title: '留言板',
+    description: '✏️ 想說什麼都可以。請保持友善，不要洗版。',
+    maxLength: 300
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  頁尾
+   * ──────────────────────────────────────────────────────────────────── */
+  footer: {
+    copyright: '© 2026 ciallo',
+    // 這個一定要留著，避免讓人誤以為是官方網站
+    disclaimer: '本站為個人非官方頁面，與 Valve Corporation 及 Steam 沒有任何關係。',
+    // 遊戲名稱、封面與成就資料的版權屬於各自發行商；Steam 為 Valve 的商標。
+    credits: '遊戲封面與名稱版權屬各自發行者所有；資料來自 Steam Web API。',
+    contactEmail: 'redteam11145114@gmail.com',   // ✏️ 換成你的信箱
+    privacyNote: '本站不使用追蹤 cookie、不蒐集個人資料。'
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  彩蛋
+   * ----------------------------------------------------------------------
+   *  發現方式：在頁面上任何位置「連續輸入」ciallo（不分大小寫，不需要輸入框）。
+   *  另外頁尾有一個小小的提示字，滑鼠移上去會給暗示。
+   *  觸發後會彈出「廣告位招租」面板。
+   * ──────────────────────────────────────────────────────────────────── */
+  easterEgg: {
+    trigger: 'ciallo',        // 連續輸入這串字就會觸發
+    hintText: '？',            // 頁尾那個不起眼的小提示
+    hintTooltip: '提示：跟站長打招呼的方式',
+    title: '🎉 你發現彩蛋了！',
+    lines: [
+      '既然你有耐心找到這裡，',
+      '那這個位置就給你吧 ——'
+    ],
+    adText: '廣告位招租',
+    adSub: '本頁面最顯眼的角落，誠徵有緣人',
+    contact: '✏️ 想租的話寄信到 redteam114514@gmail.com'
+  }
+};
