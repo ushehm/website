@@ -242,21 +242,52 @@ powershell -ExecutionPolicy Bypass -File tools\make-favicon.ps1 `
 「特別鳴謝」下面、頁尾上面有一張**很小、半透明的圓形縮圖**（68px）。
 它平常幾乎不搶眼，滑鼠移上去才會亮起來。
 
-**發現方式**：連續點它 **3 次**。每點一下底下會亮一個小點，讓你知道「有在算」；
-第 3 下就會打開畫廊，裡面是 `images/egg/1.jpeg` ～ `9.jpeg` 共 9 張圖。
+**發現方式**：連續點它 **3 次**。每點一下底下會亮一個小點，讓你知道「有在算」。
 
-畫廊裡點任一張圖可以放大到滿版寬度，再點一次縮回去。
+第 3 下會**隨機抽一張**圖片顯示（不是全部）。同一張圖再點一下可以放大。
+圖片下面有一行小字「查看全部 9 張 ▸」，點開才會展開全部圖片的網格；
+展開後下面還有一行「◂ 再隨機抽一張」可以回到單張模式。
+
+每次重新觸發都會重抽，而且會避開上一次抽到的那張（只有兩張以上時才這樣做）。
 
 | 想改什麼 | 改哪裡 |
 | :-- | :-- |
 | 要點幾下 | `data.js` → `galleryEgg.clicks` |
 | 縮圖換成別的圖 | `galleryEgg.trigger` |
-| 畫廊裡的圖片與順序 | `galleryEgg.images` 陣列 |
+| 隨機抽取的圖片池 | `galleryEgg.images` 陣列 |
 | 標題／副標／說明文字 | `galleryEgg.title` / `subtitle` / `caption` |
+| 兩行小字的文字 | `galleryEgg.moreLabel` / `backLabel`（`{n}` 會換成圖片總數）|
 | 滑過去顯示的提示 | `galleryEgg.tooltip`（設成 `''` 就沒有提示） |
 
 圖片放在 `images/egg/`，總共約 0.8 MB。縮圖載入失敗時整個彩蛋會自動移除，
 不會在頁面上留一個破圖。
+
+
+## 捐款
+
+頁尾那一排的最後面有一個「**💰 捐款**」按鈕，點下去開一個彈窗，
+列出所有付款方式。點任一張付款碼可以放大到滿版寬度，方便掃碼。
+
+目前有 6 種：
+
+| 名稱 | 地區 | 檔案 |
+| :-- | :-- | :-- |
+| 微信支付 | 中國大陸 | `images/payment/wechat-cn.jpeg` |
+| WeChat Pay HK | 香港 | `images/payment/wechat-hk.jpeg` |
+| 支付寶 | 中國大陸 | `images/payment/alipay-cn.jpeg` |
+| AlipayHK | 香港 | `images/payment/alipay-hk.jpeg` |
+| PayMe | 香港 | `images/payment/payme.jpeg` |
+| BOC Pay+ | 中銀香港 | `images/payment/boc-payplus.jpeg` |
+
+改 `data.js` 的 `donate` 區塊就能增減付款方式：`methods` 陣列裡每一項有
+`name`（名稱）、`region`（地區標籤，不想要就刪掉那一行）、`image`（圖路徑）。
+
+`donate.description` 那句話是我寫的（你當初只指定了「💰 捐款」四個字的入口），
+想改直接改；設成 `''` 就只會顯示付款方式，不會有那句說明。
+
+> 隱私提醒：付款碼圖片跟網站放在一起，所以**部署到 Cloudflare 之後任何訪客
+> 都能看到並下載這些圖**（這是捐款功能的必要條件，不然別人掃不到碼）。
+> 如果你不想讓原圖被下載，只能改用第三方收款頁面連結。
 
 
 ## 注意事項

@@ -1063,10 +1063,21 @@
     f.appendChild(el('p', { class: 'footer__credits', text: c.credits || '' }));
     f.appendChild(el('p', { class: 'footer__privacy', text: c.privacyNote || '' }));
 
+    // 捐款入口：放在這一排的最後面（在彩蛋小提示之前）
+    let donateBtn = null;
+    if (D.donate) {
+      donateBtn = el('button', {
+        class: 'footer__donate', id: 'donate-open', type: 'button',
+        title: D.donate.tooltip || '', text: D.donate.label || '捐款'
+      });
+      donateBtn.addEventListener('click', openDonate);
+    }
+
     f.appendChild(el('p', { class: 'footer__row' }, [
       el('span', { text: c.copyright || '' }),
       c.contactEmail ? el('a', { class: 'footer__link', href: 'mailto:' + c.contactEmail, text: c.contactEmail }) : null,
       el('span', { class: 'footer__updated', text: '最後更新：' + ((D.meta && D.meta.lastUpdated) || '—') }),
+      donateBtn,
       // 彩蛋提示：滑鼠移上去會給暗示
       el('span', {
         class: 'footer__egg-hint', title: egg.hintTooltip || '', text: egg.hintText || '？',
@@ -1343,7 +1354,7 @@
 
   /** 有沒有任何彈窗開著（音樂的鍵盤切換與彩蛋都要避開） */
   function anyModalOpen() {
-    const ids = ['egg-modal', 'video-modal', 'member-modal', 'gallery-modal'];
+    const ids = ['egg-modal', 'video-modal', 'member-modal', 'gallery-modal', 'donate-modal'];
     for (let i = 0; i < ids.length; i++) {
       const m = document.getElementById(ids[i]);
       if (m && !m.hidden) return true;
@@ -1403,6 +1414,7 @@
     host.appendChild(btn);
   }
 
+  /** 開啟彩蛋彈窗：先隨機給一張，想看全部再點下面那行小字 */
   function openGallery() {
     const modal = document.getElementById('gallery-modal');
     const host = document.getElementById('gallery-content');
@@ -1412,9 +1424,53 @@
     host.innerHTML = '';
     host.appendChild(el('h2', { class: 'gallery__title', id: 'gallery-title', text: cfg.title || '彩蛋' }));
     if (cfg.subtitle) host.appendChild(el('p', { class: 'gallery__subtitle', text: cfg.subtitle }));
+    // 內容會在這個容器裡被換掉（隨機單張 ↔ 全部）
+    host.appendChild(el('div', { class: 'gallery__stage', id: 'gallery-stage' }));
 
+    showGalleryRandom();
+
+    modal.hidden = false;
+    document.body.classList.add('is-locked');
+  }
+
+  /** 從 images 裡隨機抽一張顯示 */
+  function showGalleryRandom() {
+    const stage = document.getElementById('gallery-stage');
+    const cfg = D.galleryEgg;
+    const list = (cfg && cfg.images) || [];
+    if (!stage || !list.length) return;
+
+    // 抽到跟上一張一樣的話就再抽一次（只有兩張以上時才需要）
+    let pick = list[Math.floor(Math.random() * list.length)];
+    if (list.length > 1 && pick === showGalleryRandom.last) {
+      pick = list[(list.indexOf(pick) + 1) % list.length];
+    }
+    showGalleryRandom.last = pick;
+
+    stage.innerHTML = '';
+    const wrap = el('button', {
+      class: 'gallery__single-wrap', type: 'button', 'aria-label': '放大圖片'
+    }, [el('img', { class: 'gallery__single', src: pick, alt: '' })]);
+    wrap.addEventListener('click', function () { wrap.classList.toggle('is-zoom'); });
+    stage.appendChild(wrap);
+
+    // 圖片下面那行小字：點開可以看全部
+    const label = (cfg.moreLabel || '查看全部 {n} 張 ▸').replace('{n}', String(list.length));
+    const more = el('button', { class: 'gallery__more', type: 'button', text: label });
+    more.addEventListener('click', showGalleryAll);
+    stage.appendChild(more);
+  }
+
+  /** 展開成全部圖片的網格 */
+  function showGalleryAll() {
+    const stage = document.getElementById('gallery-stage');
+    const cfg = D.galleryEgg;
+    const list = (cfg && cfg.images) || [];
+    if (!stage) return;
+
+    stage.innerHTML = '';
     const grid = el('div', { class: 'gallery__grid' });
-    (cfg.images || []).forEach(function (src, i) {
+    list.forEach(function (src, i) {
       const item = el('button', {
         class: 'gallery__item', type: 'button',
         'aria-label': '放大第 ' + (i + 1) + ' 張圖片'
@@ -1427,11 +1483,12 @@
       });
       grid.appendChild(item);
     });
-    host.appendChild(grid);
-    if (cfg.caption) host.appendChild(el('p', { class: 'gallery__caption', text: cfg.caption }));
+    stage.appendChild(grid);
+    if (cfg.caption) stage.appendChild(el('p', { class: 'gallery__caption', text: cfg.caption }));
 
-    modal.hidden = false;
-    document.body.classList.add('is-locked');
+    const back = el('button', { class: 'gallery__more', type: 'button', text: cfg.backLabel || '◂ 再隨機抽一張' });
+    back.addEventListener('click', showGalleryRandom);
+    stage.appendChild(back);
   }
 
   function closeGallery() {
@@ -1449,6 +1506,68 @@
     });
     document.addEventListener('keydown', function (ev) {
       if (ev.key === 'Escape' && !modal.hidden) closeGallery();
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+   *  13. 捐款
+   * ----------------------------------------------------------------------
+   *  入口是頁尾那一排最後面的「💰 捐款」，點了開一個彈窗列出所有付款方式。
+   *  付款碼圖片跟網站放在同一個資料夾，所以離線也看得到。
+   * ══════════════════════════════════════════════════════════════════════ */
+
+  function openDonate() {
+    const modal = document.getElementById('donate-modal');
+    const host = document.getElementById('donate-content');
+    const cfg = D.donate;
+    if (!modal || !host || !cfg) return;
+
+    host.innerHTML = '';
+    host.appendChild(el('h2', { class: 'donate__title', id: 'donate-title', text: cfg.title || '捐款' }));
+    if (cfg.description) host.appendChild(el('p', { class: 'donate__desc', text: cfg.description }));
+
+    const grid = el('div', { class: 'donate__grid' });
+    (cfg.methods || []).forEach(function (m) {
+      const card = el('div', { class: 'donate__card' });
+      const wrap = el('button', {
+        class: 'donate__qr-wrap', type: 'button',
+        'aria-label': '放大 ' + (m.name || '') + ' 的付款碼'
+      }, [el('img', { class: 'donate__qr', src: m.image, alt: (m.name || '') + ' 付款碼', loading: 'lazy' })]);
+      wrap.addEventListener('click', function () {
+        // 跟畫廊一樣：一次只放大一張，再點一次縮回去
+        const zoomed = grid.querySelector('.donate__card.is-zoom');
+        if (zoomed && zoomed !== card) zoomed.classList.remove('is-zoom');
+        card.classList.toggle('is-zoom');
+      });
+      card.appendChild(wrap);
+      card.appendChild(el('div', { class: 'donate__meta' }, [
+        el('span', { class: 'donate__name', text: m.name || '' }),
+        m.region ? el('span', { class: 'donate__region', text: m.region }) : null
+      ]));
+      grid.appendChild(card);
+    });
+    host.appendChild(grid);
+    if (cfg.note) host.appendChild(el('p', { class: 'donate__note', text: cfg.note }));
+
+    modal.hidden = false;
+    document.body.classList.add('is-locked');
+  }
+
+  function closeDonate() {
+    const modal = document.getElementById('donate-modal');
+    if (!modal || modal.hidden) return;
+    modal.hidden = true;
+    document.body.classList.remove('is-locked');
+  }
+
+  function initDonateModal() {
+    const modal = document.getElementById('donate-modal');
+    if (!modal) return;
+    modal.addEventListener('click', function (ev) {
+      if (ev.target.hasAttribute('data-close-donate')) closeDonate();
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && !modal.hidden) closeDonate();
     });
   }
 
@@ -1518,6 +1637,7 @@
     initVideoModal();
     initMemberModal();
     initGalleryModal();
+    initDonateModal();
     initMusicKeys();
     initEasterEgg();
   }

@@ -374,12 +374,15 @@ const SITE_DATA = {
   /* ──────────────────────────────────────────────────────────────────────
    *  圖片彩蛋（第二個彩蛋）
    * ----------------------------------------------------------------------
-   *  觸發方式：連續點擊下面那張小圖 3 次，就會打開 1～9 的圖片畫廊。
+   *  觸發方式：連續點擊下面那張小圖 3 次。
+   *
+   *  每次觸發只會「隨機抽一張」給你看（不是全部），
+   *  想看全部的話，圖片下面有一行小字可以點開。
    *
    *  位置刻意做得低調：只放在「特別鳴謝」下面一小張縮圖，不佔版面、
    *  不影響正常瀏覽；沒興趣的人可以直接忽略。
    *
-   *  ✏️ clicks 想改成點幾下都可以；images 陣列的順序就是顯示順序。
+   *  ✏️ clicks 想改成點幾下都可以；images 就是隨機抽取的池子。
    * ──────────────────────────────────────────────────────────────────── */
   galleryEgg: {
     trigger: 'images/egg/ciallo.jpeg',   // 要點很多次的那張小圖
@@ -387,6 +390,8 @@ const SITE_DATA = {
     tooltip: '點我看看，說不定有東西',      // 滑鼠移上去顯示的提示
     title: '🎉 又一個彩蛋！',
     subtitle: '你居然有耐心點了三下',
+    moreLabel: '查看全部 {n} 張 ▸',        // {n} 會被換成圖片總數
+    backLabel: '◂ 再隨機抽一張',
     caption: '點圖片可以放大，再點一次縮回去',
     images: [
       'images/egg/1.jpeg',
@@ -398,6 +403,30 @@ const SITE_DATA = {
       'images/egg/7.jpeg',
       'images/egg/8.jpeg',
       'images/egg/9.jpeg'
+    ]
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  捐款
+   * ----------------------------------------------------------------------
+   *  入口是頁尾那一排最後面的「💰 捐款」，點下去開一個彈窗列出所有付款方式。
+   *
+   *  ✏️ description 那句是我寫的（你只指定了入口文字），想改直接改。
+   *     不想要那句話就把它設成 ''，彈窗只會顯示付款方式。
+   * ──────────────────────────────────────────────────────────────────── */
+  donate: {
+    label: '💰 捐款',
+    tooltip: '用以下方式支持我',
+    title: '💰 捐款',
+    description: '感謝你的支持。',
+    note: '點圖片可以放大，方便掃碼。',
+    methods: [
+      { name: '微信支付',       region: '中國大陸', image: 'images/payment/wechat-cn.jpeg' },
+      { name: 'WeChat Pay HK',  region: '香港',     image: 'images/payment/wechat-hk.jpeg' },
+      { name: '支付寶',         region: '中國大陸', image: 'images/payment/alipay-cn.jpeg' },
+      { name: 'AlipayHK',       region: '香港',     image: 'images/payment/alipay-hk.jpeg' },
+      { name: 'PayMe',          region: '香港',     image: 'images/payment/payme.jpeg' },
+      { name: 'BOC Pay+',       region: '中銀香港', image: 'images/payment/boc-payplus.jpeg' }
     ]
   }
 };
