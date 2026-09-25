@@ -237,6 +237,28 @@ powershell -ExecutionPolicy Bypass -File tools\make-favicon.ps1 `
 想換觸發字串或文案，改 `data.js` 的 `easterEgg` 區塊即可。
 
 
+## 圖片彩蛋（第二個）
+
+「特別鳴謝」下面、頁尾上面有一張**很小、半透明的圓形縮圖**（68px）。
+它平常幾乎不搶眼，滑鼠移上去才會亮起來。
+
+**發現方式**：連續點它 **3 次**。每點一下底下會亮一個小點，讓你知道「有在算」；
+第 3 下就會打開畫廊，裡面是 `images/egg/1.jpeg` ～ `9.jpeg` 共 9 張圖。
+
+畫廊裡點任一張圖可以放大到滿版寬度，再點一次縮回去。
+
+| 想改什麼 | 改哪裡 |
+| :-- | :-- |
+| 要點幾下 | `data.js` → `galleryEgg.clicks` |
+| 縮圖換成別的圖 | `galleryEgg.trigger` |
+| 畫廊裡的圖片與順序 | `galleryEgg.images` 陣列 |
+| 標題／副標／說明文字 | `galleryEgg.title` / `subtitle` / `caption` |
+| 滑過去顯示的提示 | `galleryEgg.tooltip`（設成 `''` 就沒有提示） |
+
+圖片放在 `images/egg/`，總共約 0.8 MB。縮圖載入失敗時整個彩蛋會自動移除，
+不會在頁面上留一個破圖。
+
+
 ## 注意事項
 
 **API 金鑰**：`steam-api-key.txt` 是你的私密金鑰。這個資料夾要上傳到 GitHub

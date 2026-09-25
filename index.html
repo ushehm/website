@@ -115,10 +115,25 @@
         <div id="thanks-content"></div>
       </section>
 
+      <!--
+        ⑧ 圖片彩蛋：特別鳴謝下面一小張縮圖，點 3 次會打開 1～9 的畫廊。
+        刻意做得很低調，不影響正常瀏覽。文字與圖片在 data.js 的 galleryEgg。
+      -->
+      <div class="egg-thumb" id="gallery-egg-trigger"></div>
+
     </main>
 
     <!-- ⑥ 頁尾 -->
     <footer class="footer" id="footer"></footer>
+  </div>
+
+  <!-- 圖片畫廊彈窗（點 ciallo 縮圖 3 次後出現，內容由 script.js 生成） -->
+  <div class="modal modal--gallery" id="gallery-modal" hidden>
+    <div class="modal__backdrop" data-close-gallery></div>
+    <div class="modal__panel modal__panel--gallery" role="dialog" aria-modal="true" aria-labelledby="gallery-title">
+      <button class="modal__close" type="button" data-close-gallery aria-label="關閉">×</button>
+      <div id="gallery-content"></div>
+    </div>
   </div>
 
   <!-- 會員註冊彈窗（玩笑性質，內容由 script.js 從 data.js 生成） -->

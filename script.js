@@ -1343,12 +1343,113 @@
 
   /** 有沒有任何彈窗開著（音樂的鍵盤切換與彩蛋都要避開） */
   function anyModalOpen() {
-    const ids = ['egg-modal', 'video-modal', 'member-modal'];
+    const ids = ['egg-modal', 'video-modal', 'member-modal', 'gallery-modal'];
     for (let i = 0; i < ids.length; i++) {
       const m = document.getElementById(ids[i]);
       if (m && !m.hidden) return true;
     }
     return false;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+   *  12. 圖片彩蛋（點小圖 3 次開畫廊）
+   * ----------------------------------------------------------------------
+   *  刻意做得很低調：只是「特別鳴謝」下面一小張縮圖，不佔版面、
+   *  不影響正常瀏覽。點擊次數達到 data.js 設定的 clicks 之後開畫廊。
+   * ══════════════════════════════════════════════════════════════════════ */
+
+  const galleryEgg = { count: 0 };
+
+  function renderGalleryEgg() {
+    const host = document.getElementById('gallery-egg-trigger');
+    const cfg = D.galleryEgg;
+    if (!host) return;
+    if (!cfg || !cfg.trigger) { host.remove(); return; }
+
+    const total = cfg.clicks || 3;
+    host.innerHTML = '';
+
+    const btn = el('button', {
+      class: 'egg-thumb__btn', type: 'button',
+      title: cfg.tooltip || '', 'aria-label': cfg.tooltip || '隱藏內容'
+    });
+    const img = el('img', { class: 'egg-thumb__img', src: cfg.trigger, alt: '', loading: 'lazy' });
+    // 圖片載入失敗就直接把整個彩蛋移除，不要在頁面上留一個破圖
+    img.addEventListener('error', function () { host.remove(); });
+    btn.appendChild(img);
+
+    // 點幾下就亮幾個點，讓人知道「有在算」
+    const dots = el('span', { class: 'egg-thumb__dots' });
+    for (let i = 0; i < total; i++) dots.appendChild(el('i'));
+    btn.appendChild(dots);
+
+    btn.addEventListener('click', function () {
+      galleryEgg.count++;
+      btn.classList.remove('is-tap');
+      void btn.offsetWidth;          // 強制重排，讓縮放動畫可以重播
+      btn.classList.add('is-tap');
+
+      const marks = dots.querySelectorAll('i');
+      const lit = galleryEgg.count % (total + 1);
+      for (let i = 0; i < marks.length; i++) marks[i].classList.toggle('is-on', i < lit);
+
+      if (galleryEgg.count >= total) {
+        galleryEgg.count = 0;
+        for (let i = 0; i < marks.length; i++) marks[i].classList.remove('is-on');
+        openGallery();
+      }
+    });
+
+    host.appendChild(btn);
+  }
+
+  function openGallery() {
+    const modal = document.getElementById('gallery-modal');
+    const host = document.getElementById('gallery-content');
+    const cfg = D.galleryEgg;
+    if (!modal || !host || !cfg) return;
+
+    host.innerHTML = '';
+    host.appendChild(el('h2', { class: 'gallery__title', id: 'gallery-title', text: cfg.title || '彩蛋' }));
+    if (cfg.subtitle) host.appendChild(el('p', { class: 'gallery__subtitle', text: cfg.subtitle }));
+
+    const grid = el('div', { class: 'gallery__grid' });
+    (cfg.images || []).forEach(function (src, i) {
+      const item = el('button', {
+        class: 'gallery__item', type: 'button',
+        'aria-label': '放大第 ' + (i + 1) + ' 張圖片'
+      }, [el('img', { class: 'gallery__img', src: src, alt: '', loading: 'lazy' })]);
+      item.addEventListener('click', function () {
+        // 同時只放大一張；再點同一張就縮回去
+        const zoomed = grid.querySelector('.gallery__item.is-zoom');
+        if (zoomed && zoomed !== item) zoomed.classList.remove('is-zoom');
+        item.classList.toggle('is-zoom');
+      });
+      grid.appendChild(item);
+    });
+    host.appendChild(grid);
+    if (cfg.caption) host.appendChild(el('p', { class: 'gallery__caption', text: cfg.caption }));
+
+    modal.hidden = false;
+    document.body.classList.add('is-locked');
+  }
+
+  function closeGallery() {
+    const modal = document.getElementById('gallery-modal');
+    if (!modal || modal.hidden) return;
+    modal.hidden = true;
+    document.body.classList.remove('is-locked');
+  }
+
+  function initGalleryModal() {
+    const modal = document.getElementById('gallery-modal');
+    if (!modal) return;
+    modal.addEventListener('click', function (ev) {
+      if (ev.target.hasAttribute('data-close-gallery')) closeGallery();
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && !modal.hidden) closeGallery();
+    });
   }
 
   /* ══════════════════════════════════════════════════════════════════════
@@ -1411,10 +1512,12 @@
     renderAbout();
     renderGuestbook();
     renderThanks();
+    renderGalleryEgg();
     renderFooter();
     renderNav();
     initVideoModal();
     initMemberModal();
+    initGalleryModal();
     initMusicKeys();
     initEasterEgg();
   }
