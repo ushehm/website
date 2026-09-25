@@ -218,7 +218,7 @@ const SITE_DATA = {
     disclaimer: '本站為個人非官方頁面，與 Valve Corporation 及 Steam 沒有任何關係。',
     // 遊戲名稱、封面與成就資料的版權屬於各自發行商；Steam 為 Valve 的商標。
     credits: '遊戲封面與名稱版權屬各自發行者所有；資料來自 Steam Web API。',
-    contactEmail: 'redteam11145114@gmail.com',   // ✏️ 換成你的信箱
+    contactEmail: 'redteam114514@gmail.com',   // ✏️ 換成你的信箱
     privacyNote: '本站不使用追蹤 cookie、不蒐集個人資料。'
   },
 
