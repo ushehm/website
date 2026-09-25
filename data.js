@@ -443,8 +443,10 @@ const SITE_DATA = {
   comic: {
     title: '隨機漫畫',
     subtitle: 'Random Comic',
-    description: '按下面的按鈕隨機抽一張，一共 {n} 張。',
+    description: '按下面的按鈕隨機抽一張，也可以用左右箭嘴一張一張看，一共 {n} 張。',
     buttonLabel: '🎲 隨機換一張',
+    prevAria: '上一張',
+    nextAria: '下一張',
     counter: '第 {i} / {n} 張',
     images: [
       'images/comic/01.jpeg',

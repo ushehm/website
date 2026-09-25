@@ -1316,10 +1316,34 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
 .comic__frame.is-error .comic__error { display: block; }
 
 .comic__bar {
-  display: flex; align-items: center; gap: 16px;
+  display: flex; align-items: center; gap: 18px;
   flex-wrap: wrap; justify-content: center;
 }
 .comic__counter { font-size: .84rem; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.comic__controls { display: flex; align-items: center; gap: 10px; }
+
+/* 左右箭頭：一張一張順序／倒序看 */
+.comic__arrow {
+  width: 42px; height: 42px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: rgba(11, 18, 25, .72);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: .8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color .2s, background .2s, border-color .2s, box-shadow .25s, transform .18s;
+}
+.comic__arrow:hover, .comic__arrow:focus-visible {
+  color: #06121c;
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 20px -3px var(--accent);
+  outline: none;
+}
+.comic__arrow:active { transform: scale(.9); }
+
 .comic__btn.is-tap { animation: comicTap .3s ease; }
 @keyframes comicTap {
   0%   { transform: scale(1); }
@@ -1329,7 +1353,9 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
 
 @media (max-width: 640px) {
   .comic { padding: 14px; gap: 12px; }
-  .comic__bar { gap: 10px; }
+  .comic__bar { gap: 12px; }
+  .comic__controls { gap: 8px; }
+  .comic__arrow { width: 38px; height: 38px; }
   /* 手機畫面窄，漫畫多半是被「寬度」限制住，
      外框再用 72vh 會留下一大片空白，所以縮矮一點。 */
   .comic__frame { height: min(60vh, 480px); }

@@ -718,6 +718,9 @@
       // 焦點在進度條或音量上 → 讓它們自己處理
       if (ev.target && (ev.target.id === 'music-bar' || ev.target.id === 'music-vol')) return;
 
+      // 焦點在漫畫區（那裡也有左右箭頭）→ 不要搶，不然按了會去換音樂專輯
+      if (ev.target && ev.target.closest && ev.target.closest('#sec-comic')) return;
+
       const sec = document.getElementById('sec-music');
       if (!sec || sec.hidden) return;
 
@@ -1589,6 +1592,15 @@
     return i;
   }
 
+  /** 依序往前／往後一張。走到兩端會繞回另一頭，可以一直看下去。 */
+  function stepComic(delta) {
+    const list = (D.comic && D.comic.images) || [];
+    const n = list.length;
+    if (!n) return 0;
+    const cur = comicState.index < 0 ? 0 : comicState.index;
+    return ((cur + delta) % n + n) % n;   // 負數也能正確繞回
+  }
+
   function showComic(i) {
     const cfg = D.comic;
     const list = (cfg && cfg.images) || [];
@@ -1639,6 +1651,19 @@
     ]);
 
     const counter = el('div', { class: 'comic__counter', id: 'comic-counter' });
+
+    const prev = el('button', {
+      class: 'comic__arrow', id: 'comic-prev', type: 'button',
+      'aria-label': cfg.prevAria || '上一張', title: cfg.prevAria || '上一張', text: '◀'
+    });
+    prev.addEventListener('click', function () { showComic(stepComic(-1)); });
+
+    const next = el('button', {
+      class: 'comic__arrow', id: 'comic-next', type: 'button',
+      'aria-label': cfg.nextAria || '下一張', title: cfg.nextAria || '下一張', text: '▶'
+    });
+    next.addEventListener('click', function () { showComic(stepComic(1)); });
+
     const btn = el('button', {
       class: 'btn btn--primary comic__btn', id: 'comic-btn', type: 'button',
       text: cfg.buttonLabel || '🎲 隨機換一張'
@@ -1652,7 +1677,10 @@
 
     box.appendChild(el('div', { class: 'comic' }, [
       frame,
-      el('div', { class: 'comic__bar' }, [counter, btn])
+      el('div', { class: 'comic__bar' }, [
+        counter,
+        el('div', { class: 'comic__controls' }, [prev, btn, next])
+      ])
     ]));
 
     showComic(pickComic());
