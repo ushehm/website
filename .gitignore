@@ -1,0 +1,19 @@
+# ⚠ 這個檔案一定要留著
+#
+# 你之前已經把網站上傳過一次 GitHub，而現在這個資料夾裡有一個
+# 絕對不能公開的檔案。有這個 .gitignore，git 就不會把它加進版控、
+# 也就不可能被推上 GitHub 或部署到 Cloudflare。
+
+# 內含你的 Steam Web API 金鑰
+steam-api-key.txt
+
+# 你原本給我的素材。三個檔案都已經複製到 images/ 與 media/ 了，
+# 留著只是多佔 7.4 MB（影片重複一份），沒有必要上傳。
+user provide image/
+
+# 作業系統與編輯器雜項
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/

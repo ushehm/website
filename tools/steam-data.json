@@ -1,0 +1,2135 @@
+{
+  "fetchedAt": "2026-09-24T10:27:33.800Z",
+  "steamId": "76561199549763479",
+  "profile": {
+    "personaName": "ciallo (∠・ ω )⌒☆",
+    "realName": "ushehm",
+    "profileUrl": "https://steamcommunity.com/id/ciaII0/",
+    "avatar": "https://avatars.steamstatic.com/50685cb4a4e06be764ae4735b5c201256c71935e_full.jpg",
+    "countryCode": "CN",
+    "memberSince": "2023-09-06",
+    "steamLevel": 83,
+    "personaState": 3
+  },
+  "ownedCount": 152,
+  "games": [
+    {
+      "appid": 730,
+      "name": "Counter-Strike 2",
+      "minutes": 14283,
+      "hours": 238.1,
+      "minutes2Weeks": 371,
+      "lastPlayed": "2026-09-19",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/730/8dbc71957312bbd3baea65848b545be9eae2a355.jpg"
+    },
+    {
+      "appid": 394360,
+      "name": "Hearts of Iron IV",
+      "minutes": 5856,
+      "hours": 97.6,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-03-01",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/394360/67b15e2336311b4b4f1eb5c802af0c0dbe644195.jpg"
+    },
+    {
+      "appid": 2458530,
+      "name": "魔女的夜宴",
+      "minutes": 3695,
+      "hours": 61.6,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-06-01",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2458530/cba4da3d4d301df7aa297fc543cc419f7212b3da.jpg"
+    },
+    {
+      "appid": 1293830,
+      "name": "Forza Horizon 4",
+      "minutes": 3429,
+      "hours": 57.2,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-01-29",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1293830/7c993f9089d54fe2767efec47b75a7009cdd632e.jpg"
+    },
+    {
+      "appid": 1044620,
+      "name": "Aokana - Four Rhythms Across the Blue",
+      "minutes": 2858,
+      "hours": 47.6,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-02-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1044620/a00d9c3180443e60ada178223086dca080450e1a.jpg"
+    },
+    {
+      "appid": 1829980,
+      "name": "Cafe Stella",
+      "minutes": 2604,
+      "hours": 43.4,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-05",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1829980/8a1a4abc123ac2ee8aef018ef31f2ce487157277.jpg"
+    },
+    {
+      "appid": 1277930,
+      "name": "Riddle Joker",
+      "minutes": 2088,
+      "hours": 34.8,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-04-12",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1277930/28db420c6e5a1278095860727b9d33ddd21c90e5.jpg"
+    },
+    {
+      "appid": 1943950,
+      "name": "Escape the Backrooms",
+      "minutes": 2076,
+      "hours": 34.6,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-06-29",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1943950/2bd4431dd3b71ea7fd11cbcef9594f0d09e4079d.jpg"
+    },
+    {
+      "appid": 3240220,
+      "name": "Grand Theft Auto V Enhanced",
+      "minutes": 1962,
+      "hours": 32.7,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-04-25",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3240220/8355a7bbdb704f727bfba80ec56bc7228991338e.jpg"
+    },
+    {
+      "appid": 1144400,
+      "name": "Senren＊Banka",
+      "minutes": 1940,
+      "hours": 32.3,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-03-22",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1144400/52bb7ecf2ec4e08b37206e52bd43e328d785fabb.jpg"
+    },
+    {
+      "appid": 1426210,
+      "name": "It Takes Two",
+      "minutes": 1917,
+      "hours": 32,
+      "minutes2Weeks": 100,
+      "lastPlayed": "2026-09-12",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1426210/6b15f6d81c4fc52056f4928b363b7fac591a945b.jpg"
+    },
+    {
+      "appid": 413420,
+      "name": "Danganronpa 2: Goodbye Despair",
+      "minutes": 1873,
+      "hours": 31.2,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-03-02",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/413420/912bb82c4ee0f7734ed28c97fde01a1371978896.jpg"
+    },
+    {
+      "appid": 3101040,
+      "name": "Magical Girl Witch Trials",
+      "minutes": 1797,
+      "hours": 30,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-11-26",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3101040/8a8cabc19943234faa0a59154775897858e66897.jpg"
+    },
+    {
+      "appid": 413410,
+      "name": "Danganronpa: Trigger Happy Havoc",
+      "minutes": 1469,
+      "hours": 24.5,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-03-02",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/413410/221f5116c2c1d46fa71a7b014b5e882334a2d0da.jpg"
+    },
+    {
+      "appid": 271590,
+      "name": "Grand Theft Auto V Legacy",
+      "minutes": 1306,
+      "hours": 21.8,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-08-30",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/271590/1e72f87eb927fa1485e68aefaff23c7fd7178251.jpg"
+    },
+    {
+      "appid": 3027600,
+      "name": "Love, Elections, and Chocolate",
+      "minutes": 1049,
+      "hours": 17.5,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-04-12",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3027600/0af92f3739044582c7c392dd357bf88102476161.jpg"
+    },
+    {
+      "appid": 2483190,
+      "name": "Forza Horizon 6",
+      "minutes": 801,
+      "hours": 13.4,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-07-26",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2483190/55a14aaa3f5ef5367225f3099ce564462f15b171.jpg"
+    },
+    {
+      "appid": 1230140,
+      "name": "ATRI -My Dear Moments-",
+      "minutes": 736,
+      "hours": 12.3,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-03-28",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1230140/40e9052985afac2661d5391a8a74ff1e2d837fdf.jpg"
+    },
+    {
+      "appid": 1372110,
+      "name": "JoJo's Bizarre Adventure: All-Star Battle R",
+      "minutes": 691,
+      "hours": 11.5,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-10-17",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1372110/ffeed3baa92f2bc742f2ed26eacdd89a0085aa29.jpg"
+    },
+    {
+      "appid": 2206340,
+      "name": "Aokana - EXTRA2",
+      "minutes": 612,
+      "hours": 10.2,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-11-20",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2206340/1642336680c869459c5e1cfb0090a1736c03ffb6.jpg"
+    },
+    {
+      "appid": 502500,
+      "name": "ACE COMBAT™7: SKIES UNKNOWN",
+      "minutes": 602,
+      "hours": 10,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-08-28",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/502500/f7e1587f3521cacbdebd07b25c05103a963160a8.jpg"
+    },
+    {
+      "appid": 3357650,
+      "name": "PRAGMATA",
+      "minutes": 593,
+      "hours": 9.9,
+      "minutes2Weeks": 1,
+      "lastPlayed": "2026-09-17",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3357650/5d35e316d15347f1bf378e756930909676d19054.jpg"
+    },
+    {
+      "appid": 990080,
+      "name": "Hogwarts Legacy",
+      "minutes": 590,
+      "hours": 9.8,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-13",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/990080/a9ecb94f249768d0ee5ccecbffe8d8c06d9bed59.jpg"
+    },
+    {
+      "appid": 899970,
+      "name": "NEKOPARA Extra",
+      "minutes": 493,
+      "hours": 8.2,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2024-12-26",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/899970/dc8a35b04deece2b870c4ea8c5e46283d822932e.jpg"
+    },
+    {
+      "appid": 3446120,
+      "name": "Kira☆Kano",
+      "minutes": 482,
+      "hours": 8,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-03-15",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3446120/2243dcfe687c5c101a79a25e5266afd9a5d6f3fe.jpg"
+    },
+    {
+      "appid": 493340,
+      "name": "Planet Coaster",
+      "minutes": 436,
+      "hours": 7.3,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-07-01",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/493340/1b2f29e743dd3048f21fefd9642d86a5f5123968.jpg"
+    },
+    {
+      "appid": 431960,
+      "name": "Wallpaper Engine",
+      "minutes": 415,
+      "hours": 6.9,
+      "minutes2Weeks": 9,
+      "lastPlayed": "2026-09-23",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/431960/72edaed9d748c6cf7397ffb1c83f0b837b9ebd9d.jpg"
+    },
+    {
+      "appid": 1687950,
+      "name": "Persona 5 Royal",
+      "minutes": 389,
+      "hours": 6.5,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2024-12-14",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1687950/2f868d8c16fc357dc7122d440b9de3916e36e6fa.jpg"
+    },
+    {
+      "appid": 1340130,
+      "name": "Aokana - EXTRA1",
+      "minutes": 375,
+      "hours": 6.3,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-12-22",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1340130/e4c08cacca639677863f6b2a95afb80128f130e0.jpg"
+    },
+    {
+      "appid": 3419430,
+      "name": "Bongo Cat",
+      "minutes": 321,
+      "hours": 5.4,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-06-29",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3419430/b25d4b846c745bdf809f5657af00298e0ae62465.jpg"
+    },
+    {
+      "appid": 333600,
+      "name": "NEKOPARA Vol. 1",
+      "minutes": 308,
+      "hours": 5.1,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-12-22",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/333600/dc8a35b04deece2b870c4ea8c5e46283d822932e.jpg"
+    },
+    {
+      "appid": 385800,
+      "name": "NEKOPARA Vol. 0",
+      "minutes": 287,
+      "hours": 4.8,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-03-31",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/385800/dc8a35b04deece2b870c4ea8c5e46283d822932e.jpg"
+    },
+    {
+      "appid": 602520,
+      "name": "NEKOPARA Vol. 3",
+      "minutes": 287,
+      "hours": 4.8,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-03-31",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/602520/dc8a35b04deece2b870c4ea8c5e46283d822932e.jpg"
+    },
+    {
+      "appid": 3167550,
+      "name": "Tiny Pasture",
+      "minutes": 287,
+      "hours": 4.8,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-07-24",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3167550/f71b6fbdab14f65f2d84e86d382bbfe2f37c242f.jpg"
+    },
+    {
+      "appid": 420110,
+      "name": "NEKOPARA Vol. 2",
+      "minutes": 257,
+      "hours": 4.3,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-03-31",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/420110/dc8a35b04deece2b870c4ea8c5e46283d822932e.jpg"
+    },
+    {
+      "appid": 567640,
+      "name": "Danganronpa V3: Killing Harmony",
+      "minutes": 251,
+      "hours": 4.2,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-14",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/567640/27e0b08d9506a81bc9f8d3a3616fb455106bfa68.jpg"
+    },
+    {
+      "appid": 555950,
+      "name": "Danganronpa Another Episode: Ultra Despair Girls",
+      "minutes": 235,
+      "hours": 3.9,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2024-12-24",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/555950/d2e0b8094bd2c0cb98d4d414ac5d73d77cbc2c44.jpg"
+    },
+    {
+      "appid": 255710,
+      "name": "Cities: Skylines",
+      "minutes": 231,
+      "hours": 3.9,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2024-12-24",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/255710/6cf7b10dd29db28448ef79698ed2118a03617d63.jpg"
+    },
+    {
+      "appid": 1406990,
+      "name": "NEKOPARA Vol. 4",
+      "minutes": 228,
+      "hours": 3.8,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1406990/786721b285e8687d61cdee2620f951120cfe790c.jpg"
+    },
+    {
+      "appid": 1829650,
+      "name": "Sekai to Sekai no Mannaka de",
+      "minutes": 204,
+      "hours": 3.4,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-08-20",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1829650/6e26ccbf04fdac109f77e5ce778a4c97c2682671.jpg"
+    },
+    {
+      "appid": 1434480,
+      "name": "Maitetsu:Last Run!!",
+      "minutes": 200,
+      "hours": 3.3,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1434480/2288fcf042cf788504be1b9a9c8337cac19ce4ba.jpg"
+    },
+    {
+      "appid": 2242710,
+      "name": "Koi x Shin Ai Kanojo",
+      "minutes": 172,
+      "hours": 2.9,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2242710/f56db038a03b5d5ba1b01c3d26522e48dba301d8.jpg"
+    },
+    {
+      "appid": 1045720,
+      "name": "The Coma 2: Vicious Sisters",
+      "minutes": 163,
+      "hours": 2.7,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1045720/ba2c9c81efc2c2fca63d08bdef97f6f4f1d6e3d2.jpg"
+    },
+    {
+      "appid": 749520,
+      "name": "Sakura no Mori † Dreamers",
+      "minutes": 160,
+      "hours": 2.7,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/749520/6d901a0a9cdd0ef5d8d586f48e1b5a56e36b66d7.jpg"
+    },
+    {
+      "appid": 391540,
+      "name": "Undertale",
+      "minutes": 158,
+      "hours": 2.6,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-01-09",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/391540/2ce672b89b63ec1e70d2f12862e72eb4a33e9268.jpg"
+    },
+    {
+      "appid": 1069230,
+      "name": "Tsukikage no Simulacre: Kaihou no Hane",
+      "minutes": 155,
+      "hours": 2.6,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1069230/2c0ec0cdea3688c5f2f13f14991d4ec8926dad07.jpg"
+    },
+    {
+      "appid": 1623730,
+      "name": "Palworld",
+      "minutes": 154,
+      "hours": 2.6,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-04-25",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1623730/f5523077a8f4c923c2e8d8c17794b3319035fa73.jpg"
+    },
+    {
+      "appid": 880950,
+      "name": "Maitetsu:Pure Station",
+      "minutes": 150,
+      "hours": 2.5,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/880950/f9b8b101dddcfa9ef8bb44f26849f4b7d188701d.jpg"
+    },
+    {
+      "appid": 658850,
+      "name": "Do Not Feed the Monkeys",
+      "minutes": 149,
+      "hours": 2.5,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-07-01",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/658850/f8fc175b3a866b5b32b2ddaaefdf00f0858052e3.jpg"
+    },
+    {
+      "appid": 641990,
+      "name": "The Escapists 2",
+      "minutes": 147,
+      "hours": 2.5,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/641990/c1d2bb67884d14088b7befc3d442df6eb801cd13.jpg"
+    },
+    {
+      "appid": 236730,
+      "name": "Anomaly 2",
+      "minutes": 145,
+      "hours": 2.4,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-07-01",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/236730/d66d46a123de32d70f6cd57d31893a944a6b288c.jpg"
+    },
+    {
+      "appid": 3171460,
+      "name": "Hatsuyuki Sakura",
+      "minutes": 143,
+      "hours": 2.4,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3171460/a5078c8f734cd9b7f3595b6e62982fd11a5c1cf8.jpg"
+    },
+    {
+      "appid": 221040,
+      "name": "Resident Evil 6",
+      "minutes": 134,
+      "hours": 2.2,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/221040/0a0832a59b6c0a4ffa995b0343892729fe61ec1b.jpg"
+    },
+    {
+      "appid": 223470,
+      "name": "POSTAL 2",
+      "minutes": 130,
+      "hours": 2.2,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/223470/1b6787955f48e75db92205e7db5ad820cf7d5251.jpg"
+    },
+    {
+      "appid": 963690,
+      "name": "Hentai Girl Hime",
+      "minutes": 122,
+      "hours": 2,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-03-22",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/963690/3bfe33cfb4420280c824f682f2f0599b36dc5e21.jpg"
+    },
+    {
+      "appid": 3682050,
+      "name": "Sickly Days and Summer Traces",
+      "minutes": 121,
+      "hours": 2,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-09",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3682050/957319a7d2aa557b255bf8222a10f8a196a9048e.jpg"
+    },
+    {
+      "appid": 2947250,
+      "name": "Select Oblige",
+      "minutes": 114,
+      "hours": 1.9,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2947250/2681abc4a5c03a9854ed756b77cdd3fd0369e73b.jpg"
+    },
+    {
+      "appid": 497700,
+      "name": "Safety First!",
+      "minutes": 108,
+      "hours": 1.8,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-06-22",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/497700/80a3e1a7533e8831e5eaf0862fb9369ceaf035c7.jpg"
+    },
+    {
+      "appid": 2947240,
+      "name": "Kimi no Hitomi ni Hit Me",
+      "minutes": 108,
+      "hours": 1.8,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2947240/c792558687391211459b86a7a968697652b54e2b.jpg"
+    },
+    {
+      "appid": 2430690,
+      "name": "Clover Day's Plus",
+      "minutes": 107,
+      "hours": 1.8,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2430690/cf37cc583771ab338d347183ab37bed6d18c005e.jpg"
+    },
+    {
+      "appid": 2567190,
+      "name": "Otome Riron to Sono Shuuhen -École de Paris-",
+      "minutes": 106,
+      "hours": 1.8,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2567190/50e3d2422961896a547b19c3dcf45a145119259e.jpg"
+    },
+    {
+      "appid": 1944250,
+      "name": "Hana no No ni Saku Utakata no",
+      "minutes": 105,
+      "hours": 1.8,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1944250/85cb93a092a84f330893be6adfa585cfcd819294.jpg"
+    },
+    {
+      "appid": 1183260,
+      "name": "TrymenT -Ima o Kaetai to Negau Anata e- AlphA Hen",
+      "minutes": 104,
+      "hours": 1.7,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1183260/0f4611ddb6e7a53099e765fbf514bd0eafd80314.jpg"
+    },
+    {
+      "appid": 2109640,
+      "name": "Cross Concerto",
+      "minutes": 104,
+      "hours": 1.7,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2109640/d178594636c6d53ace217253b10657057b6af0f3.jpg"
+    },
+    {
+      "appid": 289070,
+      "name": "Sid Meier's Civilization VI",
+      "minutes": 101,
+      "hours": 1.7,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/289070/9dc914132fec244adcede62fb8e7524a72a7398c.jpg"
+    },
+    {
+      "appid": 618140,
+      "name": "Barro",
+      "minutes": 101,
+      "hours": 1.7,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-06-23",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/618140/d096b0cbb1a0121d28d6224f4ae32816cd53eb29.jpg"
+    },
+    {
+      "appid": 2673490,
+      "name": "Seifuku Kanojo",
+      "minutes": 101,
+      "hours": 1.7,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2673490/13d5c00c97326987628a093dd2cf08af22a0a5c7.jpg"
+    },
+    {
+      "appid": 2321180,
+      "name": "SHUFFLE! Episode 2 ~Kami ni mo Akuma ni mo Nerawareteiru Otoko~",
+      "minutes": 99,
+      "hours": 1.7,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2321180/806df1c07e255d6e47bbfe81a1f75ad0cf377881.jpg"
+    },
+    {
+      "appid": 2156620,
+      "name": "Future Radio",
+      "minutes": 94,
+      "hours": 1.6,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2156620/90634f87eef26154bb526445e4bca56cb48aa92d.jpg"
+    },
+    {
+      "appid": 1518770,
+      "name": "Re: LieF ~ Shin'ainaru Anata e~",
+      "minutes": 93,
+      "hours": 1.6,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1518770/d946238f64fc5cfa4d132dde876f626dd4ddb1e5.jpg"
+    },
+    {
+      "appid": 743900,
+      "name": "Mega Man X Legacy Collection 2",
+      "minutes": 92,
+      "hours": 1.5,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/743900/6437caae242a2dee7203863ed53a8476151dd60d.jpg"
+    },
+    {
+      "appid": 983150,
+      "name": " Sakura no Mori † Dreamers 2",
+      "minutes": 90,
+      "hours": 1.5,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/983150/c756ce6ef0613f1261ffc64e719f84d12d9e0b93.jpg"
+    },
+    {
+      "appid": 2396980,
+      "name": "Fate/stay night REMASTERED",
+      "minutes": 87,
+      "hours": 1.5,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2396980/961c4593ef7adcd59954527da9464ea043d87ed8.jpg"
+    },
+    {
+      "appid": 91200,
+      "name": "Anomaly Warzone Earth",
+      "minutes": 85,
+      "hours": 1.4,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-07-01",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/91200/8b8010ddbc76c7a445648f89162f453ea7e1e101.jpg"
+    },
+    {
+      "appid": 1038740,
+      "name": "Fluffy Store",
+      "minutes": 83,
+      "hours": 1.4,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1038740/4f234d9959cb36b21b217e4089253c1aa59e5071.jpg"
+    },
+    {
+      "appid": 976390,
+      "name": "9-nine-:Episode 1",
+      "minutes": 73,
+      "hours": 1.2,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-07-11",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/976390/c87447765c3a918f581cdcaefd5e877d7ce35e9a.jpg"
+    },
+    {
+      "appid": 427190,
+      "name": "Dead Rising",
+      "minutes": 69,
+      "hours": 1.2,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-07-01",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/427190/74ffef15e4897d294a86e5e33e7b427ce37f2219.jpg"
+    },
+    {
+      "appid": 2429860,
+      "name": "Living With Sister: Monochrome Fantasy",
+      "minutes": 65,
+      "hours": 1.1,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2429860/aa642ef1d0e6f232bc39a8ebe36f1cc1849469df.jpg"
+    },
+    {
+      "appid": 629520,
+      "name": "Soundpad",
+      "minutes": 63,
+      "hours": 1.1,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-08-09",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/629520/f261c8f5948de73428a1dbed573ec964fcbecb67.jpg"
+    },
+    {
+      "appid": 1033420,
+      "name": "9-nine-:Episode 2",
+      "minutes": 60,
+      "hours": 1,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1033420/116bd1841699200ebb61e017d4a50cd31a1774b2.jpg"
+    },
+    {
+      "appid": 3446150,
+      "name": "Tsuki ni Yorisou Otome no Sahou 2",
+      "minutes": 59,
+      "hours": 1,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-12-24",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3446150/6be6c8127cac8fd779a771b333fe8b8f8520fdbc.jpg"
+    },
+    {
+      "appid": 45740,
+      "name": "Dead Rising 2",
+      "minutes": 41,
+      "hours": 0.7,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-12-24",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/45740/1a8ab50763c91798622cc43eaad21960bf4d4b1a.jpg"
+    },
+    {
+      "appid": 45770,
+      "name": "Dead Rising 2: Off the Record",
+      "minutes": 41,
+      "hours": 0.7,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-12-24",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/45770/390b241cf36d54a3cb59be36a72c35ed41f6172b.jpg"
+    },
+    {
+      "appid": 265550,
+      "name": "Dead Rising 3",
+      "minutes": 41,
+      "hours": 0.7,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-12-24",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/265550/f5cdf9af7b3ab97308c13a326fe22bad9445419c.jpg"
+    },
+    {
+      "appid": 543460,
+      "name": "Dead Rising 4",
+      "minutes": 41,
+      "hours": 0.7,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-12-24",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/543460/31b6fac04029642cb5af6cf2ca5acafe88619b4b.jpg"
+    },
+    {
+      "appid": 1174180,
+      "name": "Red Dead Redemption 2",
+      "minutes": 36,
+      "hours": 0.6,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-01-08",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1174180/5106abd9c1187a97f23295a0ba9470c94804ec6c.jpg"
+    },
+    {
+      "appid": 307230,
+      "name": "I, Zombie",
+      "minutes": 31,
+      "hours": 0.5,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-04-25",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/307230/497525562cdf7a36893068018768609aa08a2712.jpg"
+    },
+    {
+      "appid": 1089980,
+      "name": "The Henry Stickmin Collection",
+      "minutes": 28,
+      "hours": 0.5,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-04-16",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1089980/7d4a1943cb0b40413ae66f83ce943d82f4962321.jpg"
+    },
+    {
+      "appid": 783120,
+      "name": "Hello Lady!",
+      "minutes": 22,
+      "hours": 0.4,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/783120/16ac3b2e4b985d399c6091cdd7fbde2e0615554e.jpg"
+    },
+    {
+      "appid": 1025070,
+      "name": "Hello Lady! -New Division-",
+      "minutes": 22,
+      "hours": 0.4,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1025070/57fa2a0f23627d37c0e8a778d7b230ccb58bbf11.jpg"
+    },
+    {
+      "appid": 993090,
+      "name": "Lossless Scaling",
+      "minutes": 12,
+      "hours": 0.2,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-02-26",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/993090/42900f430ed7828d2dfa25f07ac02e3de96bc520.jpg"
+    },
+    {
+      "appid": 552280,
+      "name": "Tayutama 2-you're the only one-",
+      "minutes": 3,
+      "hours": 0.1,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/552280/5bfc0dc115e612eb6c345172c42acedc6d7efa6b.jpg"
+    },
+    {
+      "appid": 1094530,
+      "name": "ALIA’s CARNIVAL！",
+      "minutes": 3,
+      "hours": 0.1,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1094530/700d4c9ae5975575c015d788c1710060fd42b9bf.jpg"
+    },
+    {
+      "appid": 2153330,
+      "name": "Otome * Domain",
+      "minutes": 3,
+      "hours": 0.1,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2026-02-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2153330/84227c59448d0690b6df70a3d656582a8b48adbe.jpg"
+    },
+    {
+      "appid": 2425410,
+      "name": "Alia's Carnival! Flowering Sky",
+      "minutes": 3,
+      "hours": 0.1,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2425410/a08208a07e07b83061b195241aa5d52c5794bb58.jpg"
+    },
+    {
+      "appid": 2527460,
+      "name": "Arcana Alchemia",
+      "minutes": 3,
+      "hours": 0.1,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2527460/403bad4d4dce3c2d841f33e50ae9db7b181502fa.jpg"
+    },
+    {
+      "appid": 2947230,
+      "name": "Haruka Ao no Hanayome ni",
+      "minutes": 3,
+      "hours": 0.1,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2947230/eee8ed319132c795fb1215586018defc03dd2d58.jpg"
+    },
+    {
+      "appid": 1277940,
+      "name": "Kinkoi",
+      "minutes": 1,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-05-21",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1277940/cec78f58bd1ee476bcc075f75e39ad501a497f9d.jpg"
+    },
+    {
+      "appid": 1776970,
+      "name": "Tsuki ni Yorisou Otome no Sahou",
+      "minutes": 1,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-07-03",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1776970/25c85e9806f3944fe0be46b55c19d8677f400e55.jpg"
+    },
+    {
+      "appid": 1854980,
+      "name": "Madohi Shiroki no Kamikakushi",
+      "minutes": 1,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-05-21",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1854980/b90bd4f89eebe10a654148dd2e73b7374c7e6202.jpg"
+    },
+    {
+      "appid": 2185770,
+      "name": "Aonatsu Line",
+      "minutes": 1,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-05-21",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2185770/a7bda0fddcee7d58f532bb5ceed342e85511e7a6.jpg"
+    },
+    {
+      "appid": 2347380,
+      "name": "Witch's Garden",
+      "minutes": 1,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-03-21",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2347380/4d5d2f453bd6c9a69747a5d41b72e2cb94f10d9c.jpg"
+    },
+    {
+      "appid": 2510810,
+      "name": "Making＊Lovers CN Edition",
+      "minutes": 1,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-02-24",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2510810/877819dc36da5d637b1990ab6efad39b96377844.jpg"
+    },
+    {
+      "appid": 3027620,
+      "name": "Kakenuke★Forward to Our Sparking Youth!",
+      "minutes": 1,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": "2025-05-21",
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3027620/859a651c6bad2be58c003e4c509b4e9d241c7a13.jpg"
+    },
+    {
+      "appid": 40720,
+      "name": "Samorost 2",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/40720/ffccdcfdadec79180bdae704d67a37915c029fe4.jpg"
+    },
+    {
+      "appid": 250460,
+      "name": "Bridge Constructor",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/250460/cf170c7f96aad6b892b0014ad4c058a41ec9c78b.jpg"
+    },
+    {
+      "appid": 282800,
+      "name": "100% Orange Juice",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/282800/baaf4be38deeb8a631567ee6c651ca23b65c834a.jpg"
+    },
+    {
+      "appid": 319850,
+      "name": "Bridge Constructor Medieval",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/319850/87bcead55fac463a488ad258c127144b3dd4f806.jpg"
+    },
+    {
+      "appid": 475550,
+      "name": "Beholder",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/475550/1025e7d1606b1e7a7f17048532039d78241e9f5d.jpg"
+    },
+    {
+      "appid": 489630,
+      "name": "Warhammer 40,000: Gladius - Relics of War",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/489630/ba6ea4fbeec62073763e103450e8aa7c5373d010.jpg"
+    },
+    {
+      "appid": 503560,
+      "name": "911 Operator",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/503560/823158b3e81e69f1fb9c355c86f05655575e6317.jpg"
+    },
+    {
+      "appid": 544610,
+      "name": "Battlestar Galactica Deadlock",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/544610/9f04e46ee137eac4bcd300c566c91c858abb3c55.jpg"
+    },
+    {
+      "appid": 562620,
+      "name": "Robonauts",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/562620/4e24e35a61332d613c959e3e4f19ef6cbbe2ad36.jpg"
+    },
+    {
+      "appid": 613100,
+      "name": "House Flipper",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/613100/4ab6e7c49f3f0c063dfe08ab85038c979301f6dd.jpg"
+    },
+    {
+      "appid": 688470,
+      "name": "Han Xiongnu Wars",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/688470/2a7b24a20c6c844fa2f9616222f4dbd9cbebd19b.jpg"
+    },
+    {
+      "appid": 704840,
+      "name": "The Walking Vegetables",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/704840/b3788f83e1baa3a67a9ae47db29754917b8dbc1e.jpg"
+    },
+    {
+      "appid": 758090,
+      "name": "Monobeno",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/758090/05ac954f32a1bd15c3821648158f0e79e8cb7e73.jpg"
+    },
+    {
+      "appid": 831660,
+      "name": "Monobeno-HAPPY END- Deluxe",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/831660/05ac954f32a1bd15c3821648158f0e79e8cb7e73.jpg"
+    },
+    {
+      "appid": 990630,
+      "name": "The Last Campfire",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/990630/a6601e3e8776e4c71d20869ae2ca1cad23d41cc0.jpg"
+    },
+    {
+      "appid": 1025440,
+      "name": "Fantasy General II",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1025440/bd5ca49b57cdf52990701a4ca22036b0e1fdbbf5.jpg"
+    },
+    {
+      "appid": 1049280,
+      "name": "Pilgrims",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1049280/1f63c69bbaf23f612d86a507286448a143da7236.jpg"
+    },
+    {
+      "appid": 1056690,
+      "name": "Drink More Glurp",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1056690/4278e01bd6deb8994d6a3f0d57d5a54e383bf78d.jpg"
+    },
+    {
+      "appid": 1091500,
+      "name": "Cyberpunk 2077",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1091500/6897c3848f3e0350d512f59d5bae174a1e3739f9.jpg"
+    },
+    {
+      "appid": 1142830,
+      "name": "9-nine-:Episode 3",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1142830/e1053da30908b78c61db93465c4fffbaf417214c.jpg"
+    },
+    {
+      "appid": 1161190,
+      "name": "Natsu no Iro no Nostalgia",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1161190/d802aa52e971eddf2a040537a74306d3b062c2eb.jpg"
+    },
+    {
+      "appid": 1306970,
+      "name": "Diluvian Ultra",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1306970/5a93018e7070781441042985071d558f60d71ac3.jpg"
+    },
+    {
+      "appid": 1340140,
+      "name": "DRACU-RIOT!",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1340140/1e6797161669dde07c9aabbd80f13a593da465b4.jpg"
+    },
+    {
+      "appid": 1358710,
+      "name": "Battle Cry of Freedom",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1358710/a25b3dfb1858427fddb252b4b9c0f1711852c0f4.jpg"
+    },
+    {
+      "appid": 1368870,
+      "name": "Field of Glory II: Medieval",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1368870/3227ee83711ae4e2f24c62be289b9c35f43b5f18.jpg"
+    },
+    {
+      "appid": 1424660,
+      "name": "9-nine-:Episode 4",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1424660/e95b7c41fa3ec4b5db64cacb1bdc832e50d17ba7.jpg"
+    },
+    {
+      "appid": 1531540,
+      "name": "Distant Worlds 2",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1531540/7f77d10f4f9635383e4fa40588f17852145e8625.jpg"
+    },
+    {
+      "appid": 1662840,
+      "name": "Parquet",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1662840/eeac7daf161e1b617a526e549543dfa1509ba69b.jpg"
+    },
+    {
+      "appid": 1703140,
+      "name": "Isle of Jura",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1703140/56e2dd9001f5ec270f01115af28f47d8cd9bcbb1.jpg"
+    },
+    {
+      "appid": 1751630,
+      "name": "Hello Lady! - Complete Edition",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1751630/41690ae3ded52bd5015f10973cc1030b048196d2.jpg"
+    },
+    {
+      "appid": 1890120,
+      "name": "9-nine-:NewEpisode",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1890120/029c1ee4823a6092fc85543c69edb7eed74e96d4.jpg"
+    },
+    {
+      "appid": 1985260,
+      "name": "Kinkoi Golden Time",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/1985260/3770d570aab74c9ff6d34a0c4bf8976697a2f85c.jpg"
+    },
+    {
+      "appid": 2018640,
+      "name": "My Cat Girl Lover",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2018640/7e4971391a39a152b76e673cc8b11b9549f38560.jpg"
+    },
+    {
+      "appid": 2066360,
+      "name": "Yumahorome ~Toki o Tometa Yakata de Asu o Sagasu Maigo-tachi~",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2066360/ee5ad5aca585b035babe1316dbc135977ea5f1de.jpg"
+    },
+    {
+      "appid": 2135500,
+      "name": "Sora no Ao to Shiro to",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2135500/59e877554134f510f8c68b45306ee2a6e9174e79.jpg"
+    },
+    {
+      "appid": 2399220,
+      "name": "NUKITASHI",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2399220/bc1894287a7692797c0fdf93bcc902d143ae2215.jpg"
+    },
+    {
+      "appid": 2593370,
+      "name": "The Hungry Lamb: Traveling in the Late Ming Dynasty",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2593370/54a7574438ba0458909b1879bfca1c1992b839a4.jpg"
+    },
+    {
+      "appid": 2614070,
+      "name": "NUKITASHI 2",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2614070/7a1c0a16ef7f6ff879fa36bcbff99245ce08d2df.jpg"
+    },
+    {
+      "appid": 2754170,
+      "name": "Sore wa Maichiru Sakura no You ni -Re:BIRTH-",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2754170/087fba9fc4ab4a6c4be6ee9100bd4b3123fa77c4.jpg"
+    },
+    {
+      "appid": 2873080,
+      "name": "The NOexistenceN of you AND me",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2873080/7bd39257891274c4cc309268f665f5bfdb107fe6.jpg"
+    },
+    {
+      "appid": 2947220,
+      "name": "Parfait Remake",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/2947220/6227db569f8150c359140214c1704285e0f611eb.jpg"
+    },
+    {
+      "appid": 3092450,
+      "name": "inZOI: Creative Studio",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3092450/6dc08532335d90fdceb6c780290b83d838083fc2.jpg"
+    },
+    {
+      "appid": 3143300,
+      "name": "Amairo Chocolate 3",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3143300/d2ccfd6316406df942ba324b1e5a15ccafc82591.jpg"
+    },
+    {
+      "appid": 3446170,
+      "name": "Kono Aozora ni Yakusoku o Refine",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3446170/a53aab352ceda462be98c3c32e0620cf750ab870.jpg"
+    },
+    {
+      "appid": 3655150,
+      "name": "NEKOPARA After",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3655150/976d3f6ea01f451f3b0ffdc03c5d32e074e83e51.jpg"
+    },
+    {
+      "appid": 3780110,
+      "name": "梅染倾情琉璃塔",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3780110/e90b4f76c25406bd462d95e09995075fea626719.jpg"
+    },
+    {
+      "appid": 3838280,
+      "name": "Imouto Paradise! 3",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/3838280/4b2cbbffcdc5f859e27aa646e50544f235d5f046.jpg"
+    },
+    {
+      "appid": 4041240,
+      "name": "LOVEPICAL-POPPY!",
+      "minutes": 0,
+      "hours": 0,
+      "minutes2Weeks": 0,
+      "lastPlayed": null,
+      "icon": "https://media.steampowered.com/steamcommunity/public/images/apps/4041240/d0ce3848066288e76e58852d4a02c55321f13d14.jpg"
+    }
+  ],
+  "recentlyPlayed": [
+    {
+      "appid": 730,
+      "name": "Counter-Strike 2",
+      "minutes2Weeks": 371,
+      "hoursTotal": 238.1
+    },
+    {
+      "appid": 1426210,
+      "name": "It Takes Two",
+      "minutes2Weeks": 100,
+      "hoursTotal": 32
+    },
+    {
+      "appid": 431960,
+      "name": "Wallpaper Engine",
+      "minutes2Weeks": 9,
+      "hoursTotal": 6.9
+    },
+    {
+      "appid": 3357650,
+      "name": "PRAGMATA",
+      "minutes2Weeks": 1,
+      "hoursTotal": 9.9
+    }
+  ],
+  "wishlist": [
+    {
+      "appid": 1850570,
+      "name": "DEATH STRANDING DIRECTOR'S CUT",
+      "capsule": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1850570/header.jpg?t=1773400635",
+      "priority": 0,
+      "dateAdded": 1777781863
+    },
+    {
+      "appid": 2981340,
+      "name": "缘之空",
+      "capsule": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2981340/header_schinese.jpg?t=1752472677",
+      "priority": 2,
+      "dateAdded": 1734701965
+    },
+    {
+      "appid": 3130110,
+      "name": "悠之空",
+      "capsule": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3130110/header_schinese.jpg?t=1752472749",
+      "priority": 3,
+      "dateAdded": 1736598760
+    },
+    {
+      "appid": 3280350,
+      "name": "死亡搁浅2",
+      "capsule": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3280350/6270c77b0729e2df0a17d660286eeddfd9169386/header.jpg?t=1774022345",
+      "priority": 0,
+      "dateAdded": 1777781849
+    },
+    {
+      "appid": 3751230,
+      "name": "超级枪弹辩驳２×２",
+      "capsule": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3751230/0a4de8c1af1b7593eb8f700236c26901dbdf9c50/header_schinese.jpg?t=1789440520",
+      "priority": 0,
+      "dateAdded": 1784968135
+    }
+  ],
+  "achievements": [
+    {
+      "appid": 730,
+      "name": "Counter-Strike 2",
+      "unlocked": 1,
+      "total": 1,
+      "percent": 100,
+      "perfect": true
+    },
+    {
+      "appid": 2458530,
+      "name": "魔女的夜宴",
+      "unlocked": 50,
+      "total": 50,
+      "percent": 100,
+      "perfect": true
+    },
+    {
+      "appid": 1044620,
+      "name": "Aokana - Four Rhythms Across the Blue",
+      "unlocked": 22,
+      "total": 22,
+      "percent": 100,
+      "perfect": true
+    },
+    {
+      "appid": 1829980,
+      "name": "Cafe Stella",
+      "unlocked": 12,
+      "total": 12,
+      "percent": 100,
+      "perfect": true
+    },
+    {
+      "appid": 413420,
+      "name": "Danganronpa 2: Goodbye Despair",
+      "unlocked": 47,
+      "total": 47,
+      "percent": 100,
+      "perfect": true
+    },
+    {
+      "appid": 413410,
+      "name": "Danganronpa: Trigger Happy Havoc",
+      "unlocked": 38,
+      "total": 38,
+      "percent": 100,
+      "perfect": true
+    },
+    {
+      "appid": 3027600,
+      "name": "Love, Elections, and Chocolate",
+      "unlocked": 10,
+      "total": 10,
+      "percent": 100,
+      "perfect": true
+    },
+    {
+      "appid": 2206340,
+      "name": "Aokana - EXTRA2",
+      "unlocked": 16,
+      "total": 16,
+      "percent": 100,
+      "perfect": true
+    },
+    {
+      "appid": 3446120,
+      "name": "Kira☆Kano",
+      "unlocked": 11,
+      "total": 11,
+      "percent": 100,
+      "perfect": true
+    },
+    {
+      "appid": 431960,
+      "name": "Wallpaper Engine",
+      "unlocked": 17,
+      "total": 17,
+      "percent": 100,
+      "perfect": true
+    },
+    {
+      "appid": 1340130,
+      "name": "Aokana - EXTRA1",
+      "unlocked": 8,
+      "total": 8,
+      "percent": 100,
+      "perfect": true
+    },
+    {
+      "appid": 1144400,
+      "name": "Senren＊Banka",
+      "unlocked": 19,
+      "total": 26,
+      "percent": 73.1,
+      "perfect": false
+    },
+    {
+      "appid": 1277930,
+      "name": "Riddle Joker",
+      "unlocked": 14,
+      "total": 21,
+      "percent": 66.7,
+      "perfect": false
+    },
+    {
+      "appid": 1372110,
+      "name": "JoJo's Bizarre Adventure: All-Star Battle R",
+      "unlocked": 26,
+      "total": 46,
+      "percent": 56.5,
+      "perfect": false
+    },
+    {
+      "appid": 3357650,
+      "name": "PRAGMATA",
+      "unlocked": 19,
+      "total": 35,
+      "percent": 54.3,
+      "perfect": false
+    },
+    {
+      "appid": 502500,
+      "name": "ACE COMBAT™7: SKIES UNKNOWN",
+      "unlocked": 22,
+      "total": 49,
+      "percent": 44.9,
+      "perfect": false
+    },
+    {
+      "appid": 333600,
+      "name": "NEKOPARA Vol. 1",
+      "unlocked": 5,
+      "total": 14,
+      "percent": 35.7,
+      "perfect": false
+    },
+    {
+      "appid": 2483190,
+      "name": "Forza Horizon 6",
+      "unlocked": 20,
+      "total": 57,
+      "percent": 35.1,
+      "perfect": false
+    },
+    {
+      "appid": 1426210,
+      "name": "It Takes Two",
+      "unlocked": 6,
+      "total": 20,
+      "percent": 30,
+      "perfect": false
+    },
+    {
+      "appid": 3682050,
+      "name": "Sickly Days and Summer Traces",
+      "unlocked": 12,
+      "total": 42,
+      "percent": 28.6,
+      "perfect": false
+    },
+    {
+      "appid": 1293830,
+      "name": "Forza Horizon 4",
+      "unlocked": 42,
+      "total": 178,
+      "percent": 23.6,
+      "perfect": false
+    },
+    {
+      "appid": 3419430,
+      "name": "Bongo Cat",
+      "unlocked": 5,
+      "total": 28,
+      "percent": 17.9,
+      "perfect": false
+    },
+    {
+      "appid": 618140,
+      "name": "Barro",
+      "unlocked": 19,
+      "total": 109,
+      "percent": 17.4,
+      "perfect": false
+    },
+    {
+      "appid": 3240220,
+      "name": "Grand Theft Auto V Enhanced",
+      "unlocked": 13,
+      "total": 77,
+      "percent": 16.9,
+      "perfect": false
+    },
+    {
+      "appid": 990080,
+      "name": "Hogwarts Legacy",
+      "unlocked": 7,
+      "total": 45,
+      "percent": 15.6,
+      "perfect": false
+    },
+    {
+      "appid": 3167550,
+      "name": "Tiny Pasture",
+      "unlocked": 6,
+      "total": 55,
+      "percent": 10.9,
+      "perfect": false
+    },
+    {
+      "appid": 1687950,
+      "name": "Persona 5 Royal",
+      "unlocked": 5,
+      "total": 53,
+      "percent": 9.4,
+      "perfect": false
+    },
+    {
+      "appid": 555950,
+      "name": "Danganronpa Another Episode: Ultra Despair Girls",
+      "unlocked": 3,
+      "total": 35,
+      "percent": 8.6,
+      "perfect": false
+    },
+    {
+      "appid": 1089980,
+      "name": "The Henry Stickmin Collection",
+      "unlocked": 6,
+      "total": 82,
+      "percent": 7.3,
+      "perfect": false
+    },
+    {
+      "appid": 1943950,
+      "name": "Escape the Backrooms",
+      "unlocked": 2,
+      "total": 34,
+      "percent": 5.9,
+      "perfect": false
+    },
+    {
+      "appid": 1434480,
+      "name": "Maitetsu:Last Run!!",
+      "unlocked": 2,
+      "total": 37,
+      "percent": 5.4,
+      "perfect": false
+    },
+    {
+      "appid": 271590,
+      "name": "Grand Theft Auto V Legacy",
+      "unlocked": 3,
+      "total": 77,
+      "percent": 3.9,
+      "perfect": false
+    },
+    {
+      "appid": 394360,
+      "name": "Hearts of Iron IV",
+      "unlocked": 3,
+      "total": 293,
+      "percent": 1,
+      "perfect": false
+    },
+    {
+      "appid": 899970,
+      "name": "NEKOPARA Extra",
+      "unlocked": 0,
+      "total": 13,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 493340,
+      "name": "Planet Coaster",
+      "unlocked": 0,
+      "total": 32,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 385800,
+      "name": "NEKOPARA Vol. 0",
+      "unlocked": 0,
+      "total": 13,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 602520,
+      "name": "NEKOPARA Vol. 3",
+      "unlocked": 0,
+      "total": 27,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 420110,
+      "name": "NEKOPARA Vol. 2",
+      "unlocked": 0,
+      "total": 20,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 567640,
+      "name": "Danganronpa V3: Killing Harmony",
+      "unlocked": 0,
+      "total": 41,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 255710,
+      "name": "Cities: Skylines",
+      "unlocked": 0,
+      "total": 135,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 1406990,
+      "name": "NEKOPARA Vol. 4",
+      "unlocked": 0,
+      "total": 19,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 2242710,
+      "name": "Koi x Shin Ai Kanojo",
+      "unlocked": 0,
+      "total": 95,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 1045720,
+      "name": "The Coma 2: Vicious Sisters",
+      "unlocked": 0,
+      "total": 35,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 1069230,
+      "name": "Tsukikage no Simulacre: Kaihou no Hane",
+      "unlocked": 0,
+      "total": 14,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 1623730,
+      "name": "Palworld",
+      "unlocked": 0,
+      "total": 75,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 880950,
+      "name": "Maitetsu:Pure Station",
+      "unlocked": 0,
+      "total": 9,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 658850,
+      "name": "Do Not Feed the Monkeys",
+      "unlocked": 0,
+      "total": 33,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 641990,
+      "name": "The Escapists 2",
+      "unlocked": 0,
+      "total": 58,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 236730,
+      "name": "Anomaly 2",
+      "unlocked": 0,
+      "total": 65,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 3171460,
+      "name": "Hatsuyuki Sakura",
+      "unlocked": 0,
+      "total": 43,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 221040,
+      "name": "Resident Evil 6",
+      "unlocked": 0,
+      "total": 70,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 223470,
+      "name": "POSTAL 2",
+      "unlocked": 0,
+      "total": 89,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 963690,
+      "name": "Hentai Girl Hime",
+      "unlocked": 0,
+      "total": 100,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 2947250,
+      "name": "Select Oblige",
+      "unlocked": 0,
+      "total": 19,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 497700,
+      "name": "Safety First!",
+      "unlocked": 0,
+      "total": 34,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 2947240,
+      "name": "Kimi no Hitomi ni Hit Me",
+      "unlocked": 0,
+      "total": 18,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 2430690,
+      "name": "幸运草的约定",
+      "unlocked": 0,
+      "total": 14,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 2567190,
+      "name": "Otome Riron to Sono Shuuhen -École de Paris-",
+      "unlocked": 0,
+      "total": 29,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 1944250,
+      "name": "Hana no No ni Saku Utakata no",
+      "unlocked": 0,
+      "total": 34,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 2109640,
+      "name": "Cross Concerto",
+      "unlocked": 0,
+      "total": 50,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 289070,
+      "name": "Sid Meier's Civilization VI",
+      "unlocked": 0,
+      "total": 320,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 2673490,
+      "name": "Seifuku Kanojo",
+      "unlocked": 0,
+      "total": 18,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 2156620,
+      "name": "Future Radio",
+      "unlocked": 0,
+      "total": 10,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 743900,
+      "name": "Mega Man X Legacy Collection 2",
+      "unlocked": 0,
+      "total": 52,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 2396980,
+      "name": "Fate/stay night REMASTERED",
+      "unlocked": 0,
+      "total": 30,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 91200,
+      "name": "Anomaly Warzone Earth",
+      "unlocked": 0,
+      "total": 42,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 1038740,
+      "name": "Fluffy Store",
+      "unlocked": 0,
+      "total": 13,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 976390,
+      "name": "9-nine-:Episode 1",
+      "unlocked": 0,
+      "total": 4,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 427190,
+      "name": "Dead Rising",
+      "unlocked": 0,
+      "total": 50,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 3446150,
+      "name": "Tsuki ni Yorisou Otome no Sahou 2",
+      "unlocked": 0,
+      "total": 67,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 45740,
+      "name": "Dead Rising 2",
+      "unlocked": 0,
+      "total": 50,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 45770,
+      "name": "Dead Rising 2: Off the Record",
+      "unlocked": 0,
+      "total": 50,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 265550,
+      "name": "Dead Rising 3",
+      "unlocked": 0,
+      "total": 88,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 543460,
+      "name": "Dead Rising 4",
+      "unlocked": 0,
+      "total": 104,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 1174180,
+      "name": "Red Dead Redemption 2",
+      "unlocked": 0,
+      "total": 51,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 307230,
+      "name": "I, Zombie",
+      "unlocked": 0,
+      "total": 13,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 1094530,
+      "name": "ALIA’s CARNIVAL！",
+      "unlocked": 0,
+      "total": 34,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 2425410,
+      "name": "Alia's Carnival! Flowering Sky",
+      "unlocked": 0,
+      "total": 31,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 1277940,
+      "name": "Kinkoi",
+      "unlocked": 0,
+      "total": 15,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 1776970,
+      "name": "Tsuki ni Yorisou Otome no Sahou",
+      "unlocked": 0,
+      "total": 38,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 2185770,
+      "name": "Aonatsu Line",
+      "unlocked": 0,
+      "total": 25,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 2347380,
+      "name": "Witch's Garden",
+      "unlocked": 0,
+      "total": 20,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 2510810,
+      "name": "Making＊Lovers CN Edition",
+      "unlocked": 0,
+      "total": 50,
+      "percent": 0,
+      "perfect": false
+    },
+    {
+      "appid": 3027620,
+      "name": "Kakenuke★Forward to Our Sparking Youth!",
+      "unlocked": 0,
+      "total": 20,
+      "percent": 0,
+      "perfect": false
+    }
+  ],
+  "perfectGames": [
+    730,
+    2458530,
+    1044620,
+    1829980,
+    413420,
+    413410,
+    3027600,
+    2206340,
+    3446120,
+    431960,
+    1340130
+  ]
+}

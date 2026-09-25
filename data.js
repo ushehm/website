@@ -174,7 +174,7 @@ const SITE_DATA = {
     // 喜歡的遊戲類型
     genres: ['Galgame', '視覺小說', 'FPS', '大戰略', '競速'],
 
-    // 你的設備（✅ 已填）
+    // 你的設備
     hardware: [
       { label: '顯示卡', value: 'RTX 5060' },
       { label: '處理器', value: 'Intel Core i5-12400F' },
@@ -201,8 +201,8 @@ const SITE_DATA = {
    *     注意：Discord 與 Google 都需要訪客的瀏覽器連得上才行。
    * ──────────────────────────────────────────────────────────────────── */
   guestbook: {
-    mode: 'static',
-    discordWebhook: '',   // ✏️ mode 用 'discord' 時填這裡
+    mode: 'discord',
+    discordWebhook: 'https://discord.com/api/webhooks/1552881184458022992/7KvM07TJrtQRZVnEbbOglYcDzWUGN4N-UVfs_4wTjqT7e1hkJFaMieZMz0hQbKVmXXLU',   // ✏️ mode 用 'discord' 時填這裡
     googleFormUrl: '',    // ✏️ mode 用 'google' 時填「嵌入用」網址（結尾是 /viewform?embedded=true）
     title: '留言板',
     description: '✏️ 想說什麼都可以。請保持友善，不要洗版。',
@@ -241,5 +241,27 @@ const SITE_DATA = {
     adText: '廣告位招租',
     adSub: '本頁面最顯眼的角落，誠徵有緣人',
     contact: '✏️ 想租的話寄信到 redteam114514@gmail.com'
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  特別鳴謝（顯示在頁面最下方）
+   * ----------------------------------------------------------------------
+   *  一張卡片：按鈕上有預覽圖，點下去會彈出影片播放器。
+   *
+   *  video.source 兩種選項：
+   *    'local'   — 播放網站資料夾裡的影片檔（離線也能看，目前用這個）
+   *    'youtube' — 改用 YouTube 內嵌播放器
+   *  不管選哪個，卡片上都會保留另一個的連結，讓訪客自己挑。
+   * ──────────────────────────────────────────────────────────────────── */
+  thanks: {
+    heading: '感謝 DeepSeek 設計我的網頁',
+    description: '從版面、配色到整個頁面的程式，都是 DeepSeek 幫我做出來的。',
+    preview: 'images/thanks-preview.jpg',   // 按鈕上的預覽圖
+    buttonLabel: '播放影片',
+    video: {
+      source: 'local',
+      local: 'media/deepseek-dance.mp4',
+      youtube: 'https://youtu.be/OK2C9oWATV4'
+    }
   }
 };

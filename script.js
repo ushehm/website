@@ -516,7 +516,161 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════
-   *  7. 頁尾
+   *  7. 特別鳴謝（含影片播放器）
+   * ══════════════════════════════════════════════════════════════════════ */
+
+  /** 從各種 YouTube 網址形式取出影片 ID（youtu.be、watch?v=、embed、shorts 都吃） */
+  function youtubeId(url) {
+    if (!url) return '';
+    const m = String(url).match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{6,})/);
+    return m ? m[1] : '';
+  }
+
+  function renderThanks() {
+    const box = document.getElementById('thanks-content');
+    const t = D.thanks;
+    if (!box) return;
+    if (!t) { hideSection('sec-thanks'); return; }
+
+    const v = t.video || {};
+    const ytId = youtubeId(v.youtube);
+    const useLocal = v.source !== 'youtube' && !!v.local;
+
+    box.innerHTML = '';
+    const card = el('div', { class: 'thanks' });
+
+    /* 左邊：有預覽圖的按鈕 */
+    const btn = el('button', {
+      class: 'thanks__button', type: 'button',
+      'aria-label': (t.buttonLabel || '播放影片') + '：' + (t.heading || '')
+    });
+    if (t.preview) {
+      const img = el('img', {
+        class: 'thanks__preview', src: t.preview, alt: (t.heading || '') + ' 預覽圖', loading: 'lazy'
+      });
+      img.addEventListener('error', function () { img.remove(); btn.classList.add('is-nopreview'); });
+      btn.appendChild(img);
+    } else {
+      btn.classList.add('is-nopreview');
+    }
+    btn.appendChild(el('span', { class: 'thanks__play' }, [
+      el('span', {
+        class: 'thanks__play-icon',
+        html: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>'
+      }),
+      el('span', { class: 'thanks__play-label', text: t.buttonLabel || '播放影片' })
+    ]));
+
+    /* 右邊：文字與替代來源 */
+    const side = el('div', { class: 'thanks__body' }, [
+      el('h3', { class: 'thanks__heading', text: t.heading || '' }),
+      t.description ? el('p', { class: 'thanks__desc', text: t.description }) : null
+    ]);
+
+    const alts = el('div', { class: 'thanks__alts' });
+    if (useLocal && ytId) {
+      alts.appendChild(el('a', {
+        class: 'btn btn--ghost', href: v.youtube, target: '_blank', rel: 'noopener noreferrer',
+        text: '在 YouTube 上看'
+      }));
+    } else if (!useLocal && v.local) {
+      alts.appendChild(el('a', {
+        class: 'btn btn--ghost', href: v.local, target: '_blank', rel: 'noopener noreferrer',
+        text: '播放站內影片'
+      }));
+    }
+    if (alts.childNodes.length) side.appendChild(alts);
+
+    btn.addEventListener('click', function () { openVideo(t); });
+
+    card.appendChild(btn);
+    card.appendChild(side);
+    box.appendChild(card);
+  }
+
+  /** 開啟影片彈窗。source 決定用站內 mp4 還是 YouTube 內嵌。 */
+  function openVideo(t) {
+    const modal = document.getElementById('video-modal');
+    const box = document.getElementById('video-box');
+    const alt = document.getElementById('video-alt');
+    const title = document.getElementById('video-title');
+    if (!modal || !box) return;
+
+    const v = t.video || {};
+    const ytId = youtubeId(v.youtube);
+    const useLocal = v.source !== 'youtube' && !!v.local;
+
+    box.innerHTML = '';
+    alt.innerHTML = '';
+    title.textContent = t.heading || '影片';
+
+    if (useLocal) {
+      const video = el('video', {
+        class: 'video-box__player', src: v.local, controls: true,
+        playsinline: true, preload: 'metadata'
+      });
+      video.autoplay = true;
+      box.appendChild(video);
+      // 這是使用者點擊後才觸發的，通常可以自動播放；
+      // 若瀏覽器仍擋下，就讓訪客自己按播放鍵，不要跳錯誤。
+      const p = video.play();
+      if (p && typeof p.catch === 'function') p.catch(function () { /* 忽略 */ });
+    } else if (ytId) {
+      box.appendChild(el('iframe', {
+        class: 'video-box__frame',
+        src: 'https://www.youtube-nocookie.com/embed/' + ytId + '?autoplay=1&rel=0',
+        title: t.heading || '影片',
+        allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',
+        allowfullscreen: true
+      }));
+    } else {
+      box.appendChild(el('p', {
+        class: 'video-box__error',
+        text: '找不到可播放的來源，請檢查 data.js 的 thanks.video 設定。'
+      }));
+    }
+
+    if (useLocal && ytId) {
+      alt.appendChild(document.createTextNode('也可以 '));
+      alt.appendChild(el('a', { href: v.youtube, target: '_blank', rel: 'noopener noreferrer', text: '在 YouTube 上觀看' }));
+    } else if (!useLocal && v.local) {
+      alt.appendChild(document.createTextNode('站內也有一份影片檔：'));
+      alt.appendChild(el('a', { href: v.local, target: '_blank', rel: 'noopener noreferrer', text: '直接開啟' }));
+    }
+
+    modal.hidden = false;
+    document.body.classList.add('is-locked');
+  }
+
+  function closeVideo() {
+    const modal = document.getElementById('video-modal');
+    const box = document.getElementById('video-box');
+    if (!modal || modal.hidden) return;
+    // 一定要清空，否則關掉彈窗後影片會在背景繼續播放
+    if (box) box.innerHTML = '';
+    modal.hidden = true;
+    document.body.classList.remove('is-locked');
+  }
+
+  function initVideoModal() {
+    const modal = document.getElementById('video-modal');
+    if (!modal) return;
+    modal.addEventListener('click', function (ev) {
+      if (ev.target.hasAttribute('data-close-video')) closeVideo();
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') closeVideo();
+    });
+  }
+
+  /** 影片彈窗是否開著（給彩蛋的鍵盤偵測用，避免兩個彈窗疊在一起） */
+  function isVideoOpen() {
+    const m = document.getElementById('video-modal');
+    return !!m && !m.hidden;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+   *  8. 頁尾
    * ══════════════════════════════════════════════════════════════════════ */
   function renderFooter() {
     const f = document.getElementById('footer');
@@ -541,7 +695,7 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════
-   *  8. 彩蛋
+   *  9. 彩蛋
    * ----------------------------------------------------------------------
    *  觸發方式：在頁面上任何位置連續輸入 data.js 裡的 easterEgg.trigger
    *           （預設是 "ciallo"），不分大小寫、不需要點輸入框。
@@ -589,6 +743,8 @@
       if (ev.key === 'Escape' && !modal.hidden) { close(); return; }
       // 彈窗已經開著就不再重複偵測
       if (!modal.hidden) return;
+      // 影片彈窗開著時也不要觸發，免得兩個彈窗疊在一起
+      if (isVideoOpen()) return;
 
       // 打字偵測（忽略輸入框與修飾鍵）
       if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
@@ -625,7 +781,8 @@
     const nav = document.getElementById('section-nav');
     const items = [
       ['sec-favorites', '最愛'], ['sec-recent', '最近'], ['sec-perfect', '全成就'],
-      ['sec-wishlist', '願望'], ['sec-links', '連結'], ['sec-about', '關於'], ['sec-guestbook', '留言']
+      ['sec-wishlist', '願望'], ['sec-links', '連結'], ['sec-about', '關於'],
+      ['sec-guestbook', '留言'], ['sec-thanks', '鳴謝']
     ];
     items.forEach(function (pair) {
       const sec = document.getElementById(pair[0]);
@@ -674,8 +831,10 @@
     renderLinks();
     renderAbout();
     renderGuestbook();
+    renderThanks();
     renderFooter();
     renderNav();
+    initVideoModal();
     initEasterEgg();
   }
 

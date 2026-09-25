@@ -16,7 +16,10 @@
   <title>載入中…</title>
   <meta name="description" content="Steam 風格的個人遊戲主頁">
   <meta name="color-scheme" content="dark">
-  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="images/favicon.ico" sizes="any">
+  <link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="images/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -93,6 +96,14 @@
         <div id="guestbook-content"></div>
       </section>
 
+      <!-- ⑦ 特別鳴謝（放在頁面最後） -->
+      <section id="sec-thanks" class="section">
+        <div class="section__head">
+          <h2 class="section__title"><span class="section__icon section__icon--gold" aria-hidden="true">♥</span>特別鳴謝</h2>
+        </div>
+        <div id="thanks-content"></div>
+      </section>
+
     </main>
 
     <!-- ⑥ 頁尾 -->
@@ -105,6 +116,17 @@
     <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="egg-title">
       <button class="modal__close" type="button" data-close-egg aria-label="關閉">×</button>
       <div id="egg-content"></div>
+    </div>
+  </div>
+
+  <!-- 影片彈窗（特別鳴謝的按鈕按下去會開這個，內容由 script.js 生成） -->
+  <div class="modal modal--video" id="video-modal" hidden>
+    <div class="modal__backdrop" data-close-video></div>
+    <div class="modal__panel modal__panel--video" role="dialog" aria-modal="true" aria-labelledby="video-title">
+      <button class="modal__close" type="button" data-close-video aria-label="關閉">×</button>
+      <h2 class="video-modal__title" id="video-title"></h2>
+      <div class="video-box" id="video-box"></div>
+      <p class="video-modal__alt" id="video-alt"></p>
     </div>
   </div>
 

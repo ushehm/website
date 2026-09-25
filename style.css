@@ -566,6 +566,103 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
+ *  ⑦ 特別鳴謝
+ * ══════════════════════════════════════════════════════════════════════════ */
+.thanks {
+  display: grid;
+  grid-template-columns: minmax(260px, 440px) 1fr;
+  gap: 26px;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(160deg, var(--panel) 0%, #16202c 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* 有預覽圖的播放按鈕 */
+.thanks__button {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0b1219;
+  cursor: pointer;
+  aspect-ratio: 16 / 9;
+  transition: transform .2s, box-shadow .25s, border-color .25s;
+}
+.thanks__button:hover, .thanks__button:focus-visible {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .55), 0 0 26px rgba(102, 192, 244, .35);
+  outline: none;
+}
+/* 預覽圖載入失敗時，退化成一個單純的按鈕外觀 */
+.thanks__button.is-nopreview { aspect-ratio: auto; padding: 44px 20px; }
+.thanks__preview {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform .35s ease, filter .25s ease;
+}
+.thanks__button:hover .thanks__preview { transform: scale(1.04); filter: brightness(1.08); }
+
+.thanks__play {
+  position: absolute; inset: 0;
+  display: grid; place-content: center; justify-items: center; gap: 10px;
+  background: linear-gradient(180deg, rgba(6, 11, 17, .12), rgba(6, 11, 17, .62));
+  transition: background .25s;
+}
+.thanks__button:hover .thanks__play { background: linear-gradient(180deg, rgba(6, 11, 17, .04), rgba(6, 11, 17, .5)); }
+.thanks__play-icon {
+  width: 62px; height: 62px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(102, 192, 244, .93);
+  color: #06121c;
+  box-shadow: 0 6px 26px rgba(0, 0, 0, .55);
+  transition: transform .22s, box-shadow .22s;
+}
+.thanks__play-icon svg { width: 30px; height: 30px; margin-left: 3px; }
+.thanks__button:hover .thanks__play-icon { transform: scale(1.12); box-shadow: 0 0 30px rgba(102, 192, 244, .75); }
+.thanks__play-label {
+  font-size: .88rem; font-weight: 700; color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, .9);
+}
+
+.thanks__body { display: grid; gap: 12px; align-content: center; }
+.thanks__heading { font-size: 1.24rem; }
+.thanks__desc { margin: 0; color: var(--text-dim); font-size: .92rem; }
+.thanks__alts { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 8px 18px;
+}
+.btn--ghost:hover { background: rgba(102, 192, 244, .12); box-shadow: 0 0 18px -3px var(--accent); }
+
+/* ── 影片彈窗 ──────────────────────────────────────────────────────────── */
+.modal__panel--video {
+  width: min(1000px, calc(100vw - 40px));
+  padding: 22px;
+  text-align: left;
+}
+.video-modal__title { font-size: 1.06rem; margin-bottom: 14px; }
+.video-box {
+  position: relative;
+  width: 100%; aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.video-box__player { width: 100%; height: 100%; display: block; }
+.video-box__frame { width: 100%; height: 100%; border: 0; display: block; }
+.video-box__error { margin: 0; padding: 40px 20px; color: var(--gold); text-align: center; }
+.video-modal__alt { margin: 12px 0 0; font-size: .84rem; color: var(--text-dim); }
+
+/* ══════════════════════════════════════════════════════════════════════════
  *  RWD 與無障礙
  * ══════════════════════════════════════════════════════════════════════════ */
 @media (max-width: 640px) {
@@ -576,6 +673,8 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
   .grid--recent { grid-template-columns: 1fr; }
   .specs__row { grid-template-columns: 1fr; gap: 2px; }
   .section-nav { justify-content: flex-start; overflow-x: auto; }
+  .thanks { grid-template-columns: 1fr; gap: 18px; }
+  .modal__panel--video { padding: 16px; }
 }
 
 /* 尊重系統的「減少動態效果」設定 */
