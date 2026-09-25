@@ -428,5 +428,51 @@ const SITE_DATA = {
       { name: 'PayMe',          region: '香港',     image: 'images/payment/payme.jpeg' },
       { name: 'BOC Pay+',       region: '中銀香港', image: 'images/payment/boc-payplus.jpeg' }
     ]
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  隨機漫畫（放在留言板下面）
+   * ----------------------------------------------------------------------
+   *  顯示一張漫畫，按「🎲 隨機換一張」就換一張，不會連續抽到同一張。
+   *
+   *  文字裡的 {n} 會換成總張數、{i} 會換成目前這張的編號。
+   *
+   *  ✏️ 想加漫畫：把圖放進 images/comic/（檔名用英文數字），
+   *     再在下面 images 陣列補一行路徑就好。
+   * ──────────────────────────────────────────────────────────────────── */
+  comic: {
+    title: '隨機漫畫',
+    subtitle: 'Random Comic',
+    description: '按下面的按鈕隨機抽一張，一共 {n} 張。',
+    buttonLabel: '🎲 隨機換一張',
+    counter: '第 {i} / {n} 張',
+    images: [
+      'images/comic/01.jpeg',
+      'images/comic/02.jpeg',
+      'images/comic/03.jpeg',
+      'images/comic/04.jpeg',
+      'images/comic/05.jpeg',
+      'images/comic/06.jpeg',
+      'images/comic/07.jpeg',
+      'images/comic/08.jpeg',
+      'images/comic/09.jpeg',
+      'images/comic/10.jpeg',
+      'images/comic/11.jpeg',
+      'images/comic/12.jpeg',
+      'images/comic/13.jpeg',
+      'images/comic/14.jpeg',
+      'images/comic/15.jpeg',
+      'images/comic/16.jpeg',
+      'images/comic/17.jpeg',
+      'images/comic/18.jpeg',
+      'images/comic/19.jpeg',
+      'images/comic/20.jpeg',
+      'images/comic/21.jpeg',
+      'images/comic/22.jpeg',
+      'images/comic/23.jpeg',
+      'images/comic/24.jpeg',
+      'images/comic/25.jpeg',
+      'images/comic/26.jpeg'
+    ]
   }
 };

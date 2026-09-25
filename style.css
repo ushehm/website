@@ -1264,6 +1264,78 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
+ *  隨機漫畫（留言板下面）
+ * ══════════════════════════════════════════════════════════════════════════ */
+.comic {
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+  padding: 20px;
+  background: linear-gradient(160deg, var(--panel) 0%, #16202c 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+/* 外框高度固定、寬度自適應：
+   高度固定是為了換圖時版面不跳動（按鈕不會跑掉）；
+   寬度不固定則讓直式／橫式漫畫都能盡量放大，不會被正方形框綁死。
+   這裡用 flex 而不是 grid —— grid 的列高由內容決定，子項的
+   max-height:100% 會變成對「列高」計算而形成循環相依，圖片會直接溢出。 */
+.comic__frame {
+  position: relative;
+  width: 100%;
+  height: min(72vh, 720px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.comic__img {
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;   /* 完整顯示不裁切 —— 四格漫畫少一格就不好笑了 */
+  display: block;
+  background: #060b11;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color .25s, box-shadow .25s;
+}
+.comic__img:hover { border-color: rgba(102, 192, 244, .5); }
+.comic__error {
+  display: none;
+  padding: 20px;
+  font-size: .86rem;
+  color: var(--danger);
+  text-align: center;
+}
+.comic__frame.is-error .comic__img { display: none; }
+.comic__frame.is-error .comic__error { display: block; }
+
+.comic__bar {
+  display: flex; align-items: center; gap: 16px;
+  flex-wrap: wrap; justify-content: center;
+}
+.comic__counter { font-size: .84rem; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.comic__btn.is-tap { animation: comicTap .3s ease; }
+@keyframes comicTap {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(.93); }
+  100% { transform: scale(1); }
+}
+
+@media (max-width: 640px) {
+  .comic { padding: 14px; gap: 12px; }
+  .comic__bar { gap: 10px; }
+  /* 手機畫面窄，漫畫多半是被「寬度」限制住，
+     外框再用 72vh 會留下一大片空白，所以縮矮一點。 */
+  .comic__frame { height: min(60vh, 480px); }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
  *  RWD 與無障礙
  * ══════════════════════════════════════════════════════════════════════════ */
 /* 音樂區：平板以下把封面疊到曲目上方、播放器拆成三列 */

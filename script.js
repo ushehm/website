@@ -1572,6 +1572,93 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════
+   *  14. 隨機漫畫（放在留言板下面）
+   * ----------------------------------------------------------------------
+   *  顯示一張，按按鈕隨機換一張。跟彩蛋一樣會避開「連續抽到同一張」，
+   *  不然連按兩次卻沒變，會讓人以為按鈕壞了。
+   * ══════════════════════════════════════════════════════════════════════ */
+
+  const comicState = { index: -1 };
+
+  /** 抽一個不跟目前重複的索引 */
+  function pickComic() {
+    const list = (D.comic && D.comic.images) || [];
+    if (list.length <= 1) return 0;
+    let i;
+    do { i = Math.floor(Math.random() * list.length); } while (i === comicState.index);
+    return i;
+  }
+
+  function showComic(i) {
+    const cfg = D.comic;
+    const list = (cfg && cfg.images) || [];
+    if (!list.length || i < 0 || i >= list.length) return;
+    comicState.index = i;
+
+    const img = document.getElementById('comic-img');
+    const frame = document.getElementById('comic-frame');
+    if (frame) frame.classList.remove('is-error');
+    if (img) {
+      img.src = list[i];
+      img.alt = (cfg.title || '漫畫') + ' 第 ' + (i + 1) + ' 張';
+    }
+    const counter = document.getElementById('comic-counter');
+    if (counter) {
+      counter.textContent = (cfg.counter || '第 {i} / {n} 張')
+        .replace('{i}', String(i + 1))
+        .replace('{n}', String(list.length));
+    }
+  }
+
+  function renderComic() {
+    const box = document.getElementById('comic-content');
+    const cfg = D.comic;
+    if (!box) return;
+    const list = (cfg && cfg.images) || [];
+    if (!cfg || !list.length) { hideSection('sec-comic'); return; }
+
+    const titleEl = document.getElementById('comic-title');
+    if (titleEl) {
+      titleEl.textContent = (cfg.title || '隨機漫畫') + (cfg.subtitle ? '（' + cfg.subtitle + '）' : '');
+    }
+    const descEl = document.getElementById('comic-desc');
+    if (descEl) descEl.textContent = (cfg.description || '').replace('{n}', String(list.length));
+
+    box.innerHTML = '';
+
+    /* 固定正方形外框：漫畫的比例從 0.67 到 1.50 都有，
+       不固定的話每換一張版面就會跳動，按鈕會跑來跑去。 */
+    const img = el('img', { class: 'comic__img', id: 'comic-img', alt: '', loading: 'lazy' });
+    img.addEventListener('error', function () {
+      const f = document.getElementById('comic-frame');
+      if (f) f.classList.add('is-error');
+    });
+    const frame = el('div', { class: 'comic__frame', id: 'comic-frame' }, [
+      img,
+      el('span', { class: 'comic__error', text: '這張圖載入失敗，再按一次換一張。' })
+    ]);
+
+    const counter = el('div', { class: 'comic__counter', id: 'comic-counter' });
+    const btn = el('button', {
+      class: 'btn btn--primary comic__btn', id: 'comic-btn', type: 'button',
+      text: cfg.buttonLabel || '🎲 隨機換一張'
+    });
+    btn.addEventListener('click', function () {
+      btn.classList.remove('is-tap');
+      void btn.offsetWidth;
+      btn.classList.add('is-tap');
+      showComic(pickComic());
+    });
+
+    box.appendChild(el('div', { class: 'comic' }, [
+      frame,
+      el('div', { class: 'comic__bar' }, [counter, btn])
+    ]));
+
+    showComic(pickComic());
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
    *  分區導覽列
    * ══════════════════════════════════════════════════════════════════════ */
   function renderNav() {
@@ -1579,7 +1666,8 @@
     const items = [
       ['sec-favorites', '最愛'], ['sec-recent', '最近'], ['sec-perfect', '全成就'],
       ['sec-wishlist', '願望'], ['sec-music', '音樂'], ['sec-links', '連結'],
-      ['sec-about', '關於'], ['sec-guestbook', '留言'], ['sec-thanks', '鳴謝']
+      ['sec-about', '關於'], ['sec-guestbook', '留言'], ['sec-comic', '漫畫'],
+      ['sec-thanks', '鳴謝']
     ];
     items.forEach(function (pair) {
       const sec = document.getElementById(pair[0]);
@@ -1630,6 +1718,7 @@
     renderLinks();
     renderAbout();
     renderGuestbook();
+    renderComic();
     renderThanks();
     renderGalleryEgg();
     renderFooter();
