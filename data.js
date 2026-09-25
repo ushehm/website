@@ -63,7 +63,7 @@ const SITE_DATA = {
 
     // 目前狀態。Steam API 的數值對照：
     // 0 離線 / 1 線上 / 2 忙碌 / 3 離開 / 4 打瞌睡 / 5 想交易 / 6 想玩
-    personaState: 3,
+    personaState: 1,
 
     // ✏️ 一句話標語，顯示在名字下方
     headline: '千戀萬花？我沒玩過啊（心虛）',
