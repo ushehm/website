@@ -351,7 +351,7 @@ const SITE_DATA = {
     fields: {
       username: { label: '請輸入用戶名稱', placeholder: '2～20 個字' },
       gender:   { label: '請選擇性別',     options: ['男', '女'] },
-      phone:    { label: '請輸入電話號碼', placeholder: '例如 11451411919810' },
+      phone:    { label: '請輸入電話號碼', placeholder: '例如 1145141919810' },
       password: { label: '請輸入密碼',     placeholder: '至少 6 個字' },
       confirm:  { label: '請再次確定密碼', placeholder: '再打一次同樣的密碼' }
     },
