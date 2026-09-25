@@ -1687,6 +1687,130 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════
+   *  15. AI 助手「GPT-6-Astra」（玩笑性質）
+   * ----------------------------------------------------------------------
+   *  ⚠ 這不是真的 AI：
+   *    - 不接任何模型、不連網、不傳送任何資料（Network 面板不會有請求）
+   *    - 不管你問什麼，都是從 data.js 的 ai.replies 隨機抽一句回你
+   *    - 「GPT-6-Astra」是設定好的角色名字，不是真的存在
+   * ══════════════════════════════════════════════════════════════════════ */
+
+  const aiState = { last: -1, busy: false };
+
+  /** 抽一句回覆，避開上一次抽到的（連問兩次同一句就露餡了） */
+  function pickReply() {
+    const list = (D.ai && D.ai.replies) || [];
+    if (!list.length) return '';
+    if (list.length === 1) return list[0];
+    let i;
+    do { i = Math.floor(Math.random() * list.length); } while (i === aiState.last);
+    aiState.last = i;
+    return list[i];
+  }
+
+  /** 產生一顆對話泡泡。isThinking = 顯示跳動的點而不是文字 */
+  function aiBubble(role, text, isThinking) {
+    const body = el('div', { class: 'ai__bubble' });
+    if (isThinking) {
+      body.classList.add('ai__bubble--thinking');
+      body.appendChild(el('span', { class: 'ai__dots', html: '<i></i><i></i><i></i>', 'aria-hidden': 'true' }));
+      body.appendChild(el('span', { text: text }));
+    } else {
+      body.textContent = text;
+    }
+
+    const row = el('div', { class: 'ai__msg ai__msg--' + role });
+    if (role === 'bot') {
+      row.appendChild(el('div', { class: 'ai__avatar', html: '✦', 'aria-hidden': 'true' }));
+    }
+    row.appendChild(body);
+    return row;
+  }
+
+  function scrollAILog() {
+    const log = document.getElementById('ai-log');
+    if (log) log.scrollTop = log.scrollHeight;
+  }
+
+  function askAI() {
+    const cfg = D.ai || {};
+    const log = document.getElementById('ai-log');
+    const input = document.getElementById('ai-input');
+    if (!log || !input || aiState.busy) return;
+
+    const q = input.value.trim();
+    if (!q) { input.focus(); return; }
+    input.value = '';
+
+    const empty = document.getElementById('ai-empty');
+    if (empty) empty.remove();
+
+    log.appendChild(aiBubble('user', q));
+
+    // 先假裝思考，等一下再彈出罐頭回覆
+    const label = (cfg.thinkingLabel || '{name} 正在思考').replace('{name}', cfg.assistantName || 'AI');
+    const thinking = aiBubble('bot', label, true);
+    log.appendChild(thinking);
+    scrollAILog();
+
+    aiState.busy = true;
+    // 每次等 0.7～1.6 秒不等，比固定秒數更像真的在算
+    setTimeout(function () {
+      thinking.remove();
+      log.appendChild(aiBubble('bot', pickReply()));
+      aiState.busy = false;
+      scrollAILog();
+    }, 700 + Math.random() * 900);
+  }
+
+  function renderAI() {
+    const box = document.getElementById('ai-content');
+    const cfg = D.ai;
+    if (!box) return;
+    if (!cfg || !(cfg.replies || []).length) { hideSection('sec-ai'); return; }
+
+    const name = cfg.assistantName || 'AI';
+
+    const titleEl = document.getElementById('ai-title');
+    if (titleEl) {
+      titleEl.textContent = (cfg.title || 'AI 助手') + (cfg.subtitle ? '（' + cfg.subtitle + '）' : '');
+    }
+    const descEl = document.getElementById('ai-desc');
+    if (descEl) descEl.textContent = cfg.description || '';
+
+    box.innerHTML = '';
+
+    const log = el('div', { class: 'ai__log', id: 'ai-log', role: 'log', 'aria-live': 'polite' });
+    if (cfg.emptyHint) log.appendChild(el('p', { class: 'ai__empty', id: 'ai-empty', text: cfg.emptyHint }));
+
+    const input = el('input', {
+      class: 'ai__input', id: 'ai-input', type: 'text',
+      placeholder: cfg.placeholder || '問我任何問題…',
+      autocomplete: 'off', 'aria-label': '輸入你的問題'
+    });
+    const form = el('form', { class: 'ai__form' }, [
+      input,
+      el('button', { class: 'ai__send', id: 'ai-send', type: 'submit', text: cfg.sendLabel || '送出' })
+    ]);
+    form.addEventListener('submit', function (ev) { ev.preventDefault(); askAI(); });
+
+    box.appendChild(el('div', { class: 'ai' }, [
+      el('div', { class: 'ai__head' }, [
+        el('div', { class: 'ai__avatar ai__avatar--lg', html: '✦', 'aria-hidden': 'true' }),
+        el('div', { class: 'ai__id' }, [
+          el('div', { class: 'ai__name', text: name }),
+          el('div', { class: 'ai__status' }, [
+            el('span', { class: 'ai__dot', 'aria-hidden': 'true' }),
+            el('span', { text: cfg.tagline || '' })
+          ])
+        ])
+      ]),
+      log,
+      form
+    ]));
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
    *  分區導覽列
    * ══════════════════════════════════════════════════════════════════════ */
   function renderNav() {
@@ -1695,7 +1819,7 @@
       ['sec-favorites', '最愛'], ['sec-recent', '最近'], ['sec-perfect', '全成就'],
       ['sec-wishlist', '願望'], ['sec-music', '音樂'], ['sec-links', '連結'],
       ['sec-about', '關於'], ['sec-guestbook', '留言'], ['sec-comic', '漫畫'],
-      ['sec-thanks', '鳴謝']
+      ['sec-ai', 'AI'], ['sec-thanks', '鳴謝']
     ];
     items.forEach(function (pair) {
       const sec = document.getElementById(pair[0]);
@@ -1747,6 +1871,7 @@
     renderAbout();
     renderGuestbook();
     renderComic();
+    renderAI();
     renderThanks();
     renderGalleryEgg();
     renderFooter();
