@@ -519,5 +519,57 @@ const SITE_DATA = {
       '檢測到您的銀行餘額不足以支撐本 AI 的 token，' +
       '建議您立刻關掉網頁，去兼職打工'
     ]
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  小說
+   * ----------------------------------------------------------------------
+   *  ⚠ 小說的「內文」不在這個檔案，在 novels.js。
+   *     因為四本加起來一萬多字，塞進來會讓 data.js 很難讀。
+   *     這個檔案只放「有哪些小說」以及它們的封面、標籤、推薦標記。
+   *
+   *  key 要跟 novels.js 裡的 key 對上，對不上那本就不會顯示。
+   *
+   *  ✏️ recommended: true → 顯示「推薦」徽章並排到最前面
+   *     tags 是我看過內容之後隨手加的，想改就改，不想要就設成 []
+   *     description 留空的話，會自動抓正文第一段當簡介
+   * ──────────────────────────────────────────────────────────────────── */
+  novels: {
+    title: '小說',
+    subtitle: 'Novels',
+    description: '我自己寫的短篇，點封面就可以在這裡直接讀。',
+    readLabel: '閱讀',
+    recommendedLabel: '推薦',
+    wordsLabel: '{n} 字',
+    closeLabel: '關閉',
+    missingText: '找不到這篇的內文（novels.js 裡沒有對應的 key）。',
+
+    books: [
+      {
+        key: 'rebirth-token',
+        cover: 'images/novel/rebirth-token.jpeg',
+        recommended: true,
+        tags: ['重生', '惡搞'],
+        description: ''
+      },
+      {
+        key: 'training-wife',
+        cover: 'images/novel/training-wife.jpeg',
+        tags: ['DeepSeek', '日常'],
+        description: ''
+      },
+      {
+        key: 'deepseek-lord',
+        cover: 'images/novel/deepseek-lord.jpeg',
+        tags: ['DeepSeek', '科幻'],
+        description: ''
+      },
+      {
+        key: 'mesugaki-deepseek',
+        cover: 'images/novel/mesugaki-deepseek.jpeg',
+        tags: ['DeepSeek', '搞笑'],
+        description: ''
+      }
+    ]
   }
 };

@@ -1357,7 +1357,7 @@
 
   /** 有沒有任何彈窗開著（音樂的鍵盤切換與彩蛋都要避開） */
   function anyModalOpen() {
-    const ids = ['egg-modal', 'video-modal', 'member-modal', 'gallery-modal', 'donate-modal'];
+    const ids = ['egg-modal', 'video-modal', 'member-modal', 'gallery-modal', 'donate-modal', 'lightbox-modal', 'reader-modal'];
     for (let i = 0; i < ids.length; i++) {
       const m = document.getElementById(ids[i]);
       if (m && !m.hidden) return true;
@@ -1601,6 +1601,13 @@
     return ((cur + delta) % n + n) % n;   // 負數也能正確繞回
   }
 
+  /** 把目前這張漫畫丟進放大檢視 */
+  function zoomComic() {
+    const img = document.getElementById('comic-img');
+    if (!img || !img.getAttribute('src')) return;
+    openLightbox(img.getAttribute('src'), img.getAttribute('alt') || '');
+  }
+
   function showComic(i) {
     const cfg = D.comic;
     const list = (cfg && cfg.images) || [];
@@ -1638,12 +1645,20 @@
 
     box.innerHTML = '';
 
-    /* 固定正方形外框：漫畫的比例從 0.67 到 1.50 都有，
-       不固定的話每換一張版面就會跳動，按鈕會跑來跑去。 */
-    const img = el('img', { class: 'comic__img', id: 'comic-img', alt: '', loading: 'lazy' });
+    /* 外框高度固定：漫畫的比例從 0.67 到 1.50 都有，
+       不固定的話每換一張版面就會跳動，按鈕會跑來跑去。
+       圖片本身可以點（或按 Enter／空白）放大檢視。 */
+    const img = el('img', {
+      class: 'comic__img', id: 'comic-img', alt: '', loading: 'lazy',
+      tabindex: '0', role: 'button', 'aria-label': '放大這張漫畫'
+    });
     img.addEventListener('error', function () {
       const f = document.getElementById('comic-frame');
       if (f) f.classList.add('is-error');
+    });
+    img.addEventListener('click', zoomComic);
+    img.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); zoomComic(); }
     });
     const frame = el('div', { class: 'comic__frame', id: 'comic-frame' }, [
       img,
@@ -1811,6 +1826,232 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════
+   *  16. 圖片放大檢視（漫畫用）
+   * ----------------------------------------------------------------------
+   *  漫畫的比例從 0.67 到 1.50 都有，在頁面上被外框高度限制住，
+   *  很直的那幾張字會偏小。點一下就在覆蓋層裡放大來看。
+   *  預設「符合畫面」，再點圖片可切成「原始大小」（可捲動）。
+   * ══════════════════════════════════════════════════════════════════════ */
+
+  function openLightbox(src, alt) {
+    const modal = document.getElementById('lightbox-modal');
+    const host = document.getElementById('lightbox-content');
+    if (!modal || !host) return;
+
+    host.innerHTML = '';
+    host.classList.remove('is-actual');
+
+    const img = el('img', { class: 'lightbox__img', src: src, alt: alt || '' });
+    img.addEventListener('click', function (ev) {
+      // 點圖片只切換大小，不要順便關掉
+      ev.stopPropagation();
+      img.classList.toggle('is-actual');
+      host.classList.toggle('is-actual');
+    });
+    host.appendChild(img);
+    host.appendChild(el('p', {
+      class: 'lightbox__hint',
+      text: '點圖片切換「符合畫面」／「原始大小」　·　按 Esc 或點空白處關閉'
+    }));
+
+    modal.hidden = false;
+    document.body.classList.add('is-locked');
+  }
+
+  function closeLightbox() {
+    const modal = document.getElementById('lightbox-modal');
+    if (!modal || modal.hidden) return;
+    modal.hidden = true;
+    document.body.classList.remove('is-locked');
+  }
+
+  function initLightbox() {
+    const modal = document.getElementById('lightbox-modal');
+    if (!modal) return;
+    modal.addEventListener('click', function (ev) {
+      const t = ev.target;
+      // 覆蓋層舖滿整個畫面，所以空白處的點擊目標會是 .lightbox 本身
+      if (t.hasAttribute('data-close-lightbox') || t === modal ||
+          (t.classList && t.classList.contains('lightbox'))) {
+        closeLightbox();
+      }
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && !modal.hidden) closeLightbox();
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+   *  17. 小說
+   * ----------------------------------------------------------------------
+   *  內文在 novels.js（不是 data.js），這裡只負責接起來顯示。
+   *  點封面或「閱讀」→ 開閱讀彈窗。
+   * ══════════════════════════════════════════════════════════════════════ */
+
+  /** 取 novels.js 裡某一篇的內文；載入失敗回 null */
+  function novelText(key) {
+    if (typeof NOVELS === 'undefined' || !NOVELS) return null;
+    return NOVELS[key] || null;
+  }
+
+  /** 字數：中日韓字逐字算，英文數字以空白分詞算 */
+  function countWords(paragraphs) {
+    const s = (paragraphs || []).join('');
+    const cjk = (s.match(/[\u3400-\u9fff\u3040-\u30ff]/g) || []).length;
+    const latin = (s.replace(/[\u3400-\u9fff\u3040-\u30ff]/g, ' ').match(/[A-Za-z0-9]+/g) || []).length;
+    return cjk + latin;
+  }
+
+  function isChapterLine(t) {
+    return /^第[0-9零一二三四五六七八九十百千]+章/.test(t);
+  }
+
+  /** 沒有手寫簡介時，抓第一段真正的正文當簡介（跳過章節行） */
+  function autoBlurb(novel) {
+    if (!novel) return '';
+    const ps = novel.paragraphs || [];
+    for (let i = 0; i < ps.length; i++) {
+      if (!isChapterLine(ps[i]) && ps[i].length >= 20) {
+        return ps[i].length > 68 ? ps[i].slice(0, 68) + '……' : ps[i];
+      }
+    }
+    return ps.length ? ps[0] : '';
+  }
+
+  function openReader(key) {
+    const modal = document.getElementById('reader-modal');
+    const host = document.getElementById('reader-content');
+    const cfg = D.novels || {};
+    if (!modal || !host) return;
+
+    const novel = novelText(key);
+    host.innerHTML = '';
+
+    if (!novel) {
+      // novels.js 沒載入或 key 打錯，給個看得懂的訊息而不是空白
+      host.appendChild(el('p', { class: 'reader__missing', text: cfg.missingText || '找不到內文。' }));
+      host.appendChild(el('button', {
+        class: 'btn reader__close', type: 'button', text: cfg.closeLabel || '關閉', 'data-close-reader': ''
+      }));
+      modal.hidden = false;
+      document.body.classList.add('is-locked');
+      return;
+    }
+
+    const ps = novel.paragraphs || [];
+    host.appendChild(el('h2', { class: 'reader__title', id: 'reader-title', text: novel.title || key }));
+    host.appendChild(el('p', {
+      class: 'reader__meta',
+      text: (cfg.wordsLabel || '{n} 字').replace('{n}', countWords(ps).toLocaleString())
+    }));
+
+    const body = el('div', { class: 'reader__body' });
+    ps.forEach(function (t) {
+      const chapter = isChapterLine(t);
+      body.appendChild(el(chapter ? 'h3' : 'p', {
+        class: chapter ? 'reader__chapter' : 'reader__p',
+        text: t
+      }));
+    });
+    host.appendChild(body);
+    host.appendChild(el('button', {
+      class: 'btn reader__close', type: 'button', text: cfg.closeLabel || '關閉', 'data-close-reader': ''
+    }));
+
+    modal.hidden = false;
+    document.body.classList.add('is-locked');
+    host.scrollTop = 0;   // 每次打開都從頭讀
+  }
+
+  function closeReader() {
+    const modal = document.getElementById('reader-modal');
+    if (!modal || modal.hidden) return;
+    modal.hidden = true;
+    document.body.classList.remove('is-locked');
+  }
+
+  function initReaderModal() {
+    const modal = document.getElementById('reader-modal');
+    if (!modal) return;
+    modal.addEventListener('click', function (ev) {
+      if (ev.target.hasAttribute('data-close-reader')) closeReader();
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && !modal.hidden) closeReader();
+    });
+  }
+
+  function renderNovels() {
+    const box = document.getElementById('novel-content');
+    const cfg = D.novels;
+    if (!box) return;
+    const books = (cfg && cfg.books) || [];
+    if (!cfg || !books.length) { hideSection('sec-novel'); return; }
+
+    const titleEl = document.getElementById('novel-title');
+    if (titleEl) {
+      titleEl.textContent = (cfg.title || '小說') + (cfg.subtitle ? '（' + cfg.subtitle + '）' : '');
+    }
+    const descEl = document.getElementById('novel-desc');
+    if (descEl) descEl.textContent = cfg.description || '';
+
+    box.innerHTML = '';
+
+    // 有 recommended 的排最前面
+    const sorted = books.slice().sort(function (a, b) {
+      return (b.recommended ? 1 : 0) - (a.recommended ? 1 : 0);
+    });
+
+    const grid = el('div', { class: 'novels' });
+    sorted.forEach(function (b) {
+      const novel = novelText(b.key);
+      const title = (novel && novel.title) || b.key;
+      const blur = b.description || autoBlurb(novel);
+      const chars = novel ? countWords(novel.paragraphs || []) : 0;
+
+      const card = el('div', { class: 'novel' + (b.recommended ? ' novel--pick' : '') });
+
+      const coverBtn = el('button', {
+        class: 'novel__cover-wrap', type: 'button', 'aria-label': '閱讀《' + title + '》'
+      }, [el('img', { class: 'novel__cover', src: b.cover || '', alt: '', loading: 'lazy' })]);
+      if (b.recommended) {
+        coverBtn.appendChild(el('span', {
+          class: 'novel__badge', text: '★ ' + (cfg.recommendedLabel || '推薦')
+        }));
+      }
+      coverBtn.addEventListener('click', function () { openReader(b.key); });
+      card.appendChild(coverBtn);
+
+      const readBtn = el('button', {
+        class: 'novel__read', type: 'button', text: (cfg.readLabel || '閱讀') + ' ▸'
+      });
+      readBtn.addEventListener('click', function () { openReader(b.key); });
+
+      const info = el('div', { class: 'novel__info' }, [
+        el('h3', { class: 'novel__name', text: title }),
+        blur ? el('p', { class: 'novel__blurb', text: blur }) : null
+      ]);
+      if (b.tags && b.tags.length) {
+        const tags = el('div', { class: 'novel__tags' });
+        b.tags.forEach(function (t) { tags.appendChild(el('span', { class: 'tag', text: t })); });
+        info.appendChild(tags);
+      }
+      info.appendChild(el('div', { class: 'novel__foot' }, [
+        el('span', {
+          class: 'novel__words',
+          text: chars ? (cfg.wordsLabel || '{n} 字').replace('{n}', chars.toLocaleString()) : ''
+        }),
+        readBtn
+      ]));
+
+      card.appendChild(info);
+      grid.appendChild(card);
+    });
+
+    box.appendChild(grid);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
    *  分區導覽列
    * ══════════════════════════════════════════════════════════════════════ */
   function renderNav() {
@@ -1819,7 +2060,7 @@
       ['sec-favorites', '最愛'], ['sec-recent', '最近'], ['sec-perfect', '全成就'],
       ['sec-wishlist', '願望'], ['sec-music', '音樂'], ['sec-links', '連結'],
       ['sec-about', '關於'], ['sec-guestbook', '留言'], ['sec-comic', '漫畫'],
-      ['sec-ai', 'AI'], ['sec-thanks', '鳴謝']
+      ['sec-novel', '小說'], ['sec-ai', 'AI'], ['sec-thanks', '鳴謝']
     ];
     items.forEach(function (pair) {
       const sec = document.getElementById(pair[0]);
@@ -1871,6 +2112,7 @@
     renderAbout();
     renderGuestbook();
     renderComic();
+    renderNovels();
     renderAI();
     renderThanks();
     renderGalleryEgg();
@@ -1880,6 +2122,8 @@
     initMemberModal();
     initGalleryModal();
     initDonateModal();
+    initLightbox();
+    initReaderModal();
     initMusicKeys();
     initEasterEgg();
   }

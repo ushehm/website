@@ -13,6 +13,13 @@ steam-api-key.txt
 user provide image/
 user provide music/
 
+# 小說的原始 .txt 檔。
+# 網站實際上讀的是 novels.js（已經轉好繁體、整理成程式可讀的格式），
+# context/ 只是你的原稿。兩份都上傳的話，以後會搞不清楚改哪邊才有效，
+# 所以這裡排除，只留 novels.js。
+# 改了 .txt 之後要重新產生 novels.js —— 跟我說一聲就好。
+context/
+
 # 作業系統與編輯器雜項
 Thumbs.db
 desktop.ini
