@@ -935,6 +935,86 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
 #music-audio { display: none; }
 
 /* ══════════════════════════════════════════════════════════════════════════
+ *  會員註冊（橫幅右上角按鈕 + 彈窗）
+ * ══════════════════════════════════════════════════════════════════════════ */
+.banner__corner {
+  position: absolute;
+  top: 16px; right: 16px;
+  z-index: 3;
+}
+.member-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(11, 18, 25, .62);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font: inherit; font-size: .86rem; font-weight: 700;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background .2s, color .2s, box-shadow .25s, transform .2s;
+}
+.member-btn__icon { display: grid; place-items: center; }
+.member-btn__icon svg { width: 16px; height: 16px; }
+.member-btn:hover, .member-btn:focus-visible {
+  background: var(--accent);
+  color: #06121c;
+  box-shadow: 0 0 24px -3px var(--accent);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+/* ── 註冊彈窗 ── */
+.modal__panel--member {
+  width: min(480px, calc(100vw - 40px));
+  padding: 26px;
+  text-align: left;
+}
+.member__title { font-size: 1.3rem; margin-bottom: 6px; }
+.member__subtitle { margin: 0 0 18px; font-size: .86rem; color: var(--text-dim); }
+.member__form { display: grid; gap: 13px; }
+.member__field { display: grid; gap: 6px; }
+.member__error {
+  margin: 0;
+  min-height: 0;
+  font-size: .78rem;
+  color: var(--danger);
+}
+.member__field.is-invalid .field__input { border-color: var(--danger); }
+.member__field.is-invalid .member__radio { border-color: rgba(224, 92, 92, .5); }
+
+/* 性別：兩顆大按鈕 */
+.member__radios { display: flex; gap: 10px; }
+.member__radio {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px;
+  background: #0b1219;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s, box-shadow .22s;
+}
+.member__radio:hover { border-color: var(--accent); }
+.member__radio input { accent-color: var(--accent); cursor: pointer; }
+.member__radio:has(input:checked) {
+  border-color: var(--accent);
+  background: rgba(102, 192, 244, .1);
+  box-shadow: 0 0 16px -4px var(--accent);
+}
+
+.member__submit { width: 100%; margin-top: 4px; }
+
+/* 驗證失敗時晃一下，讓人注意到是哪一欄出問題 */
+.is-shake { animation: fieldShake .38s cubic-bezier(.36, .07, .19, .97); }
+@keyframes fieldShake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
  *  RWD 與無障礙
  * ══════════════════════════════════════════════════════════════════════════ */
 /* 音樂區：平板以下把封面疊到曲目上方、播放器拆成三列 */

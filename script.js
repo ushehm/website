@@ -712,10 +712,8 @@
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
       if (ev.target && ev.target.isContentEditable) return;
 
-      // 任何彈窗開著 → 不要搶
-      const eggModal = document.getElementById('egg-modal');
-      if (eggModal && !eggModal.hidden) return;
-      if (isVideoOpen()) return;
+      // 任何彈窗開著 → 不要搶（彩蛋、影片、會員註冊都算）
+      if (anyModalOpen()) return;
 
       // 焦點在進度條或音量上 → 讓它們自己處理
       if (ev.target && (ev.target.id === 'music-bar' || ev.target.id === 'music-vol')) return;
@@ -1126,8 +1124,8 @@
       if (ev.key === 'Escape' && !modal.hidden) { close(); return; }
       // 彈窗已經開著就不再重複偵測
       if (!modal.hidden) return;
-      // 影片彈窗開著時也不要觸發，免得兩個彈窗疊在一起
-      if (isVideoOpen()) return;
+      // 其他彈窗（影片、會員註冊）開著時也不要觸發，免得疊在一起
+      if (anyModalOpen()) return;
 
       // 打字偵測（忽略輸入框與修飾鍵）
       if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
@@ -1155,6 +1153,202 @@
       document.body.appendChild(box);
       setTimeout(function () { box.remove(); }, 3500);
     }
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+   *  11. 會員註冊（玩笑性質）
+   * ----------------------------------------------------------------------
+   *  ⚠ 這不是真的註冊功能，是刻意做的梗：
+   *    - 沒有後端，不儲存、也不傳送任何資料
+   *    - 性別那一欄「選男也說被佔用、選女也說被佔用」，所以永遠送不出去
+   *    這是 data.js 的 member.messages.genderTaken 所描述的效果，不是 bug。
+   * ══════════════════════════════════════════════════════════════════════ */
+
+  /** 橫幅右上角的那顆按鈕 */
+  function renderMemberButton() {
+    const box = document.getElementById('banner-corner');
+    const cfg = D.member;
+    if (!box) return;
+    if (!cfg) { box.remove(); return; }
+
+    box.innerHTML = '';
+    const btn = el('button', { class: 'member-btn', id: 'member-open', type: 'button' }, [
+      el('span', {
+        class: 'member-btn__icon',
+        html: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0 2c4.4 0 8 2.2 8 5v2H4v-2c0-2.8 3.6-5 8-5z"/></svg>'
+      }),
+      el('span', { text: cfg.buttonLabel || '會員註冊' })
+    ]);
+    btn.addEventListener('click', openMember);
+    box.appendChild(btn);
+  }
+
+  /** 一個欄位的外框：標籤 + 控制項 + 錯誤訊息 */
+  function memberField(key, label, control) {
+    if (control.id) control.setAttribute('aria-describedby', 'member-error-' + key);
+    return el('div', { class: 'member__field', dataset: { field: key } }, [
+      el('label', { class: 'field__label', for: control.id || null, text: label || '' }),
+      control,
+      el('p', { class: 'member__error', id: 'member-error-' + key })
+    ]);
+  }
+
+  function openMember() {
+    const modal = document.getElementById('member-modal');
+    const host = document.getElementById('member-content');
+    const cfg = D.member;
+    if (!modal || !host || !cfg) return;
+
+    const f = cfg.fields || {};
+    host.innerHTML = '';
+    host.appendChild(el('h2', { class: 'member__title', id: 'member-title', text: cfg.title || '會員註冊' }));
+    if (cfg.subtitle) host.appendChild(el('p', { class: 'member__subtitle', text: cfg.subtitle }));
+
+    const form = el('form', { class: 'member__form', novalidate: true });
+
+    // 1. 用戶名稱
+    form.appendChild(memberField('username', f.username && f.username.label,
+      el('input', {
+        class: 'field__input', id: 'member-username', type: 'text',
+        maxlength: '20', autocomplete: 'off',
+        placeholder: (f.username && f.username.placeholder) || ''
+      })));
+
+    // 2. 性別（就是這裡要玩梗）
+    const radios = el('div', { class: 'member__radios', id: 'member-gender' });
+    ((f.gender && f.gender.options) || []).forEach(function (opt, i) {
+      const rid = 'member-gender-' + i;
+      radios.appendChild(el('label', { class: 'member__radio', for: rid }, [
+        el('input', { type: 'radio', name: 'member-gender', id: rid, value: opt }),
+        el('span', { text: opt })
+      ]));
+    });
+    form.appendChild(memberField('gender', f.gender && f.gender.label, radios));
+
+    // 3. 電話號碼
+    form.appendChild(memberField('phone', f.phone && f.phone.label,
+      el('input', {
+        class: 'field__input', id: 'member-phone', type: 'tel', inputmode: 'tel',
+        autocomplete: 'off', placeholder: (f.phone && f.phone.placeholder) || ''
+      })));
+
+    // 4. 密碼
+    form.appendChild(memberField('password', f.password && f.password.label,
+      el('input', {
+        class: 'field__input', id: 'member-password', type: 'password',
+        autocomplete: 'new-password', placeholder: (f.password && f.password.placeholder) || ''
+      })));
+
+    // 5. 再次確定密碼
+    form.appendChild(memberField('confirm', f.confirm && f.confirm.label,
+      el('input', {
+        class: 'field__input', id: 'member-confirm', type: 'password',
+        autocomplete: 'new-password', placeholder: (f.confirm && f.confirm.placeholder) || ''
+      })));
+
+    form.appendChild(el('button', {
+      class: 'btn btn--primary member__submit', type: 'submit',
+      text: cfg.submitLabel || '註冊'
+    }));
+    form.addEventListener('submit', function (ev) { ev.preventDefault(); submitMember(); });
+    host.appendChild(form);
+
+    modal.hidden = false;
+    document.body.classList.add('is-locked');
+    const first = document.getElementById('member-username');
+    if (first) setTimeout(function () { first.focus(); }, 60);
+  }
+
+  function closeMember() {
+    const modal = document.getElementById('member-modal');
+    if (!modal || modal.hidden) return;
+    modal.hidden = true;
+    document.body.classList.remove('is-locked');
+  }
+
+  function setMemberError(key, msg) {
+    const field = document.querySelector('.member__field[data-field="' + key + '"]');
+    const err = document.getElementById('member-error-' + key);
+    if (field) field.classList.toggle('is-invalid', !!msg);
+    if (err) err.textContent = msg || '';
+  }
+
+  function submitMember() {
+    const cfg = D.member || {};
+    const m = cfg.messages || {};
+    const val = function (id) { const e = document.getElementById(id); return e ? e.value : ''; };
+
+    const uname = val('member-username').trim();
+    const phone = val('member-phone').trim();
+    const pass = val('member-password');
+    const confirm = val('member-confirm');
+    const picked = document.querySelector('input[name="member-gender"]:checked');
+    const gender = picked ? picked.value : '';
+
+    Object.keys({ username: 1, gender: 1, phone: 1, password: 1, confirm: 1 })
+      .forEach(function (k) { setMemberError(k, ''); });
+
+    let firstBad = null;
+    function fail(key, msg) {
+      setMemberError(key, msg);
+      if (!firstBad) firstBad = key;
+    }
+
+    if (!uname) fail('username', m.usernameRequired);
+    else if (uname.length < 2 || uname.length > 20) fail('username', m.usernameLength);
+
+    /* ↓↓↓ 這個表單的梗就在這裡 ↓↓↓
+       不論訪客選「男」還是「女」，一律回報「性別已被佔用」，
+       所以這個表單永遠註冊不成功。這是 data.js 設定出來的效果。 */
+    if (!gender) fail('gender', m.genderRequired);
+    else fail('gender', m.genderTaken);
+
+    const digits = phone.replace(/[^0-9]/g, '');
+    if (!phone) fail('phone', m.phoneRequired);
+    else if (digits.length < 8 || digits.length > 15) fail('phone', m.phoneInvalid);
+
+    if (!pass) fail('password', m.passwordRequired);
+    else if (pass.length < 6) fail('password', m.passwordShort);
+
+    if (!confirm) fail('confirm', m.confirmRequired);
+    else if (confirm !== pass) fail('confirm', m.confirmMismatch);
+
+    if (firstBad) {
+      const field = document.querySelector('.member__field[data-field="' + firstBad + '"]');
+      if (field) {
+        field.classList.remove('is-shake');
+        void field.offsetWidth;   // 強制重排，讓晃動動畫可以重播
+        field.classList.add('is-shake');
+      }
+      // 把焦點移到第一個有問題的欄位，性別是電台按鈕所以找它的 input
+      const focusable = field && field.querySelector('input');
+      if (focusable && focusable.focus) focusable.focus();
+      return;
+    }
+
+    /* 正常情況下永遠到不了這裡 —— 性別那一關一定會擋下來。
+       保留這段是為了讓邏輯完整：如果哪天把那個梗拿掉，這裡就會生效。 */
+  }
+
+  function initMemberModal() {
+    const modal = document.getElementById('member-modal');
+    if (!modal) return;
+    modal.addEventListener('click', function (ev) {
+      if (ev.target.hasAttribute('data-close-member')) closeMember();
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && !modal.hidden) closeMember();
+    });
+  }
+
+  /** 有沒有任何彈窗開著（音樂的鍵盤切換與彩蛋都要避開） */
+  function anyModalOpen() {
+    const ids = ['egg-modal', 'video-modal', 'member-modal'];
+    for (let i = 0; i < ids.length; i++) {
+      const m = document.getElementById(ids[i]);
+      if (m && !m.hidden) return true;
+    }
+    return false;
   }
 
   /* ══════════════════════════════════════════════════════════════════════
@@ -1207,6 +1401,7 @@
     if (m.lang) document.documentElement.lang = m.lang;
 
     renderBanner();
+    renderMemberButton();
     renderFavorites();
     renderRecent();
     renderPerfect();
@@ -1219,6 +1414,7 @@
     renderFooter();
     renderNav();
     initVideoModal();
+    initMemberModal();
     initMusicKeys();
     initEasterEgg();
   }
