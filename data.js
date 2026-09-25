@@ -418,7 +418,7 @@ const SITE_DATA = {
     label: '💰 捐款',
     tooltip: '用以下方式支持我',
     title: '💰 捐款',
-    description: '感謝你的支持。',
+    description: '感謝你的支持，這些捐款將會用於購買更多的token。',
     note: '點圖片可以放大，方便掃碼。',
     methods: [
       { name: '微信支付',       region: '中國大陸', image: 'images/payment/wechat-cn.jpeg' },
