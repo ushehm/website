@@ -7,9 +7,11 @@
 # 內含你的 Steam Web API 金鑰
 steam-api-key.txt
 
-# 你原本給我的素材。三個檔案都已經複製到 images/ 與 media/ 了，
-# 留著只是多佔 7.4 MB（影片重複一份），沒有必要上傳。
+# 你原本給我的素材。裡面的檔案都已經複製到 images/、media/ 底下，
+# 留著只是重複佔空間（影片 7.4 MB + 音樂 56 MB），沒有必要上傳。
+# 用萬用字元涵蓋 image / music 兩個資料夾。
 user provide image/
+user provide music/
 
 # 作業系統與編輯器雜項
 Thumbs.db

@@ -20,12 +20,20 @@ D:\My website\
 │   ├─ apple-touch-icon.png← iOS 加到主畫面用
 │   └─ README.txt          ← 圖片放的規則
 ├─ media\
-│   └─ deepseek-dance.mp4  ← 特別鳴謝播放的影片
+│   ├─ deepseek-dance.mp4  ← 特別鳴謝播放的影片
+│   └─ music\
+│       ├─ covers\         ← 4 張專輯封面
+│       ├─ startrip\       ← 各專輯的音訊檔（檔名已改成 ASCII）
+│       ├─ atri\
+│       ├─ aokana\
+│       └─ yuzusoft\
 ├─ tools\
 │   ├─ fetch-steam.mjs     ← 從 Steam API 重新抓資料的工具
 │   ├─ make-favicon.ps1    ← 從一張方形圖重新產生 favicon
 │   └─ steam-data.json     ← 抓下來的原始資料（給你參考，網站本身不讀它）
 ├─ user provide image\     ← 你原本給我的素材（已複製到上面各位置，可以刪掉）
+├─ user provide music\     ← 同上，音訊原始檔（可以刪掉）
+├─ update-website.bat      ← 雙擊就把變更推上 GitHub
 └─ steam-api-key.txt       ← ⚠ 你的 Steam Web API 金鑰，不要上傳到公開網站
 ```
 
@@ -100,6 +108,60 @@ node tools\fetch-steam.mjs
 | `'google'` | 用 iframe 嵌入 Google 表單 | `googleFormUrl`（要 `?embedded=true` 的網址）|
 
 程式碼不用改，只改這一個值。
+
+
+## My Favorite Music（音樂區）
+
+左邊是專輯封面與左右切換箭頭，右邊是曲目列表，下方是播放控制列。
+
+### 怎麼操作
+
+| 動作 | 方式 |
+| :-- | :-- |
+| 播放／暫停某首 | 點曲目那一列；再點同一首會暫停 |
+| 一首播完 | 會自動接下一首；到專輯最後一首就停 |
+| 切換專輯 | 點封面兩側的 ◀ ▶，或直接按鍵盤 **← →** |
+| 跳秒 | 點進度條任何位置，或按住拖曳 |
+| 音量 | 右下角滑桿 |
+
+鍵盤左右鍵在這些情況**不會**被攔截：焦點在輸入框（留言板）、任何彈窗開著、
+或焦點在進度條／音量滑桿上（那時左右鍵是快進／倒轉 5 秒）。
+
+切換專輯時**不會**中斷正在播的歌 —— 播放器會繼續播，只是畫面換了一張專輯。
+只有當顯示中的專輯就是播放中那首所屬的專輯時，曲目才會顯示播放中的標記。
+
+### 怎麼改內容
+
+全部在 `data.js` 的 `music` 區塊：
+
+```js
+music: {
+  albums: [
+    {
+      name:   '專輯名稱',
+      cover:  'media/music/covers/xxx.png',   // 封面圖
+      tags:   ['標籤一', '標籤二'],            // 疊在封面底部
+      accent: '#6285C8',                      // 這張專輯的主題色
+      tracks: [
+        { title: '顯示的曲名', src: 'media/music/xxx/01-song.mp3' }
+      ]
+    }
+  ]
+}
+```
+
+**`accent` 是這張專輯的主題色。** 封面發光、播放鈕、進度條、音量滑桿、
+正在播那首的邊框、區塊頂部的柔光，全部跟著它變色。目前這四個顏色是我
+從各張封面取樣算出來的（取飽和像素的色相眾數，再正規化亮度），不是隨便挑；
+想換成自己喜歡的顏色，直接改 hex 值就好。
+
+### 加新歌
+
+1. 把音訊檔放進 `media/music/<專輯>/` 底下
+2. 在 `data.js` 對應的 `tracks` 陣列加一行 `{ title: '曲名', src: '路徑' }`
+
+檔名建議用 ASCII（英文、數字、減號）。中文、空格、全形標點在網址裡需要編碼，
+能用但容易出問題，所以複製進來時我把檔名換掉了 —— 你原本的檔案完全沒動。
 
 
 ## 特別鳴謝與影片

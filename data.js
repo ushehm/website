@@ -263,5 +263,72 @@ const SITE_DATA = {
       local: 'media/deepseek-dance.mp4',
       youtube: 'https://youtu.be/OK2C9oWATV4'
     }
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  My Favorite Music（最愛音樂）
+   * ----------------------------------------------------------------------
+   *  每張專輯的欄位：
+   *    name    專輯名稱（顯示用）
+   *    cover   封面圖路徑
+   *    tags    標籤陣列，疊在封面上
+   *    accent  這張專輯的主題色。發光、漸層、進度條都跟著它變。
+   *            這四個色是我從各張封面取樣算出來的平均色再正規化亮度，
+   *            不是隨便挑的 —— 改掉也可以，隨你喜歡。
+   *    tracks  單曲列表：title 是顯示的曲名，src 是音訊檔路徑
+   *
+   *  ✅ 10 首音檔已複製到 media/music/，檔名改成 ASCII 以確保網址安全
+   *     （原始檔完全沒動，還在你的 Steam 音樂庫和使用者資料夾裡）
+   *
+   *  ✏️ 曲名是我從檔名推導的（去掉 01_ 這種編號），想改就直接改 title。
+   * ──────────────────────────────────────────────────────────────────── */
+  music: {
+    title: 'My Favorite Music',
+    subtitle: '最愛音樂',
+    description: '寫程式、通勤、發呆的時候聽的。點曲目就能播，左上角可以換專輯。',
+    albums: [
+      {
+        name: '星空列车与白的旅行',
+        cover: 'media/music/covers/startrip.png',
+        tags: ['Original Soundtrack', 'Visual Novel'],
+        accent: '#6285C8',
+        tracks: [
+          { title: 'スタートリップ', src: 'media/music/startrip/01-startrip.mp3' }
+        ]
+      },
+      {
+        name: 'ATRI My Dear Moments',
+        cover: 'media/music/covers/atri.png',
+        tags: ['Original Soundtrack', 'Visual Novel'],
+        accent: '#5F86C8',
+        tracks: [
+          { title: '光放て！', src: 'media/music/atri/21-hikari-hanate.mp3' },
+          { title: 'Dear Moments', src: 'media/music/atri/24-dear-moments.mp3' }
+        ]
+      },
+      {
+        name: 'Aokana - Four Rhythms Across the Blue',
+        cover: 'media/music/covers/aokana.png',
+        tags: ['Vocal & Sound Collection'],
+        accent: '#C8668B',
+        tracks: [
+          { title: 'infinite sky', src: 'media/music/aokana/01-infinite-sky.mp3' },
+          { title: 'Wings of Courage - 空を超えて -', src: 'media/music/aokana/02-wings-of-courage.mp3' },
+          { title: 'One Small Step', src: 'media/music/aokana/03-one-small-step.mp3' },
+          { title: 'Happy Tomorrow', src: 'media/music/aokana/04-happy-tomorrow.mp3' }
+        ]
+      },
+      {
+        name: 'YuzuSoft 柚子社',
+        cover: 'media/music/covers/yuzusoft.png',
+        tags: ['天使☆騒々 RE-BOOT!', 'Vocal'],
+        accent: '#6BB1C8',
+        tracks: [
+          { title: 'FUN FUN RE-BOOT', src: 'media/music/yuzusoft/01-fun-fun-reboot.mp3' },
+          { title: '恋せよ乙女！', src: 'media/music/yuzusoft/02-koiseyo-otome.mp3' },
+          { title: '恋ひ恋ふ縁', src: 'media/music/yuzusoft/03-koikoi-en.mp3' }
+        ]
+      }
+    ]
   }
 };

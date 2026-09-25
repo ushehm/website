@@ -346,7 +346,390 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════
-   *  4. 其他連結
+   *  4. My Favorite Music（音樂播放器）
+   * ----------------------------------------------------------------------
+   *  整個頁面只用「一個」 <audio>：切歌只換 src，不重新建立元素，
+   *  這樣才不會有殘留的播放狀態。三個狀態放在 music 物件裡。
+   * ══════════════════════════════════════════════════════════════════════ */
+
+  const music = {
+    albumIndex: 0,    // 目前「顯示」第幾張專輯
+    playingAlbum: -1, // 目前「播放中」那首所屬的專輯（可能與顯示中的不同）
+    trackIndex: -1,   // 目前播放第幾首（-1 = 還沒播）
+    audio: null,      // 共用的 <audio>
+    root: null,       // 整個區塊的根元素（拿來切換 CSS 變數與過場 class）
+    busy: false       // 換專輯的動畫進行中，避免連按造成錯亂
+  };
+
+  const ICON_PLAY  = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+  const ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
+
+  function musicAlbums() {
+    return (D.music && D.music.albums) || [];
+  }
+
+  /** 秒數 → m:ss */
+  function fmtTime(sec) {
+    if (!isFinite(sec) || sec < 0) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  /** 建立音樂區塊骨架，只做一次；之後換專輯只更新內容 */
+  function renderMusic() {
+    const box = document.getElementById('music-content');
+    const cfg = D.music;
+    if (!box) return;
+    if (!cfg || !musicAlbums().length) { hideSection('sec-music'); return; }
+
+    const titleEl = document.getElementById('music-title');
+    if (titleEl) titleEl.textContent = (cfg.title || 'Music') + (cfg.subtitle ? '（' + cfg.subtitle + '）' : '');
+    const descEl = document.getElementById('music-desc');
+    if (descEl) descEl.textContent = cfg.description || '';
+
+    box.innerHTML = '';
+    music.root = el('div', { class: 'music' });
+
+    /* ── 上半：封面 + 左右切換 + 曲目 ── */
+    const prev = el('button', { class: 'music__nav music__nav--prev', type: 'button', 'aria-label': '上一張專輯' });
+    prev.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.5 4.5 8 12l7.5 7.5 1.4-1.4L10.8 12l6.1-6.1z"/></svg>';
+    const next = el('button', { class: 'music__nav music__nav--next', type: 'button', 'aria-label': '下一張專輯' });
+    next.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.5 4.5 16 12l-7.5 7.5-1.4-1.4L13.2 12 7.1 5.9z"/></svg>';
+
+    const coverWrap = el('div', { class: 'music__cover-wrap' }, [
+      el('img', { class: 'music__cover', id: 'music-cover', alt: '', loading: 'lazy' }),
+      el('div', { class: 'music__tags', id: 'music-tags' })
+    ]);
+
+    const stage = el('div', { class: 'music__stage' }, [
+      el('div', { class: 'music__left' }, [prev, coverWrap, next]),
+      el('div', { class: 'music__right' }, [
+        el('h3', { class: 'music__album', id: 'music-album' }),
+        el('p', { class: 'music__meta', id: 'music-meta' }),
+        el('ol', { class: 'music__tracks', id: 'music-tracks' })
+      ])
+    ]);
+
+    /* ── 下半：播放器控制列 ── */
+    const playBtn = el('button', { class: 'music__play', id: 'music-play', type: 'button', 'aria-label': '播放／暫停' });
+    playBtn.innerHTML = ICON_PLAY;
+
+    const now = el('div', { class: 'music__now' }, [
+      el('span', { class: 'music__now-title', id: 'music-now-title', text: '尚未播放' }),
+      el('span', { class: 'music__now-album', id: 'music-now-album' })
+    ]);
+
+    const bar = el('div', {
+      class: 'music__bar', id: 'music-bar', role: 'slider', tabindex: '0',
+      'aria-label': '播放進度', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': '0'
+    }, [
+      el('div', { class: 'music__bar-fill', id: 'music-bar-fill' }),
+      el('div', { class: 'music__bar-knob', id: 'music-bar-knob' })
+    ]);
+
+    const time = el('div', { class: 'music__time' }, [
+      el('span', { id: 'music-cur', text: '0:00' }),
+      el('span', { class: 'music__time-sep', text: '/' }),
+      el('span', { id: 'music-dur', text: '0:00' })
+    ]);
+
+    const volRange = el('input', {
+      class: 'music__vol-range', id: 'music-vol', type: 'range',
+      min: '0', max: '1', step: '0.01', value: '0.8', 'aria-label': '音量'
+    });
+    const vol = el('div', { class: 'music__vol' }, [
+      el('span', {
+        class: 'music__vol-icon',
+        html: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z"/></svg>'
+      }),
+      volRange
+    ]);
+
+    const player = el('div', { class: 'music__player' }, [playBtn, now, bar, time, vol]);
+
+    /* 真正發聲的元素。控制列是自己畫的，所以原生控制列不需要。 */
+    const audio = el('audio', { id: 'music-audio', preload: 'metadata' });
+    music.audio = audio;
+
+    music.root.appendChild(stage);
+    music.root.appendChild(player);
+    music.root.appendChild(audio);
+    box.appendChild(music.root);
+
+    prev.addEventListener('click', function () { stepAlbum(-1); });
+    next.addEventListener('click', function () { stepAlbum(1); });
+    playBtn.addEventListener('click', togglePlay);
+    bindProgress(bar);
+    bindVolume(volRange);
+    bindAudio(audio);
+
+    showAlbum(0, 0);
+  }
+
+  /** 單一曲目列 */
+  function trackRow(track, i) {
+    const btn = el('button', { class: 'track__btn', type: 'button' }, [
+      el('span', { class: 'track__lead' }, [
+        el('span', { class: 'track__num', text: (i + 1 < 10 ? '0' : '') + (i + 1) }),
+        // 播放中時用跳動的等化器取代編號
+        el('span', { class: 'track__eq', html: '<i></i><i></i><i></i><i></i>' })
+      ]),
+      el('span', { class: 'track__title', text: track.title || '未命名' }),
+      el('span', { class: 'track__hint', text: '播放' })
+    ]);
+    btn.addEventListener('click', function () { onTrackClick(i); });
+    return el('li', { class: 'track' }, [btn]);
+  }
+
+  /**
+   * 切到第 index 張專輯。
+   * direction 只用來決定過場往左還是往右滑，0 表示第一次載入不做動畫。
+   */
+  function showAlbum(index, direction) {
+    const albums = musicAlbums();
+    if (!albums.length) return;
+    const n = albums.length;
+    const target = ((index % n) + n) % n;   // 頭尾可以繞回來
+    const album = albums[target];
+    const first = music.albumIndex === target && music.trackIndex === -1 && !music.root.classList.contains('is-ready');
+
+    music.albumIndex = target;
+    const root = music.root;
+    const delay = (direction === 0 || first) ? 0 : 160;
+
+    if (root && delay) {
+      root.classList.remove('is-out-left', 'is-out-right');
+      root.classList.add(direction < 0 ? 'is-out-left' : 'is-out-right');
+    }
+
+    const apply = function () {
+      // 主題色跟著專輯換，發光、漸層、進度條都會一起變
+      if (root) root.style.setProperty('--album-accent', album.accent || '#66c0f4');
+
+      const cover = document.getElementById('music-cover');
+      if (cover) { cover.src = album.cover || ''; cover.alt = (album.name || '') + ' 封面'; }
+
+      const albumEl = document.getElementById('music-album');
+      if (albumEl) albumEl.textContent = album.name || '';
+
+      const tags = document.getElementById('music-tags');
+      if (tags) {
+        tags.innerHTML = '';
+        (album.tags || []).forEach(function (t) {
+          tags.appendChild(el('span', { class: 'music__tag', text: t }));
+        });
+      }
+
+      const meta = document.getElementById('music-meta');
+      const tracks = album.tracks || [];
+      if (meta) {
+        meta.textContent = '第 ' + (target + 1) + ' / ' + n + ' 張專輯 ・ ' + tracks.length + ' 首';
+      }
+
+      const list = document.getElementById('music-tracks');
+      if (list) {
+        list.innerHTML = '';
+        tracks.forEach(function (t, i) { list.appendChild(trackRow(t, i)); });
+      }
+
+      if (root) {
+        root.classList.remove('is-out-left', 'is-out-right');
+        root.classList.add('is-in');
+        setTimeout(function () { root.classList.remove('is-in'); }, 420);
+        root.classList.add('is-ready');
+      }
+      updateTrackHighlight();
+    };
+
+    if (delay) setTimeout(apply, delay); else apply();
+  }
+
+  function stepAlbum(delta) {
+    // 連按時忽略，避免動畫還沒結束就被打斷
+    if (music.busy) return;
+    music.busy = true;
+    setTimeout(function () { music.busy = false; }, 260);
+    showAlbum(music.albumIndex + delta, delta);
+  }
+
+  function onTrackClick(i) {
+    if (music.trackIndex === i) { togglePlay(); return; }
+    loadTrack(i, true);
+  }
+
+  function loadTrack(i, autoplay) {
+    const album = musicAlbums()[music.albumIndex];
+    const track = album && (album.tracks || [])[i];
+    const audio = music.audio;
+    if (!track || !audio) return;
+
+    music.trackIndex = i;
+    music.playingAlbum = music.albumIndex;
+    audio.src = track.src;
+    const t = document.getElementById('music-now-title');
+    const a = document.getElementById('music-now-album');
+    if (t) t.textContent = track.title || '未命名';
+    if (a) a.textContent = album.name || '';
+    const d = document.getElementById('music-dur');
+    if (d) d.textContent = '0:00';
+    setPlayingUI(false);
+    updateTrackHighlight();
+
+    if (autoplay) {
+      const p = audio.play();
+      // 瀏覽器若擋下自動播放，就讓使用者自己按播放鍵，不要跳錯誤
+      if (p && typeof p.catch === 'function') p.catch(function () { setPlayingUI(false); });
+    }
+  }
+
+  function togglePlay() {
+    const audio = music.audio;
+    if (!audio) return;
+    // 還沒選歌 → 從目前專輯的第一首開始
+    if (!audio.getAttribute('src')) {
+      const album = musicAlbums()[music.albumIndex];
+      if (album && (album.tracks || []).length) loadTrack(0, true);
+      return;
+    }
+    if (audio.paused) {
+      const p = audio.play();
+      if (p && typeof p.catch === 'function') p.catch(function () {});
+    } else {
+      audio.pause();
+    }
+  }
+
+  /** 一首播完自動接下一首；到底了就停 */
+  function playNext() {
+    const album = musicAlbums()[music.albumIndex];
+    if (!album) return;
+    const count = (album.tracks || []).length;
+    if (music.trackIndex + 1 < count) loadTrack(music.trackIndex + 1, true);
+    else { music.trackIndex = -1; setPlayingUI(false); updateTrackHighlight(); }
+  }
+
+  function setPlayingUI(playing) {
+    const btn = document.getElementById('music-play');
+    if (btn) { btn.innerHTML = playing ? ICON_PAUSE : ICON_PLAY; btn.classList.toggle('is-playing', playing); }
+    if (music.root) music.root.classList.toggle('is-playing', playing);
+  }
+
+  function updateTrackHighlight() {
+    const playing = !!music.audio && !music.audio.paused;
+    // 只有「顯示中的專輯」就是「播放中那首所屬的專輯」時才標記，
+    // 否則切換專輯後，新專輯同一個位置的曲目會被誤標成播放中。
+    const sameAlbum = music.playingAlbum === music.albumIndex;
+    const rows = document.querySelectorAll('.music__tracks .track');
+    for (let i = 0; i < rows.length; i++) {
+      const current = sameAlbum && i === music.trackIndex;
+      rows[i].classList.toggle('is-current', current);
+      rows[i].classList.toggle('is-playing', current && playing);
+    }
+  }
+
+  function updateProgress() {
+    const audio = music.audio;
+    if (!audio || !audio.duration) return;
+    const pct = Math.max(0, Math.min(100, (audio.currentTime / audio.duration) * 100));
+    const fill = document.getElementById('music-bar-fill');
+    const knob = document.getElementById('music-bar-knob');
+    const bar = document.getElementById('music-bar');
+    const cur = document.getElementById('music-cur');
+    if (fill) fill.style.width = pct + '%';
+    if (knob) knob.style.left = pct + '%';
+    if (bar) bar.setAttribute('aria-valuenow', String(Math.round(pct)));
+    if (cur) cur.textContent = fmtTime(audio.currentTime);
+  }
+
+  /** 進度條：點擊、拖曳、觸控都能跳秒 */
+  function bindProgress(bar) {
+    let dragging = false;
+
+    function seek(ev) {
+      const audio = music.audio;
+      if (!audio || !audio.duration) return;
+      const rect = bar.getBoundingClientRect();
+      const clientX = ev.touches && ev.touches.length ? ev.touches[0].clientX : ev.clientX;
+      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      audio.currentTime = ratio * audio.duration;
+      updateProgress();
+    }
+
+    bar.addEventListener('mousedown', function (ev) { ev.preventDefault(); dragging = true; seek(ev); });
+    window.addEventListener('mousemove', function (ev) { if (dragging) seek(ev); });
+    window.addEventListener('mouseup', function () { dragging = false; });
+    bar.addEventListener('touchstart', function (ev) { dragging = true; seek(ev); }, { passive: true });
+    bar.addEventListener('touchmove', function (ev) { if (dragging) seek(ev); }, { passive: true });
+    bar.addEventListener('touchend', function () { dragging = false; });
+
+    // 焦點在進度條上時，左右鍵是快進/倒轉，所以要攔下來，
+    // 不然會同時觸發「切換專輯」。
+    bar.addEventListener('keydown', function (ev) {
+      const audio = music.audio;
+      if (!audio || !audio.duration) return;
+      if (ev.key === 'ArrowRight') { audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); ev.preventDefault(); ev.stopPropagation(); }
+      else if (ev.key === 'ArrowLeft') { audio.currentTime = Math.max(0, audio.currentTime - 5); ev.preventDefault(); ev.stopPropagation(); }
+    });
+  }
+
+  function bindVolume(range) {
+    if (!range) return;
+    range.addEventListener('input', function () {
+      if (music.audio) music.audio.volume = parseFloat(range.value);
+    });
+  }
+
+  function bindAudio(audio) {
+    audio.volume = 0.8;
+    audio.addEventListener('play', function () { setPlayingUI(true); updateTrackHighlight(); });
+    audio.addEventListener('pause', function () { setPlayingUI(false); updateTrackHighlight(); });
+    audio.addEventListener('ended', playNext);
+    audio.addEventListener('timeupdate', updateProgress);
+    audio.addEventListener('loadedmetadata', function () {
+      const d = document.getElementById('music-dur');
+      if (d) d.textContent = fmtTime(audio.duration);
+    });
+    audio.addEventListener('error', function () {
+      const t = document.getElementById('music-now-title');
+      if (t) t.textContent = '載入失敗，檔案可能不存在';
+      setPlayingUI(false);
+    });
+  }
+
+  /**
+   * 用鍵盤左右方向鍵切換專輯。
+   * 這裡的守門條件很多，因為左右鍵同時也是「文字輸入游標移動」和
+   * 「影片/進度條快進」在用，搶錯會很煩人。
+   */
+  function initMusicKeys() {
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return;
+      if (ev.ctrlKey || ev.metaKey || ev.altKey || ev.shiftKey) return;
+
+      // 正在輸入框打字（留言板）→ 不要搶
+      const tag = (ev.target && ev.target.tagName) || '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      if (ev.target && ev.target.isContentEditable) return;
+
+      // 任何彈窗開著 → 不要搶
+      const eggModal = document.getElementById('egg-modal');
+      if (eggModal && !eggModal.hidden) return;
+      if (isVideoOpen()) return;
+
+      // 焦點在進度條或音量上 → 讓它們自己處理
+      if (ev.target && (ev.target.id === 'music-bar' || ev.target.id === 'music-vol')) return;
+
+      const sec = document.getElementById('sec-music');
+      if (!sec || sec.hidden) return;
+
+      ev.preventDefault();
+      stepAlbum(ev.key === 'ArrowRight' ? 1 : -1);
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+   *  5. 其他連結
    * ══════════════════════════════════════════════════════════════════════ */
   function renderLinks() {
     const grid = document.getElementById('links-grid');
@@ -375,7 +758,7 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════
-   *  5. 關於我
+   *  6. 關於我
    * ══════════════════════════════════════════════════════════════════════ */
   function renderAbout() {
     const box = document.getElementById('about-content');
@@ -423,7 +806,7 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════
-   *  6. 留言板（三種模式）
+   *  7. 留言板（三種模式）
    * ══════════════════════════════════════════════════════════════════════ */
   function renderGuestbook() {
     const box = document.getElementById('guestbook-content');
@@ -516,7 +899,7 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════
-   *  7. 特別鳴謝（含影片播放器）
+   *  8. 特別鳴謝（含影片播放器）
    * ══════════════════════════════════════════════════════════════════════ */
 
   /** 從各種 YouTube 網址形式取出影片 ID（youtu.be、watch?v=、embed、shorts 都吃） */
@@ -670,7 +1053,7 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════
-   *  8. 頁尾
+   *  9. 頁尾
    * ══════════════════════════════════════════════════════════════════════ */
   function renderFooter() {
     const f = document.getElementById('footer');
@@ -695,7 +1078,7 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════
-   *  9. 彩蛋
+   *  10. 彩蛋
    * ----------------------------------------------------------------------
    *  觸發方式：在頁面上任何位置連續輸入 data.js 裡的 easterEgg.trigger
    *           （預設是 "ciallo"），不分大小寫、不需要點輸入框。
@@ -781,8 +1164,8 @@
     const nav = document.getElementById('section-nav');
     const items = [
       ['sec-favorites', '最愛'], ['sec-recent', '最近'], ['sec-perfect', '全成就'],
-      ['sec-wishlist', '願望'], ['sec-links', '連結'], ['sec-about', '關於'],
-      ['sec-guestbook', '留言'], ['sec-thanks', '鳴謝']
+      ['sec-wishlist', '願望'], ['sec-music', '音樂'], ['sec-links', '連結'],
+      ['sec-about', '關於'], ['sec-guestbook', '留言'], ['sec-thanks', '鳴謝']
     ];
     items.forEach(function (pair) {
       const sec = document.getElementById(pair[0]);
@@ -828,6 +1211,7 @@
     renderRecent();
     renderPerfect();
     renderWishlist();
+    renderMusic();
     renderLinks();
     renderAbout();
     renderGuestbook();
@@ -835,6 +1219,7 @@
     renderFooter();
     renderNav();
     initVideoModal();
+    initMusicKeys();
     initEasterEgg();
   }
 
