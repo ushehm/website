@@ -410,6 +410,38 @@ powershell -ExecutionPolicy Bypass -File tools\make-favicon.ps1 `
 > 「不準（不準確）」。轉換時有針對這個詞做修正。
 
 
+## 其他連結與品牌圖示
+
+「其他連結」那區的每一張卡片左邊有一個品牌圖示。目前共 8 個：
+
+| 平台 | 圖示來源 |
+| :-- | :-- |
+| Steam / Discord / X / Instagram / YouTube / Bilibili / GitHub | [Simple Icons](https://simpleicons.org/) 的官方品牌向量 |
+| **AcFun** | AcFun 官方 App 圖示（AC 娘）PNG |
+| OpenAI | 同 Simple Icons，給 AI 助手的頭像用 |
+
+### 圖示是怎麼放的
+
+圖示定義在 `script.js` 的 `ICONS` 物件裡，有兩種形式：
+
+- **`svg`** —— 向量路徑，套用 `viewBox="0 0 24 24"`，顏色由 `color` 決定
+  （透過 CSS 變數 `--brand`）。大部分品牌走這條。
+- **`img`** —— 圖片路徑。**只有 AcFun 用這個**，放在 `images/icons/acfun.png`。
+
+要換圖示或加新平台，就是在 `ICONS` 加一項，再到 `data.js` 的 `links` 陣列
+加一行 `{ icon: '代號', label: '名稱', url: '網址' }`。
+
+> **顏色沒有用官方色。** Simple Icons 給的官方品牌色裡，Steam、X、GitHub
+> 都接近黑色 —— 直接用在深色卡片上會看不見。所以顏色沿用原本配合深色底
+> 調過的值，只有形狀換成官方向量。
+
+> **AcFun 為什麼不是向量？** Simple Icons 和 Iconify（整合 24 個圖示庫）
+> **都沒有收錄 AcFun**。AcFun 官網 favicon 只有 32×32，footer 字標是 78×24
+> 的灰階 PNG，Wikimedia 上的官方字標是 3.14:1 的橫式字（而且授權是
+> CC BY 2.5）。所以最後用官方 App 圖示（32×32）。**在高解析度螢幕上會稍微
+> 偏軟** —— 如果你找得到更大的官方圖，換掉 `images/icons/acfun.png` 就好。
+
+
 ## 注意事項
 
 **API 金鑰**：`steam-api-key.txt` 是你的私密金鑰。這個資料夾要上傳到 GitHub

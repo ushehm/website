@@ -81,8 +81,10 @@ const SITE_DATA = {
    *  其他連結
    *  ✏️ 除了 Steam，其餘我都留成範例網址——請換成你自己的帳號。
    *     不想顯示某個平台，把整個 { ... } 刪掉，或在該項加 enabled: false。
-   *     icon 可用值：steam / discord / x / instagram / youtube / twitch /
-   *                  bilibili / github / email
+   *     icon 可用值：steam / discord / x / instagram / youtube /
+   *                  bilibili / acfun / github / openai / email
+   *     （圖示路徑全部是 Simple Icons 的官方品牌向量；
+   *       acfun 因為沒有官方向量，用的是官方 App 圖示 PNG）
    * ──────────────────────────────────────────────────────────────────── */
   links: [
     { icon: 'steam',     label: 'Steam',     url: 'https://steamcommunity.com/id/ciaII0/', note: '加好友一起玩' },  // ✅
@@ -91,6 +93,7 @@ const SITE_DATA = {
     { icon: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/qaq4009?stkn=MWswNnJ5Zm1nOTIycQ==',  },
     { icon: 'youtube',   label: 'YouTube',   url: 'https://youtube.com/@ushehm1?si=McTIk4uwz9MjqyhM', },
     { icon: 'bilibili',  label: 'Bilibili',  url: 'https://space.bilibili.com/1456418761', },
+    { icon: 'acfun',     label: 'AcFun',     url: 'https://m.acfun.cn/upPage/78118542?sid=5040da606812ce02', note: '我的 A 站主頁' },
     { icon: 'github',    label: 'GitHub',    url: 'https://github.com/ushehm', },
      ],
 

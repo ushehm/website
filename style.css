@@ -379,6 +379,14 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
   transition: box-shadow .22s, transform .22s;
 }
 .link-card__icon svg { width: 22px; height: 22px; }
+/* AcFun 只有官方點陣圖（32×32），走 img 而不是 svg。
+   給它圓角並稍微放大一點，因為圖本身是滿版的紅底方圖。 */
+.link-card__icon img {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  display: block;
+  object-fit: cover;
+}
 .link-card:hover .link-card__icon {
   transform: scale(1.08);
   box-shadow: 0 0 18px -2px var(--brand, var(--accent));
@@ -1386,6 +1394,8 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
   color: #06121c;
   font-size: .95rem; font-weight: 700;
 }
+/* 頭像是 OpenAI 官方標誌（向量）。白色在漸層底上比原本的深色更清楚。 */
+.ai__avatar svg { width: 58%; height: 58%; color: #fff; display: block; }
 .ai__avatar--lg { width: 42px; height: 42px; font-size: 1.15rem; }
 .ai__id { display: grid; gap: 2px; }
 .ai__name { font-size: 1rem; font-weight: 700; color: var(--text-bright); }
