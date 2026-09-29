@@ -73,6 +73,14 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
   background: linear-gradient(90deg, var(--accent-2), var(--accent));
   color: #06121c; font-weight: 700;
 }
+/* 指向獨立子頁面的那一項（歷史專區），用一個小箭頭提示會離開本頁 */
+.section-nav__link--page { color: var(--accent); }
+.section-nav__link--page::after {
+  content: ' ↗';
+  font-size: .82em;
+  opacity: .7;
+}
+.section-nav__link--page:hover { background: rgba(102, 192, 244, .12); color: var(--accent); }
 
 /* ══════════════════════════════════════════════════════════════════════════
  *  ① 頂部橫幅
@@ -1701,6 +1709,115 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
   .reader__p { font-size: .92rem; line-height: 1.9; }
   .lightbox { padding: 10px; }
   .lightbox__hint { font-size: .7rem; bottom: 10px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+ *  歷史專區（獨立子頁面 history.html）
+ * --------------------------------------------------------------------------
+ *  這一整塊只給 history.html 用，主頁不會出現這些元素。
+ * ══════════════════════════════════════════════════════════════════════════ */
+.subhead { padding: 40px 0 10px; }
+.subhead__back {
+  display: inline-block;
+  margin-bottom: 18px;
+  font-size: .84rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.subhead__back:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.subhead__title { font-size: 1.7rem; margin: 0 0 4px; }
+.subhead__sub {
+  margin: 0 0 10px;
+  font-size: .8rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.subhead__desc { margin: 0; font-size: .9rem; color: var(--text-dim); }
+
+/* ── 書單 ── */
+.books { display: grid; gap: 10px; }
+.book {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, transform .2s, box-shadow .25s;
+}
+.book:hover, .book:focus-visible {
+  background: var(--panel-2);
+  border-color: var(--accent);
+  transform: translateX(4px);
+  box-shadow: 0 0 22px -6px var(--accent);
+  outline: none;
+}
+.book.is-current { background: var(--panel-2); border-color: var(--accent); }
+.book__no {
+  text-align: center;
+  font-size: .9rem; font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.book__body { display: grid; gap: 3px; min-width: 0; }
+.book__title { font-size: .96rem; line-height: 1.45; }
+.book__meta { display: flex; flex-wrap: wrap; gap: 10px; font-size: .74rem; color: var(--text-dim); }
+.book__size { font-variant-numeric: tabular-nums; }
+.book__go { color: var(--text-dim); font-size: 1.1rem; transition: color .2s, transform .2s; }
+.book:hover .book__go { color: var(--accent); transform: translateX(3px); }
+
+/* ── 閱讀器 ── */
+.reader { margin-top: 6px; }
+.reader__bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.reader__title { margin: 0; font-size: 1.1rem; }
+.reader__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.reader__actions .btn {
+  padding: 7px 14px;
+  font-size: .82rem;
+  text-decoration: none;
+}
+.reader__hint {
+  margin: 0 0 10px;
+  font-size: .78rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+.reader__stage {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.reader__frame {
+  display: block;
+  width: 100%;
+  height: min(78vh, 900px);
+  border: 0;
+  background: #fff;   /* PDF 是白底，先給白底才不會載入時閃黑 */
+}
+
+@media (max-width: 640px) {
+  .subhead { padding: 24px 0 8px; }
+  .subhead__title { font-size: 1.35rem; }
+  .book { grid-template-columns: 30px 1fr auto; gap: 10px; padding: 12px; }
+  .book__title { font-size: .9rem; }
+  .reader__actions { width: 100%; }
+  .reader__actions .btn { flex: 1; text-align: center; }
+  .reader__frame { height: 70vh; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════

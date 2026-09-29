@@ -580,5 +580,43 @@ const SITE_DATA = {
         description: ''
       }
     ]
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  歷史專區（獨立子頁面 history.html）
+   * ----------------------------------------------------------------------
+   *  ⚠ 這個區塊只有 history.html 會讀，主頁不會用到。
+   *
+   *  PDF 放在 history/ 資料夾，檔名都改成 ASCII 了。
+   *  原始檔在 E:\history，沒有複製進專案（那些中文檔名在網址裡要編碼，
+   *  而且有空格和括號，容易出問題）。
+   *
+   *  ✏️ 要加書：把 PDF 放進 history/（檔名用英文數字），
+   *     再在下面 books 陣列補一筆。level 相同的會自動分成同一組。
+   *     size 只是顯示用的，換了 PDF 記得順手改一下。
+   * ──────────────────────────────────────────────────────────────────── */
+  history: {
+    title: '歷史專區',
+    subtitle: 'History Notes',
+    description: '中四、中五的歷史科筆記，共 11 本。點書名可以直接在這裡看。',
+    backLabel: '← 回到主頁',
+    openLabel: '在新分頁開啟 ↗',
+    downloadLabel: '下載 PDF',
+    closeLabel: '收起閱讀器',
+    readerHint: '看不到內容或只有第一頁的話，按「在新分頁開啟」用手機內建的閱讀器看。',
+    books: [
+      { level: '中四級', title: '第一次世界大戰',       note: '2024-2025 ・ 教師版', size: '6.3 MB',  file: 'history/s4-ww1.pdf' },
+      { level: '中四級', title: '第二次世界大戰',       note: '2024-2025',           size: '13.0 MB', file: 'history/s4-ww2.pdf' },
+      { level: '中四級', title: '冷戰',                 note: '2024-2025',           size: '18.5 MB', file: 'history/s4-cold-war.pdf' },
+      { level: '中四級', title: '歐洲經濟統合',         note: '2024-2025',           size: '7.8 MB',  file: 'history/s4-european-integration.pdf' },
+      { level: '中四級', title: '社會及文化國際協作',   note: '2024-2025',           size: '3.0 MB',  file: 'history/s4-society-culture.pdf' },
+
+      { level: '中五級', title: '中國：早期的現代化努力（改革與革命）', note: '2025-2026', size: '8.1 MB',  file: 'history/s5-china-early-modernization.pdf' },
+      { level: '中五級', title: '中國：毛澤東時代的社會主義現代化及後毛澤東時代的演變', note: '2025-2026', size: '14.6 MB', file: 'history/s5-mao-socialism.pdf' },
+      { level: '中五級', title: '日本的現代化與蛻變 1900-1945', note: '',           size: '5.7 MB',  file: 'history/s5-japan-1900-1945.pdf' },
+      { level: '中五級', title: '日本的現代化與蛻變 1945 後（日本經濟奇蹟及外交關係）', note: '', size: '5.0 MB',  file: 'history/s5-japan-post1945.pdf' },
+      { level: '中五級', title: '香港作為國際城市的發展', note: '2025-2026',         size: '16.4 MB', file: 'history/s5-hk-international-city.pdf' },
+      { level: '中五級', title: '香港政治及行政轉變',     note: '2025-2026',         size: '9.3 MB',  file: 'history/s5-hk-politics.pdf' }
+    ]
   }
 };

@@ -8,16 +8,26 @@ Steam 風格的個人遊戲主頁。純靜態網站 —— 沒有框架、沒有
 
 ```
 D:\My website\
-├─ index.html              ← 版面骨架（不含內容，通常不需要改）
+├─ index.html              ← 主頁骨架（不含內容，通常不需要改）
+├─ history.html             ← ★ 歷史專區（獨立子頁面）
 ├─ data.js                 ← ★ 所有內容都在這裡，你只需要改這個檔案
-├─ script.js               ← 讀取 data.js 自動生成卡片（通常不需要改）
-├─ style.css               ← 樣式，顏色集中在最上面的 :root
+├─ script.js               ← 主頁的程式（讀 data.js 生成卡片）
+├─ history.js              ← 歷史專區的程式（只有那一頁會載入）
+├─ novels.js               ← 小說內文（很長，所以從 data.js 拆出來）
+├─ style.css               ← 樣式，顏色集中在最上面的 :root；主頁與子頁共用
+├─ history\                ← ★ 11 本歷史科筆記的 PDF（檔名已改成 ASCII，107.6 MB）
 ├─ images\
 │   ├─ avatar.jpg          ← 你的 Steam 頭像
+│   ├─ banner.jpg          ← 橫幅背景圖（沒有這個檔案就自動退回漸層）
 │   ├─ thanks-preview.jpg  ← 特別鳴謝那顆按鈕的預覽圖
 │   ├─ favicon.ico / .png  ← 分頁圖示（由你提供的圖轉出來的）
 │   ├─ icon-192.png        ← Android 加到主畫面用
 │   ├─ apple-touch-icon.png← iOS 加到主畫面用
+│   ├─ icons\acfun.png     ← AcFun 的官方 App 圖示（唯一一個不是向量的品牌圖）
+│   ├─ egg\                ← 圖片彩蛋用的 10 張圖
+│   ├─ novel\              ← 4 本小說的封面
+│   ├─ payment\            ← 6 種付款方式的收款碼
+│   ├─ comic\              ← 26 張四格漫畫
 │   └─ README.txt          ← 圖片放的規則
 ├─ media\
 │   ├─ deepseek-dance.mp4  ← 特別鳴謝播放的影片
@@ -33,6 +43,7 @@ D:\My website\
 │   └─ steam-data.json     ← 抓下來的原始資料（給你參考，網站本身不讀它）
 ├─ user provide image\     ← 你原本給我的素材（已複製到上面各位置，可以刪掉）
 ├─ user provide music\     ← 同上，音訊原始檔（可以刪掉）
+├─ context\                ← 小說的原始 .txt（沒有上傳，網站讀的是 novels.js）
 ├─ update-website.bat      ← 雙擊就把變更推上 GitHub
 └─ steam-api-key.txt       ← ⚠ 你的 Steam Web API 金鑰，不要上傳到公開網站
 ```
@@ -474,6 +485,56 @@ if (!allowedInput && (tag === 'INPUT' || tag === 'TEXTAREA' || ...)) return;
 > 的灰階 PNG，Wikimedia 上的官方字標是 3.14:1 的橫式字（而且授權是
 > CC BY 2.5）。所以最後用官方 App 圖示（32×32）。**在高解析度螢幕上會稍微
 > 偏軟** —— 如果你找得到更大的官方圖，換掉 `images/icons/acfun.png` 就好。
+
+
+## 歷史專區（獨立子頁面）
+
+**`history.html`** —— 這是一個獨立的頁面，不是主頁的一個區塊。
+用途是隨時隨地用手機看歷史科筆記，不用帶實體書或 USB。
+
+主頁的**分區導覽列最右邊**有一項「**歷史 ↗**」（帶箭頭，表示會離開這一頁）。
+
+### 內容
+
+11 本 PDF，共 107.6 MB，放在 `history/` 資料夾：
+
+| 分組 | 本數 | 內容 |
+| :-- | --: | :-- |
+| 中四級 | 5 | 第一次世界大戰、第二次世界大戰、冷戰、歐洲經濟統合、社會及文化國際協作 |
+| 中五級 | 6 | 中國（早期現代化、毛澤東時代）、日本（1900-1945、1945 後）、香港（國際城市、政治及行政轉變）|
+
+### 怎麼看
+
+點書名 → 頁面下方展開閱讀器（內嵌 `<iframe>`）+ 三個按鈕：
+
+- **在新分頁開啟 ↗** —— 交給瀏覽器／手機內建的 PDF 閱讀器
+- **下載 PDF**
+- **收起閱讀器**（或按 Esc）
+
+> **手機上如果內嵌的內容一片空白或只有第一頁**，那是手機瀏覽器的限制
+> —— 按「在新分頁開啟」用手機內建的閱讀器看就正常了。閱讀器上面有寫這句提示。
+
+### 為什麼檔名改成 ASCII
+
+原始檔名（在 `E:\history`）有中文、空格、括號，在網址裡都要編碼，容易出問題。
+所以複製進來時改成 `s4-ww1.pdf` 這種名字，**中文標題保留在 `data.js` 裡顯示**。
+原始檔完全沒動。
+
+### 要加書或改書名
+
+1. 把 PDF 放進 `history/`（**檔名用英文數字**）
+2. 在 `data.js` 的 `history.books` 陣列補一筆：
+
+```js
+{ level: '中五級', title: '顯示的書名', note: '2025-2026', size: '8.1 MB', file: 'history/xxx.pdf' }
+```
+
+`level` 相同的會自動分成同一組。`size` 只是顯示用的，換了 PDF 記得順手改。
+
+### 上傳大小
+
+Cloudflare Pages 的限制是**單檔 25 MiB**、**總檔案數 20,000**。
+這 11 本最大的是 18.45 MiB，全部合格。整站現在約 182 MB。
 
 
 ## 注意事項
