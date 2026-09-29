@@ -234,6 +234,23 @@ powershell -ExecutionPolicy Bypass -File tools\make-favicon.ps1 `
 
 觸發後會彈出「🎉 你發現彩蛋了！」面板，裡面就是「**廣告位招租**」。
 
+### AI 助手的輸入框也能觸發
+
+在 **AI 助手（GPT-6-Astra）的輸入框**裡打 `ciallo` 也會觸發，打到第 6 個字母
+就彈出來，不用按送出。
+
+其他輸入框**不會**觸發 —— 留言板的名字／留言欄、會員註冊的欄位、音樂音量滑桿
+都照常運作，不會被搶按鍵。這是 `initEasterEgg()` 裡的一個例外判斷：
+
+```js
+const fromAiInput = !!ev.target && ev.target.id === 'ai-input';
+if (!fromAiInput && (tag === 'INPUT' || tag === 'TEXTAREA' || ...)) return;
+```
+
+> **一個頁面只會觸發一次。** 這是原本就有的設計（`opened` 旗標）：不管是從頁面
+> 打字還是從 AI 輸入框，只要彈過一次，重新整理頁面前就不會再彈。
+> 想改成可以重複觸發，跟我說。
+
 想換觸發字串或文案，改 `data.js` 的 `easterEgg` 區塊即可。
 
 

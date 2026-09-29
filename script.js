@@ -1167,9 +1167,13 @@
       if (anyModalOpen()) return;
 
       // 打字偵測（忽略輸入框與修飾鍵）
+      // 例外：AI 助手的輸入框。在那裡打 ciallo 也要能觸發彩蛋
+      // （這是刻意指定的，其他輸入框如留言板仍然不搶按鍵）
       if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
       const tag = (ev.target && ev.target.tagName) || '';
-      if (tag === 'INPUT' || tag === 'TEXTAREA' || (ev.target && ev.target.isContentEditable)) return;
+      const fromAiInput = !!ev.target && ev.target.id === 'ai-input';
+      if (!fromAiInput &&
+          (tag === 'INPUT' || tag === 'TEXTAREA' || (ev.target && ev.target.isContentEditable))) return;
       if (!ev.key || ev.key.length !== 1) return;
 
       buffer = (buffer + ev.key.toLowerCase()).slice(-target.length);
