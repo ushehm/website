@@ -537,6 +537,75 @@ Cloudflare Pages 的限制是**單檔 25 MiB**、**總檔案數 20,000**。
 這 11 本最大的是 18.45 MiB，全部合格。整站現在約 182 MB。
 
 
+## 部署到 Cloudflare（`.assetsignore` 很重要）
+
+這個專案的 Cloudflare 設定是「**輸出目錄 = `.`**」（倉庫根目錄）。
+也就是說 wrangler 會把**整個根目錄**都當成要上傳的靜態資產。
+
+### 這會出什麼事
+
+`.git` 資料夾裡有一個 **176 MB** 的 pack 檔，而 Cloudflare 對單一靜態資產的
+上限是 **25 MiB**。所以部署會直接失敗：
+
+```
+Asset too large: .git/objects/pack/pack-xxxx.pack is larger than 25 MiB
+```
+
+### 解法：`.assetsignore`
+
+在根目錄放一個 `.assetsignore`，格式跟 `.gitignore` 一樣。
+wrangler **不會上傳**符合裡面規則的檔案。
+
+```
+.git
+.git/
+**/.git
+**/.git/**
+```
+
+這樣就排除了 `.git`。**不需要改任何 Cloudflare 後台的設定。**
+
+官方說明：[Workers Static Assets — Ignoring assets](https://developers.cloudflare.com/workers/static-assets/binding/#ignoring-assets)
+
+> ⚠️ **這個檔案不能刪。** 刪掉之後下次部署又會因為 `.git` 太大而失敗。
+> 而且它必須留在倉庫裡（不能只放在你本機）。
+
+### 順便還排除了什麼
+
+`.assetsignore` 裡除了 `.git`，也排除了這些**不是網站內容**的東西：
+
+| 排除的 | 為什麼 |
+| :-- | :-- |
+| `steam-api-key.txt` | 你的 API 金鑰。雲端 clone 不會有它，但**萬一你在本機直接跑 wrangler**，這行可以擋住它被上傳 |
+| `user provide image/`、`user provide music/`、`context/` | 你原本給我的素材，同樣是本機才有的 |
+| `README.md`、`tools/` | 說明文件與抓資料的工具，不是網頁 |
+| `update-website.bat` / `.ps1` | 只有你自己電腦上用得到 |
+| `.gitignore`、`.assetsignore`、`wrangler.*` | 設定檔 |
+| `*.pack`、`*.idx`、`*.log` | 雜項 |
+
+### 部署後實際會上傳多少
+
+用 `ignore` 套件（gitignore 語意的實作）實際算過：
+
+```
+會被上傳 = 88 個檔案，182.0 MB
+超過 25 MiB 的 = 0
+最大的一個 = history/s4-cold-war.pdf（18.45 MB）
+```
+
+Cloudflare 的 Static Assets **沒有總容量上限**，只限制單檔 25 MiB 和
+檔案數（免費 20,000 / 付費 100,000）。所以這個規模完全沒問題。
+
+來源：[Workers Platform Limits — Static Assets](https://developers.cloudflare.com/workers/platform/limits/#static-assets)
+
+### 如果還是失敗
+
+那就表示你的專案可能還是舊的 **Pages** 形式（不是 Workers static assets），
+`Pages` 不讀 `.assetsignore`。這種情況要改後台設定，把「建置輸出目錄」
+從 `.` 改成一個**子目錄**（例如把網站檔案全部搬進 `public/`），
+這樣 `.git` 就不在資產目錄裡了。要做的話跟我說。
+
+
 ## 注意事項
 
 **API 金鑰**：`steam-api-key.txt` 是你的私密金鑰。這個資料夾要上傳到 GitHub

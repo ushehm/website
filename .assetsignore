@@ -1,0 +1,64 @@
+# ============================================================================
+#  .assetsignore —— 部署到 Cloudflare 時「不要上傳」的清單
+# ----------------------------------------------------------------------------
+#  格式跟 .gitignore 完全一樣（Cloudflare 官方說明：
+#  https://developers.cloudflare.com/workers/static-assets/binding/#ignoring-assets）
+#
+#  為什麼需要這個檔案：
+#    這個專案的「輸出目錄」設成 .（倉庫根目錄），所以 wrangler 會把整個
+#    根目錄當成要上傳的靜態資產。而 .git 裡面有一個 176 MB 的 pack 檔，
+#    超過 Cloudflare「單一資產 25 MiB」的上限，部署會直接失敗。
+#
+#  注意：wrangler 只根據這個檔案決定要不要上傳，不會動到 git 本身。
+#        這個檔案本身也要留在倉庫裡，不然下次部署又會失敗。
+# ============================================================================
+
+# ── 絕對不能上傳 ───────────────────────────────────────────────────────────
+
+# git 的版本控制資料。這是這次部署失敗的主因（裡面的 pack 檔 176 MB）。
+.git
+.git/
+**/.git
+**/.git/**
+
+# 你的 Steam Web API 金鑰。雲端 clone 不會有這個檔案（被 .gitignore 排除），
+# 但如果你哪天在本機直接跑 wrangler，這一行可以擋住它被上傳。
+steam-api-key.txt
+
+# 你原本給我的素材，已經複製到 images/ 與 media/ 底下。
+# 同樣地雲端不會有，但本機部署時要擋。
+user provide image/
+user provide music/
+context/
+
+# ── 不是網站內容的東西 ─────────────────────────────────────────────────────
+
+# 部署與版控的設定
+.gitignore
+.assetsignore
+wrangler.toml
+wrangler.json
+wrangler.jsonc
+.wrangler/
+
+# 一鍵更新腳本（只有你自己電腦上用得到）
+update-website.bat
+update-website.ps1
+
+# 說明文件與抓資料的工具
+README.md
+tools/
+
+# ── 作業系統與編輯器雜項 ───────────────────────────────────────────────────
+
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# ── 雜項 ───────────────────────────────────────────────────────────────────
+
+*.log
+*.pack
+*.idx
