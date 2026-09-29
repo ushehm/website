@@ -9,13 +9,16 @@ Steam 風格的個人遊戲主頁。純靜態網站 —— 沒有框架、沒有
 ```
 D:\My website\
 ├─ index.html              ← 主頁骨架（不含內容，通常不需要改）
-├─ history.html             ← ★ 歷史專區（獨立子頁面）
+├─ study.html              ← ★ 溫習中轉頁（列出有哪些專區）
+├─ chinese.html            ← ★ 中文專區
+├─ history.html            ← ★ 歷史專區
 ├─ data.js                 ← ★ 所有內容都在這裡，你只需要改這個檔案
 ├─ script.js               ← 主頁的程式（讀 data.js 生成卡片）
-├─ history.js              ← 歷史專區的程式（只有那一頁會載入）
+├─ study.js                ← 溫習相關三頁共用的程式
 ├─ novels.js               ← 小說內文（很長，所以從 data.js 拆出來）
-├─ style.css               ← 樣式，顏色集中在最上面的 :root；主頁與子頁共用
-├─ history\                ← ★ 11 本歷史科筆記的 PDF（檔名已改成 ASCII，107.6 MB）
+├─ style.css               ← 樣式，顏色集中在最上面的 :root；全部頁面共用
+├─ chinese\                ← ★ 中文科的 PDF
+├─ history\                ← ★ 歷史科的 PDF（12 本，109.1 MB）
 ├─ images\
 │   ├─ avatar.jpg          ← 你的 Steam 頭像
 │   ├─ banner.jpg          ← 橫幅背景圖（沒有這個檔案就自動退回漸層）
@@ -44,6 +47,7 @@ D:\My website\
 ├─ user provide image\     ← 你原本給我的素材（已複製到上面各位置，可以刪掉）
 ├─ user provide music\     ← 同上，音訊原始檔（可以刪掉）
 ├─ context\                ← 小說的原始 .txt（沒有上傳，網站讀的是 novels.js）
+├─ .assetsignore           ← ⚠ 部署時要排除哪些檔案，不要刪（見下面說明）
 ├─ update-website.bat      ← 雙擊就把變更推上 GitHub
 └─ steam-api-key.txt       ← ⚠ 你的 Steam Web API 金鑰，不要上傳到公開網站
 ```
@@ -487,21 +491,45 @@ if (!allowedInput && (tag === 'INPUT' || tag === 'TEXTAREA' || ...)) return;
 > 偏軟** —— 如果你找得到更大的官方圖，換掉 `images/icons/acfun.png` 就好。
 
 
-## 歷史專區（獨立子頁面）
+## 溫習專區（獨立子頁面）
 
-**`history.html`** —— 這是一個獨立的頁面，不是主頁的一個區塊。
-用途是隨時隨地用手機看歷史科筆記，不用帶實體書或 USB。
+主頁的**分區導覽列最右邊**有一項「**溫習 ↗**」（帶箭頭，表示會離開這一頁）。
+用途是隨時隨地用手機看筆記，不用帶實體書或 USB。
 
-主頁的**分區導覽列最右邊**有一項「**歷史 ↗**」（帶箭頭，表示會離開這一頁）。
+### 三個頁面
 
-### 內容
+| 頁面 | 功能 |
+| :-- | :-- |
+| **`study.html`** | 中轉頁。列出目前有哪些專區，點進去各自的頁面 |
+| **`chinese.html`** | 中文專區 |
+| **`history.html`** | 歷史專區 |
 
-11 本 PDF，共 107.6 MB，放在 `history/` 資料夾：
+三頁**共用同一份程式 `study.js`**，差別只在 `<body>` 上的兩個屬性：
+
+```html
+<!-- 中轉頁 -->
+<body data-study-page="hub">
+
+<!-- 專區頁 -->
+<body data-study-page="subject" data-subject="history">
+```
+
+`data-subject` 就是 `data.js` 裡的區塊名稱（`chinese` / `history`）。
+
+### 目前有什麼
+
+| 專區 | 份數 | 大小 |
+| :-- | --: | --: |
+| 中文專區 | 1 | 1.1 MB |
+| 歷史專區 | 12 | 109.1 MB |
+
+歷史專區的分組：
 
 | 分組 | 本數 | 內容 |
 | :-- | --: | :-- |
 | 中四級 | 5 | 第一次世界大戰、第二次世界大戰、冷戰、歐洲經濟統合、社會及文化國際協作 |
 | 中五級 | 6 | 中國（早期現代化、毛澤東時代）、日本（1900-1945、1945 後）、香港（國際城市、政治及行政轉變）|
+| **其他** | 1 | **歷史科框架温習紙** |
 
 ### 怎麼看
 
@@ -514,27 +542,35 @@ if (!allowedInput && (tag === 'INPUT' || tag === 'TEXTAREA' || ...)) return;
 > **手機上如果內嵌的內容一片空白或只有第一頁**，那是手機瀏覽器的限制
 > —— 按「在新分頁開啟」用手機內建的閱讀器看就正常了。閱讀器上面有寫這句提示。
 
-### 為什麼檔名改成 ASCII
+### 要加一科（例如英文）
 
-原始檔名（在 `E:\history`）有中文、空格、括號，在網址裡都要編碼，容易出問題。
-所以複製進來時改成 `s4-ww1.pdf` 這種名字，**中文標題保留在 `data.js` 裡顯示**。
-原始檔完全沒動。
+1. 在 `data.js` 的 `study.subjects` 陣列補一項（`key` / `name` / `icon` / `page`）
+2. 在 `data.js` 新增一個**同名的區塊**（照 `chinese` 的格式，裡面放 `books`）
+3. 複製 `chinese.html`，把 `data-subject` 改成新的 key，檔名改成新的一頁
+4. 把 PDF 放進新的資料夾（**檔名用英文數字**）
 
 ### 要加書或改書名
 
-1. 把 PDF 放進 `history/`（**檔名用英文數字**）
-2. 在 `data.js` 的 `history.books` 陣列補一筆：
+1. 把 PDF 放進對應的資料夾（`history/` 或 `chinese/`，**檔名用英文數字**）
+2. 在 `data.js` 對應區塊的 `books` 陣列補一筆：
 
 ```js
-{ level: '中五級', title: '顯示的書名', note: '2025-2026', size: '8.1 MB', file: 'history/xxx.pdf' }
+{ level: '其他', title: '顯示的書名', note: '', size: '1.5 MB', file: 'history/xxx.pdf' }
 ```
 
-`level` 相同的會自動分成同一組。`size` 只是顯示用的，換了 PDF 記得順手改。
+`level` 相同的會自動分成同一組 —— 用**新的 level 值就會多出一個分組**
+（「其他」就是這樣來的）。`size` 只是顯示用的，換了 PDF 記得順手改。
+
+### 為什麼檔名改成 ASCII
+
+原始檔名（在 `E:\history`、`E:\chinese`）有中文、空格、括號，在網址裡都要編碼，
+容易出問題。所以複製進來時改成 `s4-ww1.pdf` 這種名字，
+**中文標題保留在 `data.js` 裡顯示**。原始檔完全沒動。
 
 ### 上傳大小
 
-Cloudflare Pages 的限制是**單檔 25 MiB**、**總檔案數 20,000**。
-這 11 本最大的是 18.45 MiB，全部合格。整站現在約 182 MB。
+Cloudflare 對靜態資產的限制是**單檔 25 MiB**、**檔案數 20,000**（免費）。
+目前最大的一個是 18.45 MiB，全部合格。整站現在約 184.6 MB。
 
 
 ## 部署到 Cloudflare（`.assetsignore` 很重要）

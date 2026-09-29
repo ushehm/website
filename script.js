@@ -2115,14 +2115,14 @@
       nav.appendChild(el('a', { class: 'section-nav__link', href: '#' + pair[0], text: pair[1] }));
     });
 
-    // 歷史專區是獨立子頁面（不是本頁的區塊），所以另外接一項。
+    // 溫習是獨立的中轉頁（不是本頁的區塊），所以另外接一項。
     // 加 --page 修飾子，用一個小箭頭提示「這會離開這一頁」。
-    if (D.history && (D.history.books || []).length) {
+    if (D.study && (D.study.subjects || []).length) {
       nav.appendChild(el('a', {
         class: 'section-nav__link section-nav__link--page',
-        href: 'history.html',
-        text: '歷史',
-        title: '歷史專區（獨立頁面）'
+        href: 'study.html',
+        text: '溫習',
+        title: '溫習專區（獨立頁面）'
       }));
     }
 

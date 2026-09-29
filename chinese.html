@@ -3,22 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>歷史專區 — ciallo</title>
-<meta name="description" content="中四、中五歷史科筆記，共 12 本，可以直接在網頁上看。">
+<title>中文專區 — ciallo</title>
+<meta name="description" content="中文科的溫習資料，可以直接在網頁上看。">
 <meta name="theme-color" content="#171a21">
 <meta name="color-scheme" content="dark">
 
 <!--
-  歷史專區（子頁面）
+  中文專區（子頁面）
   ----------------------------------------------------------------------------
-  跟 chinese.html 共用同一份程式 study.js，差別只在 <body> 上的 data 屬性：
+  跟 history.html 共用同一份程式 study.js，差別只在 <body> 上的 data 屬性：
     data-study-page="subject"  → 這是一頁專區
-    data-subject="history"     → 要讀 data.js 的哪一個區塊
+    data-subject="chinese"     → 要讀 data.js 的哪一個區塊
 
-  刻意不載入 script.js —— 那個是主頁用的，會去找主頁才有的元素。
-
-  筆記的 PDF 放在 history/ 資料夾（檔名都是 ASCII）。
-  書單與文字設定在 data.js 的 history 區塊。
+  PDF 放在 chinese/ 資料夾。
 -->
 
 <link rel="icon" href="images/favicon.ico">
@@ -26,11 +23,10 @@
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
-<body data-study-page="subject" data-subject="history">
+<body data-study-page="subject" data-subject="chinese">
 
 <div class="page">
 
-  <!-- 子頁面的簡易頁首（不是主頁那條分區導覽） -->
   <header class="subhead">
     <a class="subhead__back" id="sub-back" href="study.html">← 回到溫習</a>
     <h1 class="subhead__title" id="sub-title"></h1>
@@ -39,10 +35,8 @@
   </header>
 
   <main>
-    <!-- 書單（由 study.js 生成） -->
     <div id="history-list"></div>
 
-    <!-- 閱讀器：點書名之後才會出現 -->
     <section class="section reader" id="reader" hidden>
       <div class="reader__bar">
         <h2 class="reader__title" id="reader-title"></h2>

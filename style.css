@@ -1737,6 +1737,46 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
 }
 .subhead__desc { margin: 0; font-size: .9rem; color: var(--text-dim); }
 
+/* ── 溫習中轉頁：專區卡片（study.html）── */
+.subjects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+.subject {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: linear-gradient(160deg, var(--panel) 0%, #16202c 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color .22s, box-shadow .28s, transform .22s;
+}
+.subject:hover, .subject:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 12px 34px -12px rgba(0, 0, 0, .8), 0 0 26px -10px var(--accent);
+  transform: translateY(-3px);
+  outline: none;
+}
+.subject__icon {
+  display: grid; place-items: center;
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(150deg, var(--accent-2), var(--accent));
+  color: #06121c;
+  font-size: 1.4rem; font-weight: 700;
+}
+.subject__body { display: grid; gap: 4px; min-width: 0; }
+.subject__name { font-size: 1.1rem; font-weight: 700; color: var(--text-bright); }
+.subject__desc { font-size: .84rem; line-height: 1.6; color: var(--text-dim); }
+.subject__meta { font-size: .74rem; color: var(--text-dim); }
+.subject__go { color: var(--text-dim); font-size: 1.3rem; transition: color .2s, transform .2s; }
+.subject:hover .subject__go { color: var(--accent); transform: translateX(4px); }
+
 /* ── 書單 ── */
 .books { display: grid; gap: 10px; }
 .book {
@@ -1813,6 +1853,10 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
 @media (max-width: 640px) {
   .subhead { padding: 24px 0 8px; }
   .subhead__title { font-size: 1.35rem; }
+  .subjects { grid-template-columns: 1fr; gap: 10px; }
+  .subject { padding: 14px; grid-template-columns: 42px 1fr auto; gap: 12px; }
+  .subject__icon { width: 42px; height: 42px; font-size: 1.15rem; border-radius: 11px; }
+  .subject__name { font-size: 1rem; }
   .book { grid-template-columns: 30px 1fr auto; gap: 10px; padding: 12px; }
   .book__title { font-size: .9rem; }
   .reader__actions { width: 100%; }

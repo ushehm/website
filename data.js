@@ -583,27 +583,81 @@ const SITE_DATA = {
   },
 
   /* ──────────────────────────────────────────────────────────────────────
-   *  歷史專區（獨立子頁面 history.html）
+   *  溫習專區
    * ----------------------------------------------------------------------
-   *  ⚠ 這個區塊只有 history.html 會讀，主頁不會用到。
+   *  主頁導覽列最右邊那一項「溫習」，點下去會開 study.html ——
+   *  那一頁只做一件事：列出下面 subjects 裡的各個專區讓你選。
    *
+   *  ⚠ 每個專區的內文（書單）不在這裡，在下面各自的區塊：
+   *     chinese / history。
+   *
+   *  ✏️ 要加第三科（例如英文）：
+   *     1. 在 subjects 陣列補一項（key / name / page）
+   *     2. 在下面新增一個對應 key 的區塊（照 chinese 的格式）
+   *     3. 複製 chinese.html 改成新的一頁
+   * ──────────────────────────────────────────────────────────────────── */
+  study: {
+    title: '溫習',
+    subtitle: 'Study',
+    description: '選一科進去，筆記都在裡面。',
+    // 各專區頁面共用的文字（改這裡，中文和歷史都會跟著變）
+    ui: {
+      backLabel: '← 回到溫習',
+      openLabel: '在新分頁開啟 ↗',
+      downloadLabel: '下載 PDF',
+      closeLabel: '收起閱讀器',
+      readerHint: '看不到內容或只有第一頁的話，按「在新分頁開啟」用手機內建的閱讀器看。',
+      missingText: '找不到這個專區的資料。'
+    },
+    subjects: [
+      {
+        key: 'chinese',
+        name: '中文專區',
+        icon: '文',
+        page: 'chinese.html',
+        description: '中文科的溫習資料。'
+      },
+      {
+        key: 'history',
+        name: '歷史專區',
+        icon: '史',
+        page: 'history.html',
+        description: '中四、中五的歷史科筆記。'
+      }
+    ]
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  中文專區（子頁面 chinese.html）
+   * ----------------------------------------------------------------------
+   *  PDF 放在 chinese/ 資料夾（檔名 ASCII）。
+   *  格式跟下面的 history 一樣，level 相同的會自動分成同一組。
+   * ──────────────────────────────────────────────────────────────────── */
+  chinese: {
+    title: '中文專區',
+    subtitle: 'Chinese',
+    description: '中文科的溫習資料。點書名可以直接在這裡看。',
+    books: [
+      { level: '寫作', title: '論據資料', note: '', size: '1.1 MB', file: 'chinese/cn-arguments.pdf' }
+    ]
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  歷史專區（子頁面 history.html）
+   * ----------------------------------------------------------------------
    *  PDF 放在 history/ 資料夾，檔名都改成 ASCII 了。
    *  原始檔在 E:\history，沒有複製進專案（那些中文檔名在網址裡要編碼，
    *  而且有空格和括號，容易出問題）。
    *
    *  ✏️ 要加書：把 PDF 放進 history/（檔名用英文數字），
-   *     再在下面 books 陣列補一筆。level 相同的會自動分成同一組。
+   *     再在下面 books 陣列補一筆。level 相同的會自動分成同一組，
+   *     所以用新的 level 值就會多出一個分組（「其他」就是這樣來的）。
    *     size 只是顯示用的，換了 PDF 記得順手改一下。
    * ──────────────────────────────────────────────────────────────────── */
   history: {
     title: '歷史專區',
     subtitle: 'History Notes',
-    description: '中四、中五的歷史科筆記，共 11 本。點書名可以直接在這裡看。',
-    backLabel: '← 回到主頁',
-    openLabel: '在新分頁開啟 ↗',
-    downloadLabel: '下載 PDF',
-    closeLabel: '收起閱讀器',
-    readerHint: '看不到內容或只有第一頁的話，按「在新分頁開啟」用手機內建的閱讀器看。',
+    description: '中四、中五的歷史科筆記，共 12 本。點書名可以直接在這裡看。',
     books: [
       { level: '中四級', title: '第一次世界大戰',       note: '2024-2025 ・ 教師版', size: '6.3 MB',  file: 'history/s4-ww1.pdf' },
       { level: '中四級', title: '第二次世界大戰',       note: '2024-2025',           size: '13.0 MB', file: 'history/s4-ww2.pdf' },
@@ -616,7 +670,9 @@ const SITE_DATA = {
       { level: '中五級', title: '日本的現代化與蛻變 1900-1945', note: '',           size: '5.7 MB',  file: 'history/s5-japan-1900-1945.pdf' },
       { level: '中五級', title: '日本的現代化與蛻變 1945 後（日本經濟奇蹟及外交關係）', note: '', size: '5.0 MB',  file: 'history/s5-japan-post1945.pdf' },
       { level: '中五級', title: '香港作為國際城市的發展', note: '2025-2026',         size: '16.4 MB', file: 'history/s5-hk-international-city.pdf' },
-      { level: '中五級', title: '香港政治及行政轉變',     note: '2025-2026',         size: '9.3 MB',  file: 'history/s5-hk-politics.pdf' }
+      { level: '中五級', title: '香港政治及行政轉變',     note: '2025-2026',         size: '9.3 MB',  file: 'history/s5-hk-politics.pdf' },
+
+      { level: '其他',   title: '歷史科框架温習紙',       note: '',                  size: '1.5 MB',  file: 'history/revision-framework.pdf' }
     ]
   }
 };

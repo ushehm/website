@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>溫習 — ciallo</title>
+<meta name="description" content="溫習專區：中文、歷史科的筆記，可以直接在網頁上看。">
+<meta name="theme-color" content="#171a21">
+<meta name="color-scheme" content="dark">
+
+<!--
+  溫習中轉頁
+  ----------------------------------------------------------------------------
+  主頁導覽列最右邊那一項「溫習」會開這一頁。
+  這一頁只列出 data.js 的 study.subjects 裡的專區，點進去各自的頁面。
+
+  只載入 style.css + data.js + study.js 三個檔案。
+-->
+
+<link rel="icon" href="images/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-study-page="hub">
+
+<div class="page">
+
+  <header class="subhead">
+    <a class="subhead__back" id="sub-back" href="index.html">← 回到主頁</a>
+    <h1 class="subhead__title" id="sub-title"></h1>
+    <p class="subhead__sub" id="sub-sub"></p>
+    <p class="subhead__desc" id="sub-desc"></p>
+  </header>
+
+  <main>
+    <div id="study-list"></div>
+
+    <noscript>
+      <p class="reader__hint">這個頁面需要 JavaScript 才能列出專區。請開啟 JavaScript 後重新整理。</p>
+    </noscript>
+  </main>
+
+  <footer class="footer" id="sub-footer"></footer>
+</div>
+
+<script src="data.js"></script>
+<script src="study.js"></script>
+</body>
+</html>
