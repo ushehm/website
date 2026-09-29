@@ -1128,7 +1128,6 @@
     const content = document.getElementById('egg-content');
     const target = e.trigger.toLowerCase();
     let buffer = '';
-    let opened = false;
 
     /* 內容 */
     content.innerHTML = '';
@@ -1143,9 +1142,10 @@
       e.contact ? el('span', { class: 'egg__ad-contact', text: e.contact }) : null
     ]));
 
+    /* 可以重複觸發：每次打滿觸發字串都會再彈一次。
+       彈窗開著時不會重複彈（下面 keydown 有擋），所以不會疊在一起。 */
     function open() {
-      if (opened) return;
-      opened = true;
+      if (!modal.hidden) return;
       modal.hidden = false;
       document.body.classList.add('is-locked');
       spawnConfetti();
@@ -1153,6 +1153,7 @@
     function close() {
       modal.hidden = true;
       document.body.classList.remove('is-locked');
+      buffer = '';   // 關掉後要重新打滿一次才會再觸發
     }
 
     modal.addEventListener('click', function (ev) {
@@ -1167,13 +1168,18 @@
       if (anyModalOpen()) return;
 
       // 打字偵測（忽略輸入框與修飾鍵）
-      // 例外：AI 助手的輸入框。在那裡打 ciallo 也要能觸發彩蛋
-      // （這是刻意指定的，其他輸入框如留言板仍然不搶按鍵）
+      // 例外：AI 助手的輸入框、以及留言板那張表單。
+      // 這兩處打 ciallo 也要能觸發彩蛋；其他輸入框（會員註冊、
+      // 音樂音量滑桿…）仍然不搶按鍵。
       if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
-      const tag = (ev.target && ev.target.tagName) || '';
-      const fromAiInput = !!ev.target && ev.target.id === 'ai-input';
-      if (!fromAiInput &&
-          (tag === 'INPUT' || tag === 'TEXTAREA' || (ev.target && ev.target.isContentEditable))) return;
+      const tgt = ev.target;
+      const tag = (tgt && tgt.tagName) || '';
+      const allowedInput = !!tgt && (
+        tgt.id === 'ai-input' ||
+        (typeof tgt.closest === 'function' && tgt.closest('.guestbook') !== null)
+      );
+      if (!allowedInput &&
+          (tag === 'INPUT' || tag === 'TEXTAREA' || (tgt && tgt.isContentEditable))) return;
       if (!ev.key || ev.key.length !== 1) return;
 
       buffer = (buffer + ev.key.toLowerCase()).slice(-target.length);
@@ -1182,6 +1188,10 @@
 
     /* 撒一點小慶祝粒子 */
     function spawnConfetti() {
+      // 可以重複觸發了，所以先把上一輪還沒落完的彩帶清掉，
+      // 不然連續觸發會疊成一堆。
+      document.querySelectorAll('.confetti').forEach(function (old) { old.remove(); });
+
       const box = el('div', { class: 'confetti' });
       for (let i = 0; i < 40; i++) {
         const bit = el('i', {
