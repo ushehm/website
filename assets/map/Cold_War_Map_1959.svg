@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ⚠ 這一行的 preserveAspectRatio="none" 是刻意加的，請不要刪掉。
+  這個檔案原本的 width/height 是 939.75 x 476.7276（比例 1.9713，等於真正的
+  羅賓森投影比例），但 viewBox 卻是 2752.766 x 1537.631（比例 1.7900），
+  兩者不一致。不一致時各瀏覽器行為不同：Chrome/Edge 會拉伸填滿，
+  iOS Safari 會置中留黑邊 —— 結果同一組光點座標在兩個瀏覽器上位置不一樣。
+  加上 preserveAspectRatio="none" 強制所有瀏覽器都拉伸填滿，行為才會一致。
+-->
 <svg
+   preserveAspectRatio="none"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"

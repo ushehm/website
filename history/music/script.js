@@ -375,6 +375,150 @@
     }
   }
 
+  /* ── 地圖縮放與平移 ───────────────────────────────────────────────────── */
+  const ZMIN = 1, ZMAX = 6;
+  const zoom = { k: 1, tx: 0, ty: 0 };
+  let dragState = null;
+  let pinchDist = 0;
+  let lastTap = 0;
+
+  function applyZoom() {
+    const z = $('cw-mapzoom');
+    const wrap = $('cw-mapwrap');
+    if (!z) return;
+    z.style.transform = 'translate(' + zoom.tx + 'px,' + zoom.ty + 'px) scale(' + zoom.k + ')';
+    // 光點反向縮放，讓它在螢幕上維持固定大小（不然放大 6 倍會變成巨大圓圈）
+    if (dotsBox) dotsBox.style.setProperty('--ds', String(1 / zoom.k));
+    if (wrap) wrap.classList.toggle('is-zoomed', zoom.k > 1.001);
+    const lvl = $('cw-zlevel');
+    if (lvl) lvl.textContent = Math.round(zoom.k * 100) + '%';
+    const zin = $('cw-zin'), zout = $('cw-zout');
+    if (zin) zin.disabled = zoom.k >= ZMAX - 0.001;
+    if (zout) zout.disabled = zoom.k <= ZMIN + 0.001;
+  }
+
+  /** 把平移量限制住，不讓地圖被拖到完全離開畫面 */
+  function clampZoom() {
+    zoom.k = Math.max(ZMIN, Math.min(ZMAX, zoom.k));
+    const wrap = $('cw-mapwrap');
+    if (!wrap) return;
+    const r = wrap.getBoundingClientRect();
+    if (zoom.k <= 1) { zoom.k = 1; zoom.tx = 0; zoom.ty = 0; return; }
+    const minX = r.width * (1 - zoom.k);
+    const minY = r.height * (1 - zoom.k);
+    zoom.tx = Math.max(minX, Math.min(0, zoom.tx));
+    zoom.ty = Math.max(minY, Math.min(0, zoom.ty));
+  }
+
+  /** 以某個畫面座標為中心縮放 */
+  function zoomAt(clientX, clientY, factor) {
+    const wrap = $('cw-mapwrap');
+    if (!wrap) return;
+    const r = wrap.getBoundingClientRect();
+    const ox = clientX - r.left;
+    const oy = clientY - r.top;
+    const k0 = zoom.k;
+    const k1 = Math.max(ZMIN, Math.min(ZMAX, k0 * factor));
+    if (Math.abs(k1 - k0) < 1e-6) return;
+    // 讓 (ox, oy) 這點在縮放前後對應到同一個地圖位置
+    zoom.tx = ox - (ox - zoom.tx) * (k1 / k0);
+    zoom.ty = oy - (oy - zoom.ty) * (k1 / k0);
+    zoom.k = k1;
+    clampZoom();
+    applyZoom();
+  }
+
+  function zoomCenter(factor) {
+    const wrap = $('cw-mapwrap');
+    if (!wrap) return;
+    const r = wrap.getBoundingClientRect();
+    zoomAt(r.left + r.width / 2, r.top + r.height / 2, factor);
+  }
+
+  function resetZoom() {
+    zoom.k = 1; zoom.tx = 0; zoom.ty = 0;
+    applyZoom();
+  }
+
+  function bindZoom() {
+    const wrap = $('cw-mapwrap');
+    if (!wrap) return;
+
+    const zin = $('cw-zin'), zout = $('cw-zout'), zrst = $('cw-zreset');
+    if (zin) zin.addEventListener('click', function () { zoomCenter(1.5); });
+    if (zout) zout.addEventListener('click', function () { zoomCenter(1 / 1.5); });
+    if (zrst) zrst.addEventListener('click', resetZoom);
+
+    // 滾輪：沒放大時不攔截（讓頁面正常捲動），按著 Ctrl 或已經放大才縮放
+    wrap.addEventListener('wheel', function (ev) {
+      if (zoom.k <= 1.001 && !ev.ctrlKey) return;
+      ev.preventDefault();
+      zoomAt(ev.clientX, ev.clientY, ev.deltaY < 0 ? 1.18 : 1 / 1.18);
+    }, { passive: false });
+
+    // 拖曳平移（只有放大後才拖；按在光點或控制列上不拖，才不會擋掉點擊）
+    wrap.addEventListener('pointerdown', function (ev) {
+      if (zoom.k <= 1.001) return;
+      if (ev.button !== 0 && ev.pointerType === 'mouse') return;
+      if (ev.target.closest('.cw-zoomctl') || ev.target.closest('.cw-dot')) return;
+      dragState = { id: ev.pointerId, x: ev.clientX, y: ev.clientY, tx: zoom.tx, ty: zoom.ty };
+      wrap.classList.add('is-dragging');
+      try { wrap.setPointerCapture(ev.pointerId); } catch (e) { /* 忽略 */ }
+    });
+    wrap.addEventListener('pointermove', function (ev) {
+      if (!dragState || ev.pointerId !== dragState.id) return;
+      ev.preventDefault();
+      zoom.tx = dragState.tx + (ev.clientX - dragState.x);
+      zoom.ty = dragState.ty + (ev.clientY - dragState.y);
+      clampZoom();
+      applyZoom();
+    });
+    function endDrag(ev) {
+      if (!dragState) return;
+      dragState = null;
+      wrap.classList.remove('is-dragging');
+      try { wrap.releasePointerCapture(ev.pointerId); } catch (e) { /* 忽略 */ }
+    }
+    wrap.addEventListener('pointerup', endDrag);
+    wrap.addEventListener('pointercancel', endDrag);
+
+    // 雙指縮放（放大後 touch-action 才是 none，所以手勢主要用在已放大的狀態）
+    wrap.addEventListener('touchstart', function (ev) {
+      if (ev.touches.length === 2) { pinchDist = touchDist(ev.touches); dragState = null; }
+    }, { passive: true });
+    wrap.addEventListener('touchmove', function (ev) {
+      if (ev.touches.length !== 2 || !pinchDist) return;
+      ev.preventDefault();
+      const d = touchDist(ev.touches);
+      if (d > 0) {
+        const f = d / pinchDist;
+        pinchDist = d;
+        zoomAt((ev.touches[0].clientX + ev.touches[1].clientX) / 2,
+               (ev.touches[0].clientY + ev.touches[1].clientY) / 2, f);
+      }
+    }, { passive: false });
+    wrap.addEventListener('touchend', function (ev) {
+      if (ev.touches.length < 2) pinchDist = 0;
+    });
+
+    // 手機：在空白處連點兩下放大（光點上不算）
+    wrap.addEventListener('click', function (ev) {
+      if (ev.target.closest('.cw-dot') || ev.target.closest('.cw-zoomctl')) return;
+      const now = Date.now();
+      if (now - lastTap < 320) { zoomAt(ev.clientX, ev.clientY, 1.8); lastTap = 0; }
+      else lastTap = now;
+    });
+
+    // 視窗變動時重新夾住平移範圍
+    window.addEventListener('resize', function () { clampZoom(); applyZoom(); });
+  }
+
+  function touchDist(t) {
+    const dx = t[0].clientX - t[1].clientX;
+    const dy = t[0].clientY - t[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
   /* ── 手機抽屜 ─────────────────────────────────────────────────────────── */
   function openPanel() {
     if (panel && window.matchMedia('(max-width: 860px)').matches) panel.classList.add('is-open');
@@ -517,6 +661,9 @@
     // 出現錯誤訊息那一列…），只量一次的話抽屜會跟它重疊。
     watchPlayerHeight();
 
+    // ── 地圖縮放 ──
+    bindZoom();
+
     // ── 鍵盤：空白 = 播放/暫停，左右 = 上下首 ──
     document.addEventListener('keydown', function (ev) {
       const tag = (ev.target && ev.target.tagName) || '';
@@ -572,6 +719,7 @@
 
     updateNowPlaying();
     updateProgress();
+    applyZoom();
 
     // 有 hash 就還原（但**不自動播放**）
     const fromHash = readHash();

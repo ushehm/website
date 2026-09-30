@@ -44,12 +44,30 @@
     <!-- ── 地圖 ── -->
     <div class="cw-mapbox">
       <div class="cw-mapwrap" id="cw-mapwrap">
-        <!-- 底圖：SVG。明確給寬高避免載入時版面位移 -->
-        <img class="cw-map" id="cw-map" src="" alt="" width="2000" height="1000" decoding="async">
-        <!-- 光點由 script.js 產生並絕對定位 -->
-        <div class="cw-dots" id="cw-dots"></div>
+        <!-- 這一層會被 transform 縮放/平移；圖片與光點都放在裡面，
+             所以光點會跟著地圖一起動 -->
+        <div class="cw-mapzoom" id="cw-mapzoom">
+          <!-- 底圖：SVG。明確給寬高避免載入時版面位移 -->
+          <img class="cw-map" id="cw-map" src="" alt="" width="1400" height="710" decoding="async">
+          <!-- 光點由 script.js 產生並絕對定位 -->
+          <div class="cw-dots" id="cw-dots"></div>
+        </div>
         <!-- 讀圖失敗時的替代訊息 -->
         <p class="cw-maperr" id="cw-maperr" hidden></p>
+
+        <!-- 縮放控制項（放在右下角，那裡是南極大陸，不會擋到光點）-->
+        <div class="cw-zoomctl">
+          <button class="cw-zbtn" id="cw-zout" type="button" aria-label="縮小地圖" title="縮小">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 11h14v2H5z"/></svg>
+          </button>
+          <button class="cw-zbtn" id="cw-zreset" type="button" aria-label="重設地圖縮放" title="重設">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>
+          </button>
+          <button class="cw-zbtn" id="cw-zin" type="button" aria-label="放大地圖" title="放大">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>
+          </button>
+          <span class="cw-zlevel" id="cw-zlevel" aria-live="polite">100%</span>
+        </div>
       </div>
       <p class="cw-maphint" id="cw-maphint"></p>
     </div>

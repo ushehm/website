@@ -85,13 +85,27 @@ h1, h2, h3 { color: var(--cw-bright); margin: 0; line-height: 1.3; }
 .cw-mapwrap {
   position: relative;
   /* 地圖內容的實際長寬比（量出來的）。光點的百分比就是對這個框算的，
-     所以這個比例一定要跟 data.js 的 map.width / map.height 一致。 */
+     所以這個比例一定要跟 data.js 的 map.width / map.height 一致。
+     ⚠ 底圖 SVG 已被加上 preserveAspectRatio="none"，所以不論哪個瀏覽器
+       都會拉伸填滿這個框 —— 這樣座標才會到處都一致。 */
   aspect-ratio: 1400 / 710;
   border: 1px solid var(--cw-border);
   border-radius: var(--cw-radius);
   overflow: hidden;
   background: #0b121a;
   box-shadow: 0 14px 40px -14px rgba(0, 0, 0, .8);
+  /* 縮放時不要讓瀏覽器自己捲動頁面 */
+  touch-action: pan-y;
+}
+.cw-mapwrap.is-zoomed { touch-action: none; cursor: grab; }
+.cw-mapwrap.is-dragging { cursor: grabbing; }
+
+/* 這一層負責縮放與平移 */
+.cw-mapzoom {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 0;
+  will-change: transform;
 }
 /* 復古 CRT 掃描線：很淡，只是質感（地圖本身是白底，所以用深色線） */
 .cw-mapwrap::after {
@@ -99,6 +113,7 @@ h1, h2, h3 { color: var(--cw-bright); margin: 0; line-height: 1.3; }
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 3;
   background-image: repeating-linear-gradient(
     180deg,
     rgba(20, 30, 40, .07) 0px,
@@ -115,6 +130,8 @@ h1, h2, h3 { color: var(--cw-bright); margin: 0; line-height: 1.3; }
      不加 background —— SVG 橢圓外是透明的，讓它透出下面的深色底，
      這樣才是「深色背景上的一張紙地圖」，而不是一整塊米色。 */
   filter: sepia(.2) saturate(.94) brightness(.96) contrast(1.02);
+  user-select: none;
+  -webkit-user-drag: none;
 }
 .cw-maperr {
   margin: 0;
@@ -122,6 +139,45 @@ h1, h2, h3 { color: var(--cw-bright); margin: 0; line-height: 1.3; }
   text-align: center;
   font-size: .88rem;
   color: var(--cw-dim);
+}
+
+/* ── 縮放控制項（固定在右下角）────────────────────────────────────────── */
+.cw-zoomctl {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px 4px;
+  background: rgba(8, 14, 20, .84);
+  border: 1px solid var(--cw-border);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+.cw-zbtn {
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  padding: 0;
+  color: var(--cw-text);
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background .18s, color .18s;
+}
+.cw-zbtn svg { width: 17px; height: 17px; }
+.cw-zbtn:hover, .cw-zbtn:focus-visible { background: var(--cw-panel-2); color: var(--cw-bright); }
+.cw-zbtn:focus-visible { outline: 2px solid var(--cw-accent); outline-offset: 1px; }
+.cw-zbtn[disabled] { opacity: .3; cursor: default; background: transparent; }
+.cw-zlevel {
+  min-width: 40px;
+  padding-right: 6px;
+  text-align: center;
+  font-size: .72rem;
+  color: var(--cw-dim);
+  font-variant-numeric: tabular-nums;
 }
 
 /* 光點層：蓋在地圖上，座標用百分比 */
@@ -137,6 +193,10 @@ h1, h2, h3 { color: var(--cw-bright); margin: 0; line-height: 1.3; }
   border-radius: 50%;
   background: rgba(13, 22, 32, .6);
   cursor: pointer;
+  /* --ds 是「1 / 目前縮放倍率」，由 script.js 設定。
+     地圖放大時光點跟著放大會變得很誇張，所以反向縮回來，
+     讓光點在螢幕上維持固定大小。 */
+  transform: scale(var(--ds, 1));
   transition: transform .18s, box-shadow .25s, background .2s;
   /* 讓 box-shadow 的光暈看起來更亮 */
   filter: drop-shadow(0 0 6px var(--dot, var(--cw-amber)));
@@ -163,7 +223,7 @@ h1, h2, h3 { color: var(--cw-bright); margin: 0; line-height: 1.3; }
 .cw-dot:hover,
 .cw-dot:focus-visible,
 .cw-dot[aria-pressed="true"] {
-  transform: scale(1.4);
+  transform: scale(calc(var(--ds, 1) * 1.4));
   background: var(--dot, var(--cw-amber));
   box-shadow: 0 0 20px 5px var(--dot, var(--cw-amber));
   outline: none;
