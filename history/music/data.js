@@ -10,9 +10,9 @@
  *
  *  ── 地圖與光點座標 ──────────────────────────────────────────────────────
  *  x / y 是「地圖圖片上的百分比」（0 開始，左上角是 0,0）。
- *  目前的數字是用 d3-geo 的羅賓森投影算出來，再校準到這張圖上的。
- *  ⚠ 這張圖的中央經線是 10.5°E（不是 0°），校準時一定要把這件事算進去，
- *    否則誤差會隨經度增加（北京、平壤、大馬士革都因此偏東約 2.7 個百分點）。
+ *  目前的數字是這樣定出來的（見 README 的「地圖與光點座標」）：
+ *    x 大致線性於經度（中央經線約 10.7°E），y 用羅賓森投影。
+ *    東亞的兩點另外用逐點掃描地圖色塊校正過。
  *  ⚠ 換地圖之後這些數字要重新校準，不然光點會跑位。
  *  lat / lon 是首都的真實經緯度，留著方便重新對位用。
  *
@@ -74,7 +74,7 @@ const HISTORY_MUSIC = {
       country: '英國',
       capital: '倫敦',
       lat: 51.51, lon: -0.13,
-      x: 47.47, y: 18.22,
+      x: 46.99, y: 18.22,
       description: '英倫雅樂。',
       tracks: [
         { title: 'I Don\u2019t Want to Join the Army', audio: '../../assets/audio/uk-01.m4a' }
@@ -87,7 +87,7 @@ const HISTORY_MUSIC = {
       country: '法國',
       capital: '巴黎',
       lat: 48.86, lon: 2.35,
-      x: 48.02, y: 19.81,
+      x: 47.68, y: 19.81,
       description: '高盧風情。',
       tracks: [
         { title: '馬賽曲 La Marseillaise', audio: '../../assets/audio/france-01.m4a' }
@@ -100,7 +100,7 @@ const HISTORY_MUSIC = {
       country: '東德',
       capital: '柏林',
       lat: 52.52, lon: 13.4,
-      x: 50.69, y: 17.62,
+      x: 50.75, y: 17.62,
       description: '柏林之聲。',
       tracks: [
         { title: '東德國歌：從廢墟中崛起', audio: '../../assets/audio/eastgermany-01.m4a' },
@@ -117,7 +117,7 @@ const HISTORY_MUSIC = {
       country: '敘利亞',
       capital: '大馬士革',
       lat: 33.51, lon: 36.29,
-      x: 56.79, y: 29.22,
+      x: 58.00, y: 29.22,
       description: '大馬士革餘音。',
       tracks: [
         { title: 'God, Syria, and Bashar', audio: '../../assets/audio/syria-01.m4a' }
@@ -130,7 +130,7 @@ const HISTORY_MUSIC = {
       country: '蘇聯',
       capital: '莫斯科',
       lat: 55.75, lon: 37.62,
-      x: 56.25, y: 15.72,
+      x: 57.48, y: 15.72,
       description: '鐵血史詩。',
       tracks: [
         { title: '蘇聯國歌：牢不可破的聯盟', audio: '../../assets/audio/ussr-01.m4a' },
@@ -147,7 +147,7 @@ const HISTORY_MUSIC = {
       country: '中國',
       capital: '北京',
       lat: 39.9, lon: 116.41,
-      x: 77.12, y: 25.27,
+      x: 80.43, y: 25.27,
       description: '東方神韻',
       tracks: [
         { title: '繼續革命的戰歌（1978-1982 國歌）', audio: '../../assets/audio/china-01.m4a' },
@@ -176,7 +176,7 @@ const HISTORY_MUSIC = {
       country: '北韓',
       capital: '平壤',
       lat: 39.03, lon: 125.75,
-      x: 79.64, y: 25.81,
+      x: 82.79, y: 25.81,
       description: '主體宏音。',
       tracks: [
         { title: '愛國歌（朝鮮國歌）', audio: '../../assets/audio/dprk-01.m4a' },
