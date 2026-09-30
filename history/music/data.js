@@ -68,16 +68,17 @@ const HISTORY_MUSIC = {
    * ─────────────────────────────────────────────────────────────────── */
   countries: [
 
-    /* ── 英國（目前沒有曲目） ── */
+    /* ── 英國（1 首） ── */
     {
       id: 'uk',
       country: '英國',
       capital: '倫敦',
       lat: 51.51, lon: -0.13,
       x: 47.47, y: 18.22,
-      description: '冷戰時期英國的民俗音樂。',
-      // 目前沒有曲目 —— 把 m4a / mp3 放進 assets/audio/ 再照上面格式加進來就好
-      tracks: []
+      description: '冷戰時期英國的軍歌與民歌。',
+      tracks: [
+        { title: 'I Don\u2019t Want to Join the Army（英國軍歌五首）', audio: '../../assets/audio/uk-01.m4a' }
+      ]
     },
 
     /* ── 法國（1 首） ── */
@@ -136,8 +137,7 @@ const HISTORY_MUSIC = {
         { title: '喀秋莎 Катюша', audio: '../../assets/audio/ussr-02.m4a' },
         { title: '紅軍最強大 Красная Армия', audio: '../../assets/audio/ussr-03.m4a' },
         { title: '國際歌（俄語）', audio: '../../assets/audio/ussr-04.m4a' },
-        { title: '戰鬥仍將繼續／列寧是如此的年輕', audio: '../../assets/audio/ussr-05.m4a' },
-        { title: '國際歌（中文）', audio: '../../assets/audio/ussr-06.m4a' }
+        { title: '戰鬥仍將繼續／列寧是如此的年輕', audio: '../../assets/audio/ussr-05.m4a' }
       ]
     },
 
@@ -159,7 +159,7 @@ const HISTORY_MUSIC = {
         { title: '我們走在大路上（1970）', audio: '../../assets/audio/china-07.m4a' },
         { title: '社會主義好', audio: '../../assets/audio/china-08.m4a' },
         { title: '人民軍隊忠於黨（文革版）', audio: '../../assets/audio/china-09.m4a' },
-        { title: '三大紀律八項注意', audio: '../../assets/audio/china-10.m4a' },
+        { title: '國際歌（中文）', audio: '../../assets/audio/china-10.m4a' },
         { title: '文化大革命就是好', audio: '../../assets/audio/china-11.m4a' },
         { title: '把文化大革命進行到底', audio: '../../assets/audio/china-12.m4a' },
         { title: '回擊翻案風 粉碎復辟夢', audio: '../../assets/audio/china-13.m4a' },
@@ -180,7 +180,8 @@ const HISTORY_MUSIC = {
       description: '冷戰時期北韓（朝鮮民主主義人民共和國）的音樂。',
       tracks: [
         { title: '愛國歌（朝鮮國歌）', audio: '../../assets/audio/dprk-01.m4a' },
-        { title: '朝鮮人民軍軍歌', audio: '../../assets/audio/dprk-02.m4a' }
+        { title: '朝鮮人民軍軍歌', audio: '../../assets/audio/dprk-02.m4a' },
+        { title: '三大紀律八項注意（朝鮮版）', audio: '../../assets/audio/dprk-03.m4a' }
       ]
     }
 
