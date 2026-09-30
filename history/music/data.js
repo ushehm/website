@@ -75,7 +75,7 @@ const HISTORY_MUSIC = {
       capital: '倫敦',
       lat: 51.51, lon: -0.13,
       x: 47.47, y: 18.22,
-      description: '冷戰時期英國的軍歌與民歌。',
+      description: '英倫雅樂。',
       tracks: [
         { title: 'I Don\u2019t Want to Join the Army（英國軍歌五首）', audio: '../../assets/audio/uk-01.m4a' }
       ]
@@ -88,7 +88,7 @@ const HISTORY_MUSIC = {
       capital: '巴黎',
       lat: 48.86, lon: 2.35,
       x: 48.02, y: 19.81,
-      description: '冷戰時期法國的民俗音樂。',
+      description: '高盧風情。',
       tracks: [
         { title: '馬賽曲 La Marseillaise', audio: '../../assets/audio/france-01.m4a' }
       ]
@@ -101,7 +101,7 @@ const HISTORY_MUSIC = {
       capital: '柏林',
       lat: 52.52, lon: 13.4,
       x: 50.69, y: 17.62,
-      description: '冷戰時期德國的歌曲。這裡同時收了東德（德意志民主共和國）與西德的曲子 —— 因為這批歌裡只有《從廢墟中崛起》是東德國歌，其餘都是德國民謠與西德的。',
+      description: '柏林之聲。',
       tracks: [
         { title: '東德國歌：從廢墟中崛起', audio: '../../assets/audio/eastgermany-01.m4a' },
         { title: '德意志之歌 Das Deutschlandlied', audio: '../../assets/audio/eastgermany-02.m4a' },
@@ -118,7 +118,7 @@ const HISTORY_MUSIC = {
       capital: '大馬士革',
       lat: 33.51, lon: 36.29,
       x: 56.79, y: 29.22,
-      description: '冷戰時期敘利亞的音樂。',
+      description: '大馬士革餘音。',
       tracks: [
         { title: 'God, Syria, and Bashar', audio: '../../assets/audio/syria-01.m4a' }
       ]
@@ -131,7 +131,7 @@ const HISTORY_MUSIC = {
       capital: '莫斯科',
       lat: 55.75, lon: 37.62,
       x: 56.25, y: 15.72,
-      description: '冷戰時期蘇聯的音樂。',
+      description: '鐵血史詩。',
       tracks: [
         { title: '蘇聯國歌：牢不可破的聯盟', audio: '../../assets/audio/ussr-01.m4a' },
         { title: '喀秋莎 Катюша', audio: '../../assets/audio/ussr-02.m4a' },
@@ -148,7 +148,7 @@ const HISTORY_MUSIC = {
       capital: '北京',
       lat: 39.9, lon: 116.41,
       x: 77.12, y: 25.27,
-      description: '冷戰時期中國的歌曲，主要是文革前後的紅色歌曲。',
+      description: '東方神韻',
       tracks: [
         { title: '繼續革命的戰歌（1978-1982 國歌）', audio: '../../assets/audio/china-01.m4a' },
         { title: '東方紅', audio: '../../assets/audio/china-02.m4a' },
@@ -177,7 +177,7 @@ const HISTORY_MUSIC = {
       capital: '平壤',
       lat: 39.03, lon: 125.75,
       x: 79.64, y: 25.81,
-      description: '冷戰時期北韓（朝鮮民主主義人民共和國）的音樂。',
+      description: '主體宏音。',
       tracks: [
         { title: '愛國歌（朝鮮國歌）', audio: '../../assets/audio/dprk-01.m4a' },
         { title: '朝鮮人民軍軍歌', audio: '../../assets/audio/dprk-02.m4a' },
