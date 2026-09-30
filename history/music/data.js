@@ -10,7 +10,9 @@
  *
  *  ── 地圖與光點座標 ──────────────────────────────────────────────────────
  *  x / y 是「地圖圖片上的百分比」（0 開始，左上角是 0,0）。
- *  目前的數字是照 assets/map/cold-war-map.svg 這張圖算出來的。
+ *  目前的數字是用 d3-geo 的羅賓森投影算出來，再校準到這張圖上的。
+ *  ⚠ 這張圖的中央經線是 10.5°E（不是 0°），校準時一定要把這件事算進去，
+ *    否則誤差會隨經度增加（北京、平壤、大馬士革都因此偏東約 2.7 個百分點）。
  *  ⚠ 換地圖之後這些數字要重新校準，不然光點會跑位。
  *  lat / lon 是首都的真實經緯度，留著方便重新對位用。
  *
@@ -55,6 +57,7 @@ const HISTORY_MUSIC = {
     loading: '載入中…',
     loadError: '這個音訊檔載入失敗（可能還沒放進 assets/audio/）',
     tracksTitle: '曲目',
+    noTracks: '這個國家目前還沒有曲目。',
     hint: '點光點聽音樂。地圖可以縮放 —— 右下角的 ＋／－、滑鼠滾輪、雙指，或在空白處連點兩下。手機的曲目列表在下面的抽屜裡。'
   },
 
@@ -65,122 +68,122 @@ const HISTORY_MUSIC = {
    * ─────────────────────────────────────────────────────────────────── */
   countries: [
 
-    /* ── 英國 ── */
+    /* ── 英國（目前沒有曲目） ── */
     {
       id: 'uk',
       country: '英國',
       capital: '倫敦',
       lat: 51.51, lon: -0.13,
-      x: 49.97, y: 18.22,
+      x: 47.47, y: 18.22,
       description: '冷戰時期英國的民俗音樂。',
-      tracks: [
-        { title: '英國民俗曲 1', audio: '../../assets/audio/uk-01.mp3' }
-      ]
+      // 目前沒有曲目 —— 把 m4a / mp3 放進 assets/audio/ 再照上面格式加進來就好
+      tracks: []
     },
 
-    /* ── 法國 ── */
+    /* ── 法國（1 首） ── */
     {
       id: 'france',
       country: '法國',
       capital: '巴黎',
       lat: 48.86, lon: 2.35,
-      x: 50.57, y: 19.81,
+      x: 48.02, y: 19.81,
       description: '冷戰時期法國的民俗音樂。',
       tracks: [
-        { title: '法國民俗曲 1', audio: '../../assets/audio/france-01.mp3' }
+        { title: '馬賽曲 La Marseillaise', audio: '../../assets/audio/france-01.m4a' }
       ]
     },
 
-    /* ── 東德 ── */
+    /* ── 東德（5 首） ── */
     {
       id: 'eastgermany',
       country: '東德',
       capital: '柏林',
-      lat: 52.52, lon: 13.40,
-      x: 53.17, y: 17.62,
-      description: '冷戰時期東德（德意志民主共和國）的民俗音樂。',
+      lat: 52.52, lon: 13.4,
+      x: 50.69, y: 17.62,
+      description: '冷戰時期德國的歌曲。這裡同時收了東德（德意志民主共和國）與西德的曲子 —— 因為這批歌裡只有《從廢墟中崛起》是東德國歌，其餘都是德國民謠與西德的。',
       tracks: [
-        { title: '東德民俗曲 1', audio: '../../assets/audio/eastgermany-01.mp3' },
-        { title: '東德民俗曲 2', audio: '../../assets/audio/eastgermany-02.mp3' },
-        { title: '東德民俗曲 3', audio: '../../assets/audio/eastgermany-03.mp3' },
-        { title: '東德民俗曲 4', audio: '../../assets/audio/eastgermany-04.mp3' },
-        { title: '東德民俗曲 5', audio: '../../assets/audio/eastgermany-05.mp3' }
+        { title: '東德國歌：從廢墟中崛起', audio: '../../assets/audio/eastgermany-01.m4a' },
+        { title: '德意志之歌 Das Deutschlandlied', audio: '../../assets/audio/eastgermany-02.m4a' },
+        { title: '守望萊茵蘭 Die Wacht am Rhein', audio: '../../assets/audio/eastgermany-03.m4a' },
+        { title: '艾麗卡 Erika', audio: '../../assets/audio/eastgermany-04.m4a' },
+        { title: '莉莉瑪蓮 Lili Marleen（1959）', audio: '../../assets/audio/eastgermany-05.m4a' }
       ]
     },
 
-    /* ── 敘利亞 ── */
+    /* ── 敘利亞（1 首） ── */
     {
       id: 'syria',
       country: '敘利亞',
       capital: '大馬士革',
       lat: 33.51, lon: 36.29,
-      x: 59.56, y: 29.22,
-      description: '冷戰時期敘利亞的民俗音樂。',
+      x: 56.79, y: 29.22,
+      description: '冷戰時期敘利亞的音樂。',
       tracks: [
-        { title: '敘利亞民俗曲 1', audio: '../../assets/audio/syria-01.mp3' }
+        { title: 'God, Syria, and Bashar', audio: '../../assets/audio/syria-01.m4a' }
       ]
     },
 
-    /* ── 蘇聯 ── */
+    /* ── 蘇聯（6 首） ── */
     {
       id: 'ussr',
       country: '蘇聯',
       capital: '莫斯科',
       lat: 55.75, lon: 37.62,
-      x: 58.67, y: 15.72,
-      description: '冷戰時期蘇聯的民俗音樂。',
+      x: 56.25, y: 15.72,
+      description: '冷戰時期蘇聯的音樂。',
       tracks: [
-        { title: '蘇聯民俗曲 1', audio: '../../assets/audio/ussr-01.mp3' },
-        { title: '蘇聯民俗曲 2', audio: '../../assets/audio/ussr-02.mp3' },
-        { title: '蘇聯民俗曲 3', audio: '../../assets/audio/ussr-03.mp3' },
-        { title: '蘇聯民俗曲 4', audio: '../../assets/audio/ussr-04.mp3' },
-        { title: '蘇聯民俗曲 5', audio: '../../assets/audio/ussr-05.mp3' }
+        { title: '蘇聯國歌：牢不可破的聯盟', audio: '../../assets/audio/ussr-01.m4a' },
+        { title: '喀秋莎 Катюша', audio: '../../assets/audio/ussr-02.m4a' },
+        { title: '紅軍最強大 Красная Армия', audio: '../../assets/audio/ussr-03.m4a' },
+        { title: '國際歌（俄語）', audio: '../../assets/audio/ussr-04.m4a' },
+        { title: '戰鬥仍將繼續／列寧是如此的年輕', audio: '../../assets/audio/ussr-05.m4a' },
+        { title: '國際歌（中文）', audio: '../../assets/audio/ussr-06.m4a' }
       ]
     },
 
-    /* ── 中國 ── */
+    /* ── 中國（17 首） ── */
     {
       id: 'china',
       country: '中國',
       capital: '北京',
-      lat: 39.90, lon: 116.41,
-      x: 79.81, y: 25.27,
-      description: '冷戰時期中國的民俗音樂。',
+      lat: 39.9, lon: 116.41,
+      x: 77.12, y: 25.27,
+      description: '冷戰時期中國的歌曲，主要是文革前後的紅色歌曲。',
       tracks: [
-        { title: '中國民俗曲 1',  audio: '../../assets/audio/china-01.mp3' },
-        { title: '中國民俗曲 2',  audio: '../../assets/audio/china-02.mp3' },
-        { title: '中國民俗曲 3',  audio: '../../assets/audio/china-03.mp3' },
-        { title: '中國民俗曲 4',  audio: '../../assets/audio/china-04.mp3' },
-        { title: '中國民俗曲 5',  audio: '../../assets/audio/china-05.mp3' },
-        { title: '中國民俗曲 6',  audio: '../../assets/audio/china-06.mp3' },
-        { title: '中國民俗曲 7',  audio: '../../assets/audio/china-07.mp3' },
-        { title: '中國民俗曲 8',  audio: '../../assets/audio/china-08.mp3' },
-        { title: '中國民俗曲 9',  audio: '../../assets/audio/china-09.mp3' },
-        { title: '中國民俗曲 10', audio: '../../assets/audio/china-10.mp3' },
-        { title: '中國民俗曲 11', audio: '../../assets/audio/china-11.mp3' },
-        { title: '中國民俗曲 12', audio: '../../assets/audio/china-12.mp3' },
-        { title: '中國民俗曲 13', audio: '../../assets/audio/china-13.mp3' },
-        { title: '中國民俗曲 14', audio: '../../assets/audio/china-14.mp3' },
-        { title: '中國民俗曲 15', audio: '../../assets/audio/china-15.mp3' },
-        { title: '中國民俗曲 16', audio: '../../assets/audio/china-16.mp3' },
-        { title: '中國民俗曲 17', audio: '../../assets/audio/china-17.mp3' }
+        { title: '繼續革命的戰歌（1978-1982 國歌）', audio: '../../assets/audio/china-01.m4a' },
+        { title: '東方紅', audio: '../../assets/audio/china-02.m4a' },
+        { title: '歌唱社會主義祖國（1968）', audio: '../../assets/audio/china-03.m4a' },
+        { title: '沒有共產黨就沒有新中國', audio: '../../assets/audio/china-04.m4a' },
+        { title: '大海航行靠舵手', audio: '../../assets/audio/china-05.m4a' },
+        { title: '中國人民志願軍戰歌', audio: '../../assets/audio/china-06.m4a' },
+        { title: '我們走在大路上（1970）', audio: '../../assets/audio/china-07.m4a' },
+        { title: '社會主義好', audio: '../../assets/audio/china-08.m4a' },
+        { title: '人民軍隊忠於黨（文革版）', audio: '../../assets/audio/china-09.m4a' },
+        { title: '三大紀律八項注意', audio: '../../assets/audio/china-10.m4a' },
+        { title: '文化大革命就是好', audio: '../../assets/audio/china-11.m4a' },
+        { title: '把文化大革命進行到底', audio: '../../assets/audio/china-12.m4a' },
+        { title: '回擊翻案風 粉碎復辟夢', audio: '../../assets/audio/china-13.m4a' },
+        { title: '奮起千鈞棒 痛打落水狗', audio: '../../assets/audio/china-14.m4a' },
+        { title: '永遠不能忘', audio: '../../assets/audio/china-15.m4a' },
+        { title: '偉大的毛澤東思想燦爛輝煌（1968）', audio: '../../assets/audio/china-16.m4a' },
+        { title: '三大紀律八項注意（另一版本）', audio: '../../assets/audio/china-17.m4a' }
       ]
     },
 
-    /* ── 北韓 ── */
+    /* ── 北韓（2 首） ── */
     {
       id: 'dprk',
       country: '北韓',
       capital: '平壤',
       lat: 39.03, lon: 125.75,
-      x: 82.34, y: 25.81,
-      description: '冷戰時期北韓（朝鮮民主主義人民共和國）的民俗音樂。',
+      x: 79.64, y: 25.81,
+      description: '冷戰時期北韓（朝鮮民主主義人民共和國）的音樂。',
       tracks: [
-        { title: '北韓民俗曲 1', audio: '../../assets/audio/dprk-01.mp3' },
-        { title: '北韓民俗曲 2', audio: '../../assets/audio/dprk-02.mp3' },
-        { title: '北韓民俗曲 3', audio: '../../assets/audio/dprk-03.mp3' }
+        { title: '愛國歌（朝鮮國歌）', audio: '../../assets/audio/dprk-01.m4a' },
+        { title: '朝鮮人民軍軍歌', audio: '../../assets/audio/dprk-02.m4a' }
       ]
     }
 
   ]
+
 };

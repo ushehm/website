@@ -297,6 +297,11 @@ h1, h2, h3 { color: var(--cw-bright); margin: 0; line-height: 1.3; }
 }
 
 .cw-tracks { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.cw-tracks__empty {
+  padding: 14px 4px;
+  font-size: .86rem;
+  color: var(--cw-dim);
+}
 
 .cw-track {
   display: grid;

@@ -149,6 +149,12 @@
     const list = tracksOf(ci);
     const c = currentCountry();
 
+    // 這個國家還沒有曲目（例如英國）—— 顯示提示，不要留一片空白
+    if (!list.length) {
+      trackBox.appendChild(el('li', { class: 'cw-tracks__empty', text: UI.noTracks || '目前還沒有曲目。' }));
+      return;
+    }
+
     list.forEach(function (t, i) {
       const timeText = t.duration || (state.failed[t.audio] ? '—' : '--:--');
       const btn = el('button', {
