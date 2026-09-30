@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>冷戰時期・歷史音樂 — ciallo</title>
+<meta name="description" content="冷戰時期各國首都的民俗音樂互動地圖。點地圖上的光點聽那個國家的音樂。">
+<meta name="theme-color" content="#0d1620">
+<meta name="color-scheme" content="dark">
+
+<!--
+  冷戰時期・歷史音樂
+  ----------------------------------------------------------------------------
+  獨立分頁，從「歷史專區」右上角的「🎵 歷史音樂」進來。
+
+  這頁自己帶 style.css / data.js / script.js，不共用主站的 script.js。
+  地圖是 SVG 底圖 + 絕對定位的百分比光點，沒有任何地圖函式庫。
+
+  檔案：
+    index.html   這一頁
+    style.css    這一頁的樣式
+    script.js    播放器與互動
+    data.js      國家、座標、曲目（要換 MP3 改那個檔案）
+-->
+
+<link rel="icon" href="../../images/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon.png">
+<link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="cw-head">
+    <a class="cw-back" id="cw-back" href="../../history.html">← 回到歷史專區</a>
+    <h1 class="cw-title" id="cw-title"></h1>
+    <p class="cw-sub" id="cw-sub"></p>
+    <p class="cw-intro" id="cw-intro"></p>
+  </header>
+
+  <main class="cw-main">
+
+    <!-- ── 地圖 ── -->
+    <div class="cw-mapbox">
+      <div class="cw-mapwrap" id="cw-mapwrap">
+        <!-- 底圖：SVG。明確給寬高避免載入時版面位移 -->
+        <img class="cw-map" id="cw-map" src="" alt="" width="2000" height="1000" decoding="async">
+        <!-- 光點由 script.js 產生並絕對定位 -->
+        <div class="cw-dots" id="cw-dots"></div>
+        <!-- 讀圖失敗時的替代訊息 -->
+        <p class="cw-maperr" id="cw-maperr" hidden></p>
+      </div>
+      <p class="cw-maphint" id="cw-maphint"></p>
+    </div>
+
+    <!-- ── 側欄：國家資訊 + 曲目（手機時變成底部抽屜）── -->
+    <aside class="cw-panel" id="cw-panel" aria-labelledby="cw-country">
+      <div class="cw-panel__grip" id="cw-grip" role="button" tabindex="0"
+           aria-label="展開或收起曲目列表"></div>
+
+      <div class="cw-empty" id="cw-empty"></div>
+
+      <div class="cw-info" id="cw-info" hidden>
+        <h2 class="cw-country" id="cw-country"></h2>
+        <p class="cw-capital" id="cw-capital"></p>
+        <p class="cw-desc" id="cw-desc"></p>
+
+        <h3 class="cw-tracks-title" id="cw-tracks-title"></h3>
+        <ol class="cw-tracks" id="cw-tracks"></ol>
+
+        <button class="cw-close" id="cw-close" type="button">收起</button>
+      </div>
+    </aside>
+
+  </main>
+
+  <footer class="cw-foot">
+    <p class="cw-credit" id="cw-credit"></p>
+    <p class="cw-footrow">
+      <a href="../../history.html">歷史專區</a>
+      <a href="../../index.html">回到主頁</a>
+    </p>
+  </footer>
+</div>
+
+<!-- ══ 底部固定播放器 ══════════════════════════════════════════════════════ -->
+<div class="cw-player" id="cw-player" role="region" aria-label="音樂播放器">
+
+  <div class="cw-player__now">
+    <span class="cw-now-title" id="cw-now-title">尚未選擇曲目</span>
+    <span class="cw-now-sub" id="cw-now-sub"></span>
+  </div>
+
+  <div class="cw-player__bar">
+    <span class="cw-time" id="cw-cur">0:00</span>
+    <div class="cw-seek" id="cw-seek" role="slider" tabindex="0"
+         aria-label="播放進度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="cw-seek__fill" id="cw-seek-fill"></div>
+      <div class="cw-seek__knob" id="cw-seek-knob"></div>
+    </div>
+    <span class="cw-time" id="cw-dur">0:00</span>
+  </div>
+
+  <div class="cw-player__ctl">
+    <button class="cw-btn" id="cw-prev" type="button" aria-label="上一首" title="上一首">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h2.5v14H6zM19 5v14l-9-7z"/></svg>
+    </button>
+    <button class="cw-btn cw-btn--play" id="cw-play" type="button" aria-label="播放" title="播放">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <button class="cw-btn" id="cw-next" type="button" aria-label="下一首" title="下一首">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.5 5H18v14h-2.5zM5 5v14l9-7z"/></svg>
+    </button>
+    <button class="cw-btn" id="cw-shuffle" type="button" aria-label="隨機播放" title="隨機播放" aria-pressed="false">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 3h4v4h-2V6.4l-3.3 3.3-1.4-1.4L17.6 5H17V3zM3 5h3.2l3.4 3.4-1.4 1.4L5.6 7H3V5zm14 8.6V13h2v4h-4v-2h1.6l-3.3-3.3 1.4-1.4L17 13.6zM3 17h2.6l3.6-3.6 1.4 1.4L6.2 19H3v-2z"/></svg>
+    </button>
+    <button class="cw-btn" id="cw-repeat" type="button" aria-label="循環播放" title="循環播放" aria-pressed="true">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 7h9v2.5L20 6l-4-3.5V5H5v6h2V7zm10 10H8v-2.5L4 18l4 3.5V19h11v-6h-2v4z"/></svg>
+    </button>
+
+    <div class="cw-vol">
+      <button class="cw-btn cw-btn--mute" id="cw-mute" type="button" aria-label="靜音" title="靜音" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+      </button>
+      <input class="cw-vol__range" id="cw-vol" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="音量">
+    </div>
+  </div>
+
+  <!-- 錯誤訊息（音訊載入失敗時顯示，不影響其他曲目）-->
+  <p class="cw-error" id="cw-error" role="status" hidden></p>
+
+  <!-- 只有一個 audio 元素，切歌只換 src -->
+  <audio id="cw-audio" preload="none"></audio>
+</div>
+
+<noscript>
+  <p class="cw-maphint">這個頁面需要 JavaScript 才能顯示地圖與播放器。</p>
+</noscript>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

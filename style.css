@@ -1717,9 +1717,40 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
  *  這一整塊只給 history.html 用，主頁不會出現這些元素。
  * ══════════════════════════════════════════════════════════════════════════ */
 .subhead { padding: 40px 0 10px; }
+/* 頁首最上面一列：左邊「回到溫習」、右邊「🎵 歷史音樂」（只有歷史專區有） */
+.subhead__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.subhead__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  font-size: .86rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  background: rgba(102, 192, 244, .1);
+  border: 1px solid rgba(102, 192, 244, .45);
+  border-radius: 999px;
+  transition: background .2s, color .2s, box-shadow .25s, transform .2s;
+}
+.subhead__action:hover, .subhead__action:focus-visible {
+  background: var(--accent);
+  color: #06121c;
+  box-shadow: 0 0 20px -3px var(--accent);
+  transform: translateY(-1px);
+  outline: none;
+}
+.subhead__action-arrow { font-size: .88em; opacity: .75; }
 .subhead__back {
   display: inline-block;
-  margin-bottom: 18px;
+  margin-bottom: 0;
   font-size: .84rem;
   color: var(--text-dim);
   text-decoration: none;

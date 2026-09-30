@@ -32,7 +32,13 @@
 
   <!-- 子頁面的簡易頁首（不是主頁那條分區導覽） -->
   <header class="subhead">
-    <a class="subhead__back" id="sub-back" href="study.html">← 回到溫習</a>
+    <div class="subhead__top">
+      <a class="subhead__back" id="sub-back" href="study.html">← 回到溫習</a>
+      <!-- 冷戰時期歷史音樂（獨立分頁，所以帶一個離開本頁的箭頭）-->
+      <a class="subhead__action" href="history/music/">
+        <span aria-hidden="true">🎵</span> 歷史音樂 <span class="subhead__action-arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
     <h1 class="subhead__title" id="sub-title"></h1>
     <p class="subhead__sub" id="sub-sub"></p>
     <p class="subhead__desc" id="sub-desc"></p>

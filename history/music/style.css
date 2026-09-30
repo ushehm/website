@@ -1,0 +1,512 @@
+/* ============================================================================
+ *  冷戰時期・歷史音樂 —— 這一頁專用的樣式
+ * ----------------------------------------------------------------------------
+ *  刻意不共用主站的 style.css：這一頁是獨立的主題頁，
+ *  用自己的一組顏色（冷戰深色調）。
+ * ========================================================================== */
+
+:root {
+  --cw-bg:      #0d1620;
+  --cw-bg-2:    #101c28;
+  --cw-panel:   #16232f;
+  --cw-panel-2: #1d2e3d;
+  --cw-border:  #2a475e;
+  --cw-text:    #c7d5e0;
+  --cw-dim:     #8ba0b2;
+  --cw-bright:  #ffffff;
+  --cw-accent:  #66c0f4;
+  --cw-amber:   #f0a441;
+  --cw-red:     #d9534f;
+  --cw-green:   #7ddf8a;
+
+  --cw-radius:  10px;
+  --cw-player-h: 92px;   /* 由 script.js 依實際高度更新 */
+
+  --cw-font: 'Motiva Sans', 'Segoe UI', 'Noto Sans TC', 'Microsoft JhengHei',
+             system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  /* 底部留出播放器的高度，內容才不會被蓋住 */
+  padding: 0 0 calc(var(--cw-player-h) + 16px);
+  background: var(--cw-bg);
+  color: var(--cw-text);
+  font-family: var(--cw-font);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+
+a { color: var(--cw-accent); }
+img { max-width: 100%; }
+
+h1, h2, h3 { color: var(--cw-bright); margin: 0; line-height: 1.3; }
+
+.page { max-width: 1500px; margin: 0 auto; padding: 0 20px; }
+
+/* ── 頁首 ──────────────────────────────────────────────────────────────── */
+.cw-head { padding: 34px 0 18px; }
+.cw-back {
+  display: inline-block;
+  margin-bottom: 14px;
+  font-size: .84rem;
+  color: var(--cw-dim);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.cw-back:hover { color: var(--cw-accent); border-bottom-color: var(--cw-accent); }
+.cw-title { font-size: 1.7rem; letter-spacing: .02em; }
+.cw-sub {
+  margin: 4px 0 10px;
+  font-size: .78rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--cw-amber);
+}
+.cw-intro { margin: 0; font-size: .9rem; color: var(--cw-dim); }
+
+/* ── 版面：桌機 = 地圖 + 右側卡片；手機 = 單欄 + 底部抽屜 ──────────────── */
+.cw-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 18px;
+  align-items: start;
+  padding-bottom: 18px;
+}
+
+/* ── 地圖 ──────────────────────────────────────────────────────────────── */
+.cw-mapbox { min-width: 0; }
+.cw-mapwrap {
+  position: relative;
+  /* 地圖內容的實際長寬比（量出來的）。光點的百分比就是對這個框算的，
+     所以這個比例一定要跟 data.js 的 map.width / map.height 一致。 */
+  aspect-ratio: 1400 / 710;
+  border: 1px solid var(--cw-border);
+  border-radius: var(--cw-radius);
+  overflow: hidden;
+  background: #0b121a;
+  box-shadow: 0 14px 40px -14px rgba(0, 0, 0, .8);
+}
+/* 復古 CRT 掃描線：很淡，只是質感（地圖本身是白底，所以用深色線） */
+.cw-mapwrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(20, 30, 40, .07) 0px,
+    rgba(20, 30, 40, .07) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+.cw-map {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* 底圖是白底的老地圖，加一點泛黃壓低刺眼感。
+     不加 background —— SVG 橢圓外是透明的，讓它透出下面的深色底，
+     這樣才是「深色背景上的一張紙地圖」，而不是一整塊米色。 */
+  filter: sepia(.2) saturate(.94) brightness(.96) contrast(1.02);
+}
+.cw-maperr {
+  margin: 0;
+  padding: 40px 20px;
+  text-align: center;
+  font-size: .88rem;
+  color: var(--cw-dim);
+}
+
+/* 光點層：蓋在地圖上，座標用百分比 */
+.cw-dots { position: absolute; inset: 0; }
+
+.cw-dot {
+  position: absolute;
+  width: 22px; height: 22px;
+  /* left/top 是光點的圓心，所以要往左上各推半個寬度 */
+  margin: -11px 0 0 -11px;
+  padding: 0;
+  border: 2px solid var(--dot, var(--cw-amber));
+  border-radius: 50%;
+  background: rgba(13, 22, 32, .6);
+  cursor: pointer;
+  transition: transform .18s, box-shadow .25s, background .2s;
+  /* 讓 box-shadow 的光暈看起來更亮 */
+  filter: drop-shadow(0 0 6px var(--dot, var(--cw-amber)));
+}
+/* 脈衝圈 */
+.cw-dot::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid var(--dot, var(--cw-amber));
+  animation: cwPulse 2.4s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes cwPulse {
+  0%   { transform: scale(1);   opacity: .85; }
+  70%  { transform: scale(3);   opacity: 0; }
+  100% { transform: scale(3);   opacity: 0; }
+}
+/* 每顆光點的脈衝錯開，看起來比較有生命 */
+.cw-dot:nth-child(2n)::after { animation-delay: .6s; }
+.cw-dot:nth-child(3n)::after { animation-delay: 1.2s; }
+
+.cw-dot:hover,
+.cw-dot:focus-visible,
+.cw-dot[aria-pressed="true"] {
+  transform: scale(1.4);
+  background: var(--dot, var(--cw-amber));
+  box-shadow: 0 0 20px 5px var(--dot, var(--cw-amber));
+  outline: none;
+  z-index: 3;
+}
+.cw-dot:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+/* 光點上的國家名：平常隱藏，hover / 聚焦 / 選中時出現 */
+.cw-dot__label {
+  position: absolute;
+  left: 50%; bottom: calc(100% + 10px);
+  transform: translateX(-50%);
+  padding: 4px 10px;
+  font-size: .76rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--cw-bright);
+  background: rgba(6, 12, 18, .92);
+  border: 1px solid var(--dot, var(--cw-amber));
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s;
+}
+.cw-dot:hover .cw-dot__label,
+.cw-dot:focus-visible .cw-dot__label,
+.cw-dot[aria-pressed="true"] .cw-dot__label { opacity: 1; }
+
+.cw-maphint {
+  margin: 10px 0 0;
+  font-size: .78rem;
+  color: var(--cw-dim);
+}
+
+/* ── 右側卡片（手機時變成抽屜）────────────────────────────────────────── */
+.cw-panel {
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - var(--cw-player-h) - 32px);
+  overflow-y: auto;
+  padding: 18px;
+  background: var(--cw-panel);
+  border: 1px solid var(--cw-border);
+  border-radius: var(--cw-radius);
+}
+/* 手機抽屜的把手，桌機不需要 */
+.cw-panel__grip { display: none; }
+
+.cw-empty { font-size: .88rem; color: var(--cw-dim); }
+.cw-country { font-size: 1.2rem; }
+.cw-capital {
+  margin: 2px 0 10px;
+  font-size: .8rem;
+  letter-spacing: .08em;
+  color: var(--cw-amber);
+}
+.cw-desc {
+  margin: 0 0 16px;
+  font-size: .86rem;
+  line-height: 1.75;
+  color: var(--cw-dim);
+}
+.cw-tracks-title {
+  font-size: .82rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--cw-dim);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--cw-border);
+  margin-bottom: 8px;
+}
+
+.cw-tracks { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+
+.cw-track {
+  display: grid;
+  grid-template-columns: 26px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--cw-text);
+  font: inherit;
+  font-size: .88rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background .18s, border-color .18s, color .18s;
+}
+.cw-track:hover, .cw-track:focus-visible {
+  background: var(--cw-panel-2);
+  border-color: var(--cw-border);
+  outline: none;
+}
+.cw-track__no {
+  text-align: center;
+  font-size: .76rem;
+  color: var(--cw-dim);
+  font-variant-numeric: tabular-nums;
+}
+.cw-track__title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cw-track__time {
+  font-size: .74rem;
+  color: var(--cw-dim);
+  font-variant-numeric: tabular-nums;
+}
+/* 目前播放的曲目 */
+.cw-track[aria-current="true"] {
+  background: linear-gradient(90deg, rgba(240, 164, 65, .16), transparent);
+  border-color: var(--cw-amber);
+}
+.cw-track[aria-current="true"] .cw-track__title { color: var(--cw-bright); font-weight: 700; }
+.cw-track[aria-current="true"] .cw-track__no { color: var(--cw-amber); }
+
+.cw-close {
+  display: none;
+  width: 100%;
+  margin-top: 14px;
+  padding: 9px;
+  font: inherit;
+  font-size: .84rem;
+  color: var(--cw-dim);
+  background: transparent;
+  border: 1px solid var(--cw-border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.cw-close:hover { color: var(--cw-bright); border-color: var(--cw-accent); }
+
+/* ── 頁尾 ──────────────────────────────────────────────────────────────── */
+.cw-foot {
+  padding: 20px 0 10px;
+  border-top: 1px solid var(--cw-border);
+  font-size: .78rem;
+  color: var(--cw-dim);
+}
+.cw-credit { margin: 0 0 6px; }
+.cw-footrow { margin: 0; display: flex; gap: 16px; }
+.cw-footrow a { color: var(--cw-dim); text-decoration: none; }
+.cw-footrow a:hover { color: var(--cw-accent); }
+
+/* ══ 底部固定播放器 ═══════════════════════════════════════════════════════ */
+.cw-player {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: minmax(120px, 1.1fr) minmax(160px, 2fr) auto;
+  grid-template-areas:
+    'now bar ctl';
+  align-items: center;
+  gap: 18px;
+  padding: 12px 20px;
+  background: rgba(11, 18, 26, .96);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--cw-border);
+}
+
+.cw-player__now { grid-area: now; display: grid; min-width: 0; }
+.cw-now-title {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--cw-bright);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cw-now-sub {
+  font-size: .74rem;
+  color: var(--cw-dim);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.cw-player__bar { grid-area: bar; display: flex; align-items: center; gap: 10px; }
+.cw-time {
+  font-size: .76rem;
+  color: var(--cw-dim);
+  font-variant-numeric: tabular-nums;
+  min-width: 38px;
+  text-align: center;
+}
+.cw-seek {
+  position: relative;
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: #24384a;
+  cursor: pointer;
+  transition: height .15s;
+}
+.cw-seek:hover, .cw-seek:focus-visible { height: 10px; outline: none; }
+.cw-seek__fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--cw-amber), #ffe0a8);
+}
+.cw-seek__knob {
+  position: absolute; top: 50%; left: 0;
+  width: 13px; height: 13px; margin-left: -6.5px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translateY(-50%) scale(0);
+  box-shadow: 0 0 10px var(--cw-amber);
+  transition: transform .15s;
+}
+.cw-seek:hover .cw-seek__knob,
+.cw-seek:focus-visible .cw-seek__knob { transform: translateY(-50%) scale(1); }
+
+.cw-player__ctl { grid-area: ctl; display: flex; align-items: center; gap: 6px; }
+
+.cw-btn {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  padding: 0;
+  color: var(--cw-text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color .18s, background .18s, border-color .18s, transform .15s;
+}
+.cw-btn svg { width: 20px; height: 20px; }
+.cw-btn:hover, .cw-btn:focus-visible {
+  color: var(--cw-bright);
+  background: var(--cw-panel-2);
+  outline: none;
+}
+.cw-btn:focus-visible { outline: 2px solid var(--cw-accent); outline-offset: 2px; }
+.cw-btn--play {
+  width: 46px; height: 46px;
+  color: #14100a;
+  background: linear-gradient(160deg, #ffd08a, var(--cw-amber));
+}
+.cw-btn--play:hover { color: #14100a; filter: brightness(1.08); transform: scale(1.05); }
+.cw-btn--play svg { width: 24px; height: 24px; }
+/* 開啟中的切換鈕（隨機 / 循環） */
+.cw-btn[aria-pressed="true"] { color: var(--cw-amber); border-color: var(--cw-amber); }
+.cw-btn[aria-pressed="false"] { color: var(--cw-dim); }
+
+.cw-vol { display: flex; align-items: center; gap: 4px; margin-left: 4px; }
+.cw-btn--mute { width: 32px; height: 32px; }
+.cw-btn--mute svg { width: 18px; height: 18px; }
+.cw-vol__range {
+  -webkit-appearance: none; appearance: none;
+  width: 84px; height: 4px;
+  border-radius: 999px;
+  background: #24384a;
+  cursor: pointer;
+  outline: none;
+}
+.cw-vol__range::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--cw-amber);
+  box-shadow: 0 0 8px var(--cw-amber);
+}
+.cw-vol__range::-moz-range-thumb {
+  width: 13px; height: 13px; border: 0; border-radius: 50%;
+  background: var(--cw-amber);
+}
+
+/* 錯誤訊息：橫跨整個播放器下方 */
+.cw-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: .78rem;
+  color: #ffb4a8;
+}
+
+/* ══ 手機 ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .page { padding: 0 12px; }
+  .cw-head { padding: 22px 0 12px; }
+  .cw-title { font-size: 1.35rem; }
+
+  .cw-main { grid-template-columns: 1fr; gap: 12px; }
+
+  /* 曲目變成底部抽屜：預設收起來，點光點後滑上來，不會蓋住地圖 */
+  .cw-panel {
+    position: fixed;
+    left: 0; right: 0;
+    /* ⚠ top 一定要設 auto —— 桌機版為了 sticky 設了 top: 16px，
+       不覆蓋的話 top 和 bottom 會同時生效，抽屜會卡在畫面頂端。 */
+    top: auto;
+    bottom: var(--cw-player-h);
+    z-index: 35;
+    max-height: 60vh;
+    padding: 10px 16px 18px;
+    border-radius: 16px 16px 0 0;
+    border-bottom: 0;
+    box-shadow: 0 -14px 44px rgba(0, 0, 0, .65);
+    /* 收起來時要整塊推出畫面（含播放器的高度），不然會露出一截 */
+    transform: translateY(calc(100% + var(--cw-player-h) + 24px));
+    visibility: hidden;
+    transition: transform .3s cubic-bezier(.2, .9, .3, 1), visibility .3s;
+  }
+  .cw-panel.is-open {
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .cw-panel__grip {
+    display: block;
+    width: 46px; height: 5px;
+    margin: 2px auto 12px;
+    border-radius: 999px;
+    background: var(--cw-border);
+    cursor: pointer;
+  }
+  .cw-close { display: block; }
+
+  /* 播放器改成兩列，上面是曲名與進度、下面是控制鍵 */
+  .cw-player {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'now ctl'
+      'bar bar';
+    gap: 8px 12px;
+    padding: 10px 14px;
+  }
+  .cw-player__ctl { gap: 2px; }
+  .cw-btn { width: 34px; height: 34px; }
+  .cw-btn svg { width: 18px; height: 18px; }
+  .cw-btn--play { width: 40px; height: 40px; }
+  .cw-btn--play svg { width: 21px; height: 21px; }
+  /* 手機上先把隨機／循環／音量收起來，避免擠爆 */
+  .cw-vol { display: none; }
+  #cw-shuffle, #cw-repeat { display: none; }
+}
+
+@media (max-width: 380px) {
+  .cw-title { font-size: 1.2rem; }
+}
+
+/* ── 尊重系統的「減少動態效果」設定 ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+  /* 關掉脈衝圈（不留一個靜止的圈在那裡） */
+  .cw-dot::after { display: none; }
+}
