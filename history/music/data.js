@@ -77,7 +77,7 @@ const HISTORY_MUSIC = {
       x: 47.47, y: 18.22,
       description: '英倫雅樂。',
       tracks: [
-        { title: 'I Don\u2019t Want to Join the Army（英國軍歌五首）', audio: '../../assets/audio/uk-01.m4a' }
+        { title: 'I Don\u2019t Want to Join the Army', audio: '../../assets/audio/uk-01.m4a' }
       ]
     },
 
