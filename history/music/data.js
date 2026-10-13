@@ -109,7 +109,7 @@ const HISTORY_MUSIC = {
         { title: '德意志之歌 Das Deutschlandlied', audio: '../../assets/audio/eastgermany-02.m4a' },
         { title: '守望萊茵蘭 Die Wacht am Rhein', audio: '../../assets/audio/eastgermany-03.m4a' },
         { title: '艾麗卡 Erika', audio: '../../assets/audio/eastgermany-04.m4a' },
-        { title: '莉莉瑪蓮 Lili Marleen（1959）', audio: '../../assets/audio/eastgermany-05.m4a' }
+        { title: '莉莉瑪蓮 Lili Marleen', audio: '../../assets/audio/eastgermany-05.m4a' }
       ]
     },
 
@@ -154,21 +154,21 @@ const HISTORY_MUSIC = {
       tracks: [
         { title: '繼續革命的戰歌（1978-1982 國歌）', audio: '../../assets/audio/china-01.m4a' },
         { title: '東方紅', audio: '../../assets/audio/china-02.m4a' },
-        { title: '歌唱社會主義祖國（1968）', audio: '../../assets/audio/china-03.m4a' },
+        { title: '歌唱社會主義祖國', audio: '../../assets/audio/china-03.m4a' },
         { title: '沒有共產黨就沒有新中國', audio: '../../assets/audio/china-04.m4a' },
         { title: '大海航行靠舵手', audio: '../../assets/audio/china-05.m4a' },
         { title: '中國人民志願軍戰歌', audio: '../../assets/audio/china-06.m4a' },
-        { title: '我們走在大路上（1970）', audio: '../../assets/audio/china-07.m4a' },
+        { title: '我們走在大路上', audio: '../../assets/audio/china-07.m4a' },
         { title: '社會主義好', audio: '../../assets/audio/china-08.m4a' },
-        { title: '人民軍隊忠於黨（文革版）', audio: '../../assets/audio/china-09.m4a' },
-        { title: '國際歌（中文）', audio: '../../assets/audio/china-10.m4a' },
+        { title: '人民軍隊忠於黨', audio: '../../assets/audio/china-09.m4a' },
+        { title: '國際歌', audio: '../../assets/audio/china-10.m4a' },
         { title: '文化大革命就是好', audio: '../../assets/audio/china-11.m4a' },
         { title: '把文化大革命進行到底', audio: '../../assets/audio/china-12.m4a' },
         { title: '回擊翻案風 粉碎復辟夢', audio: '../../assets/audio/china-13.m4a' },
         { title: '奮起千鈞棒 痛打落水狗', audio: '../../assets/audio/china-14.m4a' },
         { title: '永遠不能忘', audio: '../../assets/audio/china-15.m4a' },
         { title: '偉大的毛澤東思想燦爛輝煌（1968）', audio: '../../assets/audio/china-16.m4a' },
-        { title: '三大紀律八項注意（另一版本）', audio: '../../assets/audio/china-17.m4a' }
+        { title: '三大紀律八項注意', audio: '../../assets/audio/china-17.m4a' }
       ]
     },
 
@@ -183,7 +183,7 @@ const HISTORY_MUSIC = {
       tracks: [
         { title: '愛國歌（朝鮮國歌）', audio: '../../assets/audio/dprk-01.m4a' },
         { title: '朝鮮人民軍軍歌', audio: '../../assets/audio/dprk-02.m4a' },
-        { title: '三大紀律八項注意（朝鮮版）', audio: '../../assets/audio/dprk-03.m4a' }
+        { title: '三大紀律八項注意', audio: '../../assets/audio/dprk-03.m4a' }
       ]
     }
 
