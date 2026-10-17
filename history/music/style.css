@@ -49,18 +49,52 @@ h1, h2, h3 { color: var(--cw-bright); margin: 0; line-height: 1.3; }
 
 .page { max-width: 1500px; margin: 0 auto; padding: 0 20px; }
 
-/* ── 頁首 ──────────────────────────────────────────────────────────────── */
-.cw-head { padding: 34px 0 18px; }
-.cw-back {
-  display: inline-block;
-  margin-bottom: 14px;
+/* ── 麵包屑 ────────────────────────────────────────────────────────────── */
+.cw-crumb { margin: 0 0 16px; }
+.cw-crumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   font-size: .84rem;
+  line-height: 1.5;
+}
+.cw-crumb__list li { display: flex; align-items: center; min-width: 0; }
+/* 分隔符只用 CSS 產生，螢幕閱讀器不會唸出來 */
+.cw-crumb__list li + li::before {
+  content: '/';
+  margin: 0 9px;
+  color: var(--cw-border);
+  user-select: none;
+}
+.cw-crumb__list a {
   color: var(--cw-dim);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: color .2s, border-color .2s;
+  white-space: nowrap;
 }
-.cw-back:hover { color: var(--cw-accent); border-bottom-color: var(--cw-accent); }
+.cw-crumb__list a:hover,
+.cw-crumb__list a:focus-visible {
+  color: var(--cw-accent);
+  border-bottom-color: var(--cw-accent);
+}
+.cw-crumb__list a:focus-visible { outline: 2px solid var(--cw-accent); outline-offset: 3px; }
+/* 目前所在的頁面：不是連結，用琥珀色標示 */
+.cw-crumb__list [aria-current="page"] {
+  color: var(--cw-amber);
+  font-weight: 700;
+  /* 太長就省略，不要撐破版面 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── 頁首 ──────────────────────────────────────────────────────────────── */
+.cw-head { padding: 34px 0 18px; }
 .cw-title { font-size: 1.7rem; letter-spacing: .02em; }
 .cw-sub {
   margin: 4px 0 10px;

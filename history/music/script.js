@@ -79,8 +79,9 @@
     document.getElementById('cw-title').textContent = D.title || '歷史音樂';
     document.getElementById('cw-sub').textContent = D.subtitle || '';
     document.getElementById('cw-intro').textContent = D.intro || '';
-    const back = $('cw-back');
-    if (back) { back.href = D.backHref || '../../history.html'; back.textContent = D.backLabel || '← 回上一頁'; }
+    // 麵包屑最後一項就是這一頁，文字跟頁面標題一致
+    const here = $('cw-crumb-here');
+    if (here) here.textContent = D.title || '歷史音樂';
     document.title = (D.title || '歷史音樂') + ' — ciallo';
     $('cw-tracks-title').textContent = UI.tracksTitle || '曲目';
     $('cw-maphint').textContent = UI.hint || '';

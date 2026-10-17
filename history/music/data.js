@@ -27,10 +27,9 @@ const HISTORY_MUSIC = {
   title: '冷戰時期・歷史音樂',
   subtitle: 'Cold War Folk Music',
   intro: '點地圖上的光點，聽那個國家的民俗音樂。',
-  backLabel: '← 回到歷史專區',
-  // ⚠ 這一頁在 history/music/，而歷史專區是網站根目錄的 history.html，
-  //   所以要往上兩層。寫成 'history.html' 會變成 history/music/history.html。
-  backHref: '../../history.html',
+  // 導覽改用麵包屑，直接寫在 index.html 裡（主頁 / 溫習 / 歷史專區 / 這一頁）。
+  // 之前把返回連結的路徑放在這裡，結果寫成相對路徑 'history.html'，
+  // 變成 /history/music/history.html —— 所以路徑這種東西留在 HTML 裡比較安全。
 
   /* ── 地圖底圖 ───────────────────────────────────────────────────────── */
   map: {

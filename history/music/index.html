@@ -33,7 +33,17 @@
 <div class="page">
 
   <header class="cw-head">
-    <a class="cw-back" id="cw-back" href="../../history.html">← 回到歷史專區</a>
+    <!-- 麵包屑：主頁 / 溫習 / 歷史專區 / 冷戰時期・歷史音樂
+         這一頁在 history/music/，其他頁都在根目錄，所以往上兩層。
+         最後一項是目前頁面，不是連結，用 aria-current="page" 標示。 -->
+    <nav class="cw-crumb" aria-label="麵包屑導覽">
+      <ol class="cw-crumb__list">
+        <li><a href="../../index.html">主頁</a></li>
+        <li><a href="../../study.html">溫習</a></li>
+        <li><a href="../../history.html">歷史專區</a></li>
+        <li><span id="cw-crumb-here" aria-current="page">冷戰時期・歷史音樂</span></li>
+      </ol>
+    </nav>
     <h1 class="cw-title" id="cw-title"></h1>
     <p class="cw-sub" id="cw-sub"></p>
     <p class="cw-intro" id="cw-intro"></p>
