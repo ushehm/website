@@ -83,8 +83,27 @@
 
     const open = document.getElementById('reader-open');
     if (open) open.href = book.file;
+
+    // 跨網域的檔案（例如 Cloudflare R2 的 PDF）瀏覽器會忽略 download 屬性，
+    // 按下去只會開啟，不會下載。所以那種情況改成「開啟 PDF」並開新分頁，
+    // 不要讓按鈕寫著「下載」卻做不到。
     const dl = document.getElementById('reader-download');
-    if (dl) dl.href = book.file;
+    if (dl) {
+      dl.href = book.file;
+      const remote = /^https?:/i.test(book.file);
+      if (remote) {
+        dl.removeAttribute('download');
+        dl.setAttribute('target', '_blank');
+        dl.setAttribute('rel', 'noopener noreferrer');
+        dl.textContent = UI.remoteOpenLabel || '開啟 PDF ↗';
+        dl.title = '這個檔案放在外部空間，瀏覽器不允許強制下載，會開新分頁顯示';
+      } else {
+        dl.setAttribute('download', '');
+        dl.removeAttribute('target');
+        dl.textContent = UI.downloadLabel || '下載 PDF';
+        dl.removeAttribute('title');
+      }
+    }
 
     // #view=FitH 請瀏覽器盡量把頁面寬度撐滿；支援的瀏覽器會照做
     frame.src = book.file + '#view=FitH&toolbar=1';
@@ -120,13 +139,16 @@
     subjects.forEach(function (s) {
       const conf = D[s.key];
       const count = (conf && conf.books) ? conf.books.length : 0;
+      // 單位詞可以各自設定（筆記 / 試卷…），沒設定就用「份筆記」
+      const unit = s.unit || '份筆記';
+      const meta = count > 0 ? (count + ' ' + unit) : (s.emptyMeta || '尚未加入');
 
       const card = el('a', { class: 'subject', href: s.page || '#' }, [
         el('span', { class: 'subject__icon', 'aria-hidden': 'true', text: s.icon || '書' }),
         el('span', { class: 'subject__body' }, [
           el('span', { class: 'subject__name', text: s.name || s.key }),
           el('span', { class: 'subject__desc', text: s.description || '' }),
-          el('span', { class: 'subject__meta', text: count + ' 份筆記' })
+          el('span', { class: 'subject__meta', text: meta })
         ]),
         el('span', { class: 'subject__go', 'aria-hidden': 'true', text: '▸' })
       ]);
@@ -141,10 +163,19 @@
     const list = document.getElementById('history-list');
     if (!list) return;
 
-    if (!SUBJECT || !(SUBJECT.books || []).length) {
+    if (!SUBJECT) {
       list.appendChild(el('p', {
         class: 'reader__hint',
         text: UI.missingText || '找不到這個專區的資料。'
+      }));
+      return;
+    }
+
+    if (!(SUBJECT.books || []).length) {
+      // 專區存在但還沒放清單（例如 DSE 試卷庫還沒填檔案）
+      list.appendChild(el('p', {
+        class: 'reader__hint',
+        text: UI.emptyText || '這個專區的清單還沒加入。'
       }));
       return;
     }

@@ -605,9 +605,11 @@ const SITE_DATA = {
       backLabel: '← 回到溫習',
       openLabel: '在新分頁開啟 ↗',
       downloadLabel: '下載 PDF',
+      remoteOpenLabel: '開啟 PDF ↗',
       closeLabel: '收起閱讀器',
       readerHint: '看不到內容或只有第一頁的話，按「在新分頁開啟」用手機內建的閱讀器看。',
-      missingText: '找不到這個專區的資料。'
+      missingText: '找不到這個專區的資料。',
+      emptyText: '這個專區的試卷清單還沒加入。'
     },
     subjects: [
       {
@@ -623,7 +625,45 @@ const SITE_DATA = {
         icon: '史',
         page: 'history.html',
         description: '中四、中五的歷史科筆記。'
+      },
+      {
+        key: 'dse',
+        name: 'DSE 試卷庫',
+        icon: '卷',
+        page: 'dse.html',
+        description: 'English、Math、History、THS 四科的歷屆試卷。',
+        unit: '份試卷',
+        emptyMeta: '清單待補'
       }
+    ]
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────
+   *  DSE 試卷庫（子頁面 dse.html）
+   * ----------------------------------------------------------------------
+   *  PDF 放在 Cloudflare R2，四個科目各一個 bucket（見下面的 buckets）。
+   *
+   *  ⚠ R2 的公開網址「不支援目錄列表」—— 開 https://pub-xxx.r2.dev/ 會回 404，
+   *    所以沒有辦法自動列出試卷。試卷清單是手寫在下面的 books 陣列裡，
+   *    加新試卷就在 books 加一行（file 用完整網址，前面不用加 ../）。
+   *
+   *  level 相同的會自動分成同一組（這裡用科名當組名）。
+   *  檔案要開 CORS / 允許嵌入才能在 iframe 裡直接看（R2 公開 bucket 預設可以）。
+   * ──────────────────────────────────────────────────────────────────── */
+  dse: {
+    title: 'DSE 試卷庫',
+    subtitle: 'DSE Past Papers',
+    description: '四個科目的歷屆試卷，全部是 PDF，可以直接在這裡看。',
+    // 四個 bucket 的根網址，方便對照（books 裡的 file 要用完整網址）
+    buckets: {
+      eng: 'https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev',
+      math: 'https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev',
+      history: 'https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev',
+      ths: 'https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev'
+    },
+    books: [
+      // 範例（把註解拿掉、換成真實檔名就會出現在頁面上）：
+      // { level: 'English', title: 'Paper 1 Reading', note: '2024', size: '', file: 'https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/2024-p1.pdf' }
     ]
   },
 

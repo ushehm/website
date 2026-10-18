@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DSE 試卷庫 — ciallo</title>
+<meta name="description" content="DSE 歷屆試卷：English、Math、History、THS，全部是 PDF。">
+<meta name="theme-color" content="#171a21">
+<meta name="color-scheme" content="dark">
+
+<!--
+  DSE 試卷庫
+  ----------------------------------------------------------------------------
+  從「溫習」專區的「卷 DSE 試卷庫」卡片進來。
+
+  PDF 放在 Cloudflare R2（四個科目各一個 bucket），不是放在這個 repo 裡，
+  所以這裡沒有 PDF 檔。試卷清單寫在 data.js 的 dse.books 陣列。
+
+  ⚠ R2 公開網址不支援目錄列表，所以清單只能手寫，沒辦法自動抓。
+-->
+
+<link rel="icon" href="images/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-study-page="subject" data-subject="dse">
+
+<div class="page">
+
+  <!-- 子頁面的簡易頁首（不是主頁那條分區導覽） -->
+  <header class="subhead">
+    <div class="subhead__top">
+      <a class="subhead__back" id="sub-back" href="study.html">← 回到溫習</a>
+    </div>
+    <h1 class="subhead__title" id="sub-title"></h1>
+    <p class="subhead__sub" id="sub-sub"></p>
+    <p class="subhead__desc" id="sub-desc"></p>
+  </header>
+
+  <main>
+
+    <!-- 科別篩選（試卷清單按科分組，這裡只是標示；由 study.js 產生） -->
+    <div id="history-list"></div>
+
+    <!-- 閱讀器：點書名之後才會出現 -->
+    <section class="section reader" id="reader" hidden>
+      <div class="reader__bar">
+        <h2 class="reader__title" id="reader-title"></h2>
+        <div class="reader__actions">
+          <a class="btn btn--primary" id="reader-open" href="#" target="_blank" rel="noopener noreferrer">在新分頁開啟 ↗</a>
+          <a class="btn btn--ghost" id="reader-download" href="#" download>下載 PDF</a>
+          <button class="btn btn--ghost" type="button" id="reader-close">收起閱讀器</button>
+        </div>
+      </div>
+      <p class="reader__hint" id="reader-hint"></p>
+      <div class="reader__stage">
+        <iframe class="reader__frame" id="reader-frame" title="試卷內容" loading="lazy"></iframe>
+      </div>
+    </section>
+
+    <noscript>
+      <p class="reader__hint">這個頁面需要 JavaScript 才能列出試卷。請開啟 JavaScript 後重新整理。</p>
+    </noscript>
+  </main>
+
+  <footer class="footer" id="sub-footer"></footer>
+</div>
+
+<script src="data.js"></script>
+<script src="study.js"></script>
+</body>
+</html>

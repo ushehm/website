@@ -577,6 +577,50 @@ Cloudflare 對靜態資產的限制是**單檔 25 MiB**、**檔案數 20,000**�
 目前最大的一個是 18.45 MiB，全部合格。整站現在約 184.6 MB。
 
 
+## DSE 試卷庫（子頁面 `dse.html`）
+
+**`dse.html`** —— 從溫習專區的「**卷 DSE 試卷庫**」卡片進來。
+
+> ⚠️ **目前清單是空的**，頁面會顯示「這個專區的試卷清單還沒加入」。
+> 把檔名補進 `data.js` 的 `dse.books` 就會出現。
+
+### PDF 放在 Cloudflare R2，不在這個 repo 裡
+
+四個科目各一個 bucket：
+
+| 科目 | Bucket |
+| :-- | :-- |
+| English | `https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev` |
+| Math | `https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev` |
+| History | `https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev` |
+| THS | `https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev` |
+
+### ⚠️ R2 公開網址不支援目錄列表
+
+開 `https://pub-xxx.r2.dev/` 會回 **404**，不會列出檔案。實測四個 bucket 都一樣
+（連 `?list-type=2` 也是 404）。
+
+所以**試卷清單只能手寫在 `data.js`**，沒有辦法自動抓。加新試卷就在
+`dse.books` 加一行：
+
+```js
+{ level: 'English', title: 'Paper 1 Reading', note: '2024', size: '', file: 'https://pub-3baf.../2024-p1.pdf' }
+```
+
+`level` 相同的會自動分成同一組（用科名當組名）。
+
+### 跨網域的下載按鈕
+
+`study.js` 會判斷 `file` 是不是 `http(s)` 開頭：
+
+- **是**（R2 的 PDF）→ 按鈕改成「**開啟 PDF ↗**」並開新分頁。
+  因為瀏覽器會忽略跨網域的 `download` 屬性，寫「下載」但做不到會誤導。
+- **否**（repo 裡的 PDF，如中文／歷史專區）→ 維持「下載 PDF」。
+
+想讓 R2 的檔案真的能強制下載，要在上傳時設 `Content-Disposition: attachment`，
+那是 R2 那邊的設定，不是這裡的程式。
+
+
 ## 冷戰時期・歷史音樂（獨立分頁）
 
 **`history/music/`** —— 從**歷史專區右上角**的「**🎵 歷史音樂 ↗**」按鈕進來。
