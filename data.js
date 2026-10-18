@@ -767,7 +767,8 @@ const SITE_DATA = {
       { level: "History · 綜合卷", title: "2024", note: "整份試卷", size: "7.3 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2024/2024.pdf" },
       { level: "History · 綜合卷", title: "2025", note: "整份試卷", size: "7.4 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2025/2025.pdf" },
 
-      /* ── THS · 卷一（13 份）── */
+      
+      /* ── THS · 卷一（14 份）── */
       { level: "THS · 卷一", title: "2012", note: "卷一", size: "1.1 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2012/2012卷一.pdf" },
       { level: "THS · 卷一", title: "2013", note: "卷一", size: "0.8 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2013/2013卷一.pdf" },
       { level: "THS · 卷一", title: "2014", note: "卷一", size: "0.9 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2014/2014卷一.pdf" },
@@ -781,8 +782,9 @@ const SITE_DATA = {
       { level: "THS · 卷一", title: "2022", note: "卷一", size: "3.0 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2022/2022 卷一.pdf" },
       { level: "THS · 卷一", title: "2023", note: "卷一", size: "4.0 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2023/2023卷一.pdf" },
       { level: "THS · 卷一", title: "2024", note: "卷一", size: "0.8 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2024/2024卷一.pdf" },
+      { level: "THS · 卷一", title: "2026", note: "卷一", size: "0.5 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2026/2026 P1.pdf" },
 
-      /* ── THS · 卷二（13 份）── */
+      /* ── THS · 卷二（14 份）── */
       { level: "THS · 卷二", title: "2012", note: "卷二", size: "0.3 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2012/2012卷二.pdf" },
       { level: "THS · 卷二", title: "2013", note: "卷二", size: "0.3 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2013/2013卷二.pdf" },
       { level: "THS · 卷二", title: "2014", note: "卷二", size: "0.3 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2014/2014卷二.pdf" },
@@ -796,15 +798,11 @@ const SITE_DATA = {
       { level: "THS · 卷二", title: "2022", note: "卷二", size: "0.6 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2022/2022 卷二.pdf" },
       { level: "THS · 卷二", title: "2023", note: "卷二", size: "0.7 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2023/2023卷二.pdf" },
       { level: "THS · 卷二", title: "2024", note: "卷二", size: "0.2 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2024/2024卷二.pdf" },
+      { level: "THS · 卷二", title: "2026", note: "卷二", size: "0.2 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2026/2026 P2.pdf" },
 
       /* ── THS · 綜合卷（1 份）── */
-      { level: "THS · 綜合卷", title: "2025", note: "卷一 + 卷二（C 卷）", size: "53.1 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2025/2025 C.pdf" },
+      { level: "THS · 綜合卷", title: "2025", note: "卷一 + 卷二（C 卷）", size: "53.1 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2025/2025 C.pdf" }
 
-      /* ── THS · P1（1 份）── */
-      { level: "THS · P1", title: "2026", note: "P1", size: "0.5 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2026/2026 P1.pdf" },
-
-      /* ── THS · P2（1 份）── */
-      { level: "THS · P2", title: "2026", note: "P2", size: "0.2 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2026/2026 P2.pdf" }
     ]
   },
 
