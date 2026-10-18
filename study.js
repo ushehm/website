@@ -189,7 +189,10 @@
     });
 
     groups.forEach(function (g) {
-      const grid = el('div', { class: 'books' });
+      // 份數很多時（例如 DSE 試卷庫 111 份）改成多欄排列，
+      // 不然一張一張往下排，頁面會長到一萬多 px。
+      const dense = (SUBJECT.books || []).length > 24;
+      const grid = el('div', { class: 'books' + (dense ? ' books--dense' : '') });
 
       g.items.forEach(function (it) {
         const b = it.book;
@@ -219,7 +222,7 @@
             el('span', { class: 'section__icon', 'aria-hidden': 'true', text: '❐' }),
             el('span', { text: g.level || '筆記' })
           ]),
-          el('p', { class: 'section__desc', text: g.items.length + ' 本' })
+          el('p', { class: 'section__desc', text: g.items.length + ' ' + (SUBJECT.unit || '本') })
         ]),
         grid
       ]));

@@ -581,8 +581,46 @@ Cloudflare 對靜態資產的限制是**單檔 25 MiB**、**檔案數 20,000**�
 
 **`dse.html`** —— 從溫習專區的「**卷 DSE 試卷庫**」卡片進來。
 
-> ⚠️ **目前清單是空的**，頁面會顯示「這個專區的試卷清單還沒加入」。
-> 把檔名補進 `data.js` 的 `dse.books` 就會出現。
+目前有 **111 份 PDF**，分 11 組：
+
+| 組別 | 份數 | 範圍 |
+| :-- | --: | :-- |
+| English · Marking Scheme | 16 | 2012–2025 + PP + SP |
+| English · Reading Passage | 14 | 2012–2018、2020–2023、2025 + Practice + Sample |
+| Math · P1 | 14 | 2012–2025 |
+| Math · P2 | 14 | 2012–2025 |
+| History · P1 | 12 | 2012–2023 |
+| History · P2 | 12 | 2012–2023 |
+| THS · 卷一 | 13 | 2012–2024 |
+| THS · 卷二 | 13 | 2012–2024 |
+| THS · 綜合卷 | 1 | 2025（C 卷） |
+| THS · P1 | 1 | 2026 |
+| THS · P2 | 1 | 2026 |
+
+### ⚠️ 每一條網址都是實測過的
+
+清單不是照規則「推」出來的，是**逐條對 R2 發 HTTP HEAD 請求驗證**過的
+（111 / 111 都回 200）。因為有幾個檔名不符合規則：
+
+| 位置 | 例外 |
+| :-- | :-- |
+| `reading ans/MS/2024` | 叫 **`2024 MS+CP.pdf`**（不是 `2024 MS.pdf`） |
+| `reading passage/Paper 1/2013` | 叫 **`2013 Reading Passage.pdf`** |
+| `reading passage/Paper 1/2025` | 叫 **`2025 P1.pdf`**（其他年份是 `{年}.pdf`） |
+| `5. 旅遊與款待/2022` | **`2022 卷一.pdf`** 有空格；其他年份是 `2022卷一.pdf` |
+
+### 還沒找到的 6 份
+
+這 6 份用常見命名變體試了 144 個組合都沒找到，可能還沒上傳或命名更特殊：
+
+```
+reading passage/Paper 1/2019/2019.pdf
+reading passage/Paper 1/2024/2024.pdf
+4. 歷史/2024/2024 P1.pdf   4. 歷史/2024/2024 P2.pdf
+4. 歷史/2025/2025 P1.pdf   4. 歷史/2025/2025 P2.pdf
+```
+
+補上時在 `data.js` 的 `dse.books` 加對應的行就好。
 
 ### PDF 放在 Cloudflare R2，不在這個 repo 裡
 
@@ -594,6 +632,15 @@ Cloudflare 對靜態資產的限制是**單檔 25 MiB**、**檔案數 20,000**�
 | Math | `https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev` |
 | History | `https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev` |
 | THS | `https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev` |
+
+**bucket 根目錄就是那些資料夾**，路徑前面**不要**再加 `eng/`、`math/`、`history/`、`ths/`
+—— 加了會 404（實測過）。
+
+### 多欄排列
+
+份數超過 24 時，`study.js` 會給書單加上 `books--dense` class，
+`style.css` 那段會改成 `repeat(auto-fill, minmax(300px, 1fr))` 多欄排列。
+不然 111 份一張一張往下排，頁面會長到一萬多 px。
 
 ### ⚠️ R2 公開網址不支援目錄列表
 

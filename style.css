@@ -1810,6 +1810,15 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
 
 /* ── 書單 ── */
 .books { display: grid; gap: 10px; }
+/* 份數很多時（例如 DSE 試卷庫 111 份）改成多欄，避免頁面長到一萬多 px */
+.books--dense {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 8px;
+}
+.books--dense .book { padding: 10px 12px; gap: 10px; grid-template-columns: 34px 1fr auto; }
+.books--dense .book:hover, .books--dense .book:focus-visible { transform: none; }
+.books--dense .book__no { font-size: .8rem; }
+.books--dense .book__title { font-size: .9rem; }
 .book {
   display: grid;
   grid-template-columns: 44px 1fr auto;

@@ -632,8 +632,7 @@ const SITE_DATA = {
         icon: '卷',
         page: 'dse.html',
         description: 'English、Math、History、THS 四科的歷屆試卷。',
-        unit: '份試卷',
-        emptyMeta: '清單待補'
+        unit: '份試卷'
       }
     ]
   },
@@ -653,7 +652,9 @@ const SITE_DATA = {
   dse: {
     title: 'DSE 試卷庫',
     subtitle: 'DSE Past Papers',
-    description: '四個科目的歷屆試卷，全部是 PDF，可以直接在這裡看。',
+    description: '四個科目的歷屆試卷，共 111 份 PDF，可以直接在這裡看。',
+    // 分組標題後面顯示的單位（預設是「本」，試卷用「份」）
+    unit: '份',
     // 四個 bucket 的根網址，方便對照（books 裡的 file 要用完整網址）
     buckets: {
       eng: 'https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev',
@@ -662,8 +663,138 @@ const SITE_DATA = {
       ths: 'https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev'
     },
     books: [
-      // 範例（把註解拿掉、換成真實檔名就會出現在頁面上）：
-      // { level: 'English', title: 'Paper 1 Reading', note: '2024', size: '', file: 'https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/2024-p1.pdf' }
+      /* ── English · Marking Scheme ── */
+      { level: "English · Marking Scheme", title: "2012", note: "", size: "1.7 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2012 MS.pdf" },
+      { level: "English · Marking Scheme", title: "2013", note: "", size: "6.4 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2013 MS.pdf" },
+      { level: "English · Marking Scheme", title: "2014", note: "", size: "6.2 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2014 MS.pdf" },
+      { level: "English · Marking Scheme", title: "2015", note: "", size: "8.0 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2015 MS.pdf" },
+      { level: "English · Marking Scheme", title: "2016", note: "", size: "3.5 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2016 MS.pdf" },
+      { level: "English · Marking Scheme", title: "2017", note: "", size: "3.4 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2017 MS.pdf" },
+      { level: "English · Marking Scheme", title: "2018", note: "", size: "4.0 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2018 MS.pdf" },
+      { level: "English · Marking Scheme", title: "2019", note: "", size: "0.9 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2019 MS.pdf" },
+      { level: "English · Marking Scheme", title: "2020", note: "", size: "7.3 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2020 MS.pdf" },
+      { level: "English · Marking Scheme", title: "2021", note: "", size: "14.9 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2021 MS.pdf" },
+      { level: "English · Marking Scheme", title: "2022", note: "", size: "9.1 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2022 MS.pdf" },
+      { level: "English · Marking Scheme", title: "2023", note: "", size: "10.0 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2023 MS.pdf" },
+      { level: "English · Marking Scheme", title: "2024", note: "MS + CP", size: "25.0 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2024 MS+CP.pdf" },
+      { level: "English · Marking Scheme", title: "2025", note: "", size: "5.4 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/2025 MS.pdf" },
+      { level: "English · Marking Scheme", title: "PP", note: "Practice Paper", size: "1.3 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/PP MS.pdf" },
+      { level: "English · Marking Scheme", title: "SP", note: "Sample Paper", size: "0.8 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading ans/MS/SP MS.pdf" },
+
+      /* ── English · Reading Passage ── */
+      { level: "English · Reading Passage", title: "2012", note: "", size: "1.4 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/2012/2012.pdf" },
+      { level: "English · Reading Passage", title: "2013", note: "Reading Passage", size: "1.8 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/2013/2013 Reading Passage.pdf" },
+      { level: "English · Reading Passage", title: "2014", note: "", size: "2.6 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/2014/2014.pdf" },
+      { level: "English · Reading Passage", title: "2015", note: "", size: "1.3 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/2015/2015.pdf" },
+      { level: "English · Reading Passage", title: "2016", note: "", size: "5.5 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/2016/2016.pdf" },
+      { level: "English · Reading Passage", title: "2017", note: "", size: "1.6 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/2017/2017.pdf" },
+      { level: "English · Reading Passage", title: "2018", note: "", size: "0.8 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/2018/2018.pdf" },
+      { level: "English · Reading Passage", title: "2020", note: "", size: "1.7 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/2020/2020.pdf" },
+      { level: "English · Reading Passage", title: "2021", note: "", size: "9.2 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/2021/2021.pdf" },
+      { level: "English · Reading Passage", title: "2022", note: "", size: "22.6 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/2022/2022.pdf" },
+      { level: "English · Reading Passage", title: "2023", note: "", size: "11.6 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/2023/2023.pdf" },
+      { level: "English · Reading Passage", title: "2025", note: "P1", size: "2.1 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/2025/2025 P1.pdf" },
+      { level: "English · Reading Passage", title: "Practice Paper", note: "2012", size: "0.3 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/Practice Paper/2012 Practice Paper.pdf" },
+      { level: "English · Reading Passage", title: "Sample Paper", note: "2012", size: "0.6 MB", file: "https://pub-3baf68b3eac4428a8b3bf978848b3a6a.r2.dev/reading passage/Paper 1/Sample Paper/2012 Sample Paper.pdf" },
+
+      /* ── Math · P1 ── */
+      { level: "Math · P1", title: "2012", note: "P1", size: "0.9 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2012/2012 P1.pdf" },
+      { level: "Math · P1", title: "2013", note: "P1", size: "1.0 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2013/2013 P1.pdf" },
+      { level: "Math · P1", title: "2014", note: "P1", size: "1.6 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2014/2014 P1.pdf" },
+      { level: "Math · P1", title: "2015", note: "P1", size: "1.5 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2015/2015 P1.pdf" },
+      { level: "Math · P1", title: "2016", note: "P1", size: "7.2 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2016/2016 P1.pdf" },
+      { level: "Math · P1", title: "2017", note: "P1", size: "4.6 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2017/2017 P1.pdf" },
+      { level: "Math · P1", title: "2018", note: "P1", size: "4.8 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2018/2018 P1.pdf" },
+      { level: "Math · P1", title: "2019", note: "P1", size: "10.9 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2019/2019 P1.pdf" },
+      { level: "Math · P1", title: "2020", note: "P1", size: "2.3 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2020/2020 P1.pdf" },
+      { level: "Math · P1", title: "2021", note: "P1", size: "0.6 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2021/2021 P1.pdf" },
+      { level: "Math · P1", title: "2022", note: "P1", size: "8.1 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2022/2022 P1.pdf" },
+      { level: "Math · P1", title: "2023", note: "P1", size: "1.2 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2023/2023 P1.pdf" },
+      { level: "Math · P1", title: "2024", note: "P1", size: "6.5 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2024/2024 P1.pdf" },
+      { level: "Math · P1", title: "2025", note: "P1", size: "5.1 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2025/2025 P1.pdf" },
+
+      /* ── Math · P2 ── */
+      { level: "Math · P2", title: "2012", note: "P2", size: "0.3 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2012/2012 P2.pdf" },
+      { level: "Math · P2", title: "2013", note: "P2", size: "0.3 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2013/2013 P2.pdf" },
+      { level: "Math · P2", title: "2014", note: "P2", size: "1.3 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2014/2014 P2.pdf" },
+      { level: "Math · P2", title: "2015", note: "P2", size: "0.6 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2015/2015 P2.pdf" },
+      { level: "Math · P2", title: "2016", note: "P2", size: "1.9 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2016/2016 P2.pdf" },
+      { level: "Math · P2", title: "2017", note: "P2", size: "1.9 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2017/2017 P2.pdf" },
+      { level: "Math · P2", title: "2018", note: "P2", size: "0.2 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2018/2018 P2.pdf" },
+      { level: "Math · P2", title: "2019", note: "P2", size: "0.8 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2019/2019 P2.pdf" },
+      { level: "Math · P2", title: "2020", note: "P2", size: "0.6 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2020/2020 P2.pdf" },
+      { level: "Math · P2", title: "2021", note: "P2", size: "0.2 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2021/2021 P2.pdf" },
+      { level: "Math · P2", title: "2022", note: "P2", size: "1.1 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2022/2022 P2.pdf" },
+      { level: "Math · P2", title: "2023", note: "P2", size: "0.4 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2023/2023 P2.pdf" },
+      { level: "Math · P2", title: "2024", note: "P2", size: "1.2 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2024/2024 P2.pdf" },
+      { level: "Math · P2", title: "2025", note: "P2", size: "0.2 MB", file: "https://pub-c29bfeb95e54401c9497a28e66ef82af.r2.dev/3. 數學/2025/2025 P2.pdf" },
+
+      /* ── History · P1 ── */
+      { level: "History · P1", title: "2012", note: "P1", size: "6.9 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2012/2012 P1.pdf" },
+      { level: "History · P1", title: "2013", note: "P1", size: "8.3 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2013/2013 P1.pdf" },
+      { level: "History · P1", title: "2014", note: "P1", size: "0.6 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2014/2014 P1.pdf" },
+      { level: "History · P1", title: "2015", note: "P1", size: "0.5 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2015/2015 P1.pdf" },
+      { level: "History · P1", title: "2016", note: "P1", size: "0.5 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2016/2016 P1.pdf" },
+      { level: "History · P1", title: "2017", note: "P1", size: "0.7 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2017/2017 P1.pdf" },
+      { level: "History · P1", title: "2018", note: "P1", size: "0.6 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2018/2018 P1.pdf" },
+      { level: "History · P1", title: "2019", note: "P1", size: "0.3 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2019/2019 P1.pdf" },
+      { level: "History · P1", title: "2020", note: "P1", size: "0.5 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2020/2020 P1.pdf" },
+      { level: "History · P1", title: "2021", note: "P1", size: "3.7 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2021/2021 P1.pdf" },
+      { level: "History · P1", title: "2022", note: "P1", size: "0.4 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2022/2022 P1.pdf" },
+      { level: "History · P1", title: "2023", note: "P1", size: "0.4 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2023/2023 P1.pdf" },
+
+      /* ── History · P2 ── */
+      { level: "History · P2", title: "2012", note: "P2", size: "0.9 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2012/2012 P2.pdf" },
+      { level: "History · P2", title: "2013", note: "P2", size: "0.9 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2013/2013 P2.pdf" },
+      { level: "History · P2", title: "2014", note: "P2", size: "0.2 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2014/2014 P2.pdf" },
+      { level: "History · P2", title: "2015", note: "P2", size: "0.2 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2015/2015 P2.pdf" },
+      { level: "History · P2", title: "2016", note: "P2", size: "0.3 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2016/2016 P2.pdf" },
+      { level: "History · P2", title: "2017", note: "P2", size: "0.3 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2017/2017 P2.pdf" },
+      { level: "History · P2", title: "2018", note: "P2", size: "0.2 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2018/2018 P2.pdf" },
+      { level: "History · P2", title: "2019", note: "P2", size: "0.2 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2019/2019 P2.pdf" },
+      { level: "History · P2", title: "2020", note: "P2", size: "0.2 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2020/2020 P2.pdf" },
+      { level: "History · P2", title: "2021", note: "P2", size: "0.5 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2021/2021 P2.pdf" },
+      { level: "History · P2", title: "2022", note: "P2", size: "0.1 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2022/2022 P2.pdf" },
+      { level: "History · P2", title: "2023", note: "P2", size: "0.1 MB", file: "https://pub-f50c30463ef544feae10f9adc4cc0eee.r2.dev/4. 歷史/2023/2023 P2.pdf" },
+
+      /* ── THS · 卷一 ── */
+      { level: "THS · 卷一", title: "2012", note: "卷一", size: "1.1 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2012/2012卷一.pdf" },
+      { level: "THS · 卷一", title: "2013", note: "卷一", size: "0.8 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2013/2013卷一.pdf" },
+      { level: "THS · 卷一", title: "2014", note: "卷一", size: "0.9 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2014/2014卷一.pdf" },
+      { level: "THS · 卷一", title: "2015", note: "卷一", size: "0.9 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2015/2015卷一.pdf" },
+      { level: "THS · 卷一", title: "2016", note: "卷一", size: "1.3 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2016/2016卷一.pdf" },
+      { level: "THS · 卷一", title: "2017", note: "卷一", size: "1.3 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2017/2017卷一.pdf" },
+      { level: "THS · 卷一", title: "2018", note: "卷一", size: "1.0 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2018/2018卷一.pdf" },
+      { level: "THS · 卷一", title: "2019", note: "卷一", size: "1.0 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2019/2019卷一.pdf" },
+      { level: "THS · 卷一", title: "2020", note: "卷一", size: "1.0 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2020/2020卷一.pdf" },
+      { level: "THS · 卷一", title: "2021", note: "卷一", size: "2.6 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2021/2021卷一.pdf" },
+      { level: "THS · 卷一", title: "2022", note: "卷一", size: "3.0 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2022/2022 卷一.pdf" },
+      { level: "THS · 卷一", title: "2023", note: "卷一", size: "4.0 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2023/2023卷一.pdf" },
+      { level: "THS · 卷一", title: "2024", note: "卷一", size: "0.8 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2024/2024卷一.pdf" },
+
+      /* ── THS · 卷二 ── */
+      { level: "THS · 卷二", title: "2012", note: "卷二", size: "0.3 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2012/2012卷二.pdf" },
+      { level: "THS · 卷二", title: "2013", note: "卷二", size: "0.3 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2013/2013卷二.pdf" },
+      { level: "THS · 卷二", title: "2014", note: "卷二", size: "0.3 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2014/2014卷二.pdf" },
+      { level: "THS · 卷二", title: "2015", note: "卷二", size: "0.3 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2015/2015卷二.pdf" },
+      { level: "THS · 卷二", title: "2016", note: "卷二", size: "0.4 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2016/2016卷二.pdf" },
+      { level: "THS · 卷二", title: "2017", note: "卷二", size: "0.4 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2017/2017卷二.pdf" },
+      { level: "THS · 卷二", title: "2018", note: "卷二", size: "0.4 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2018/2018卷二.pdf" },
+      { level: "THS · 卷二", title: "2019", note: "卷二", size: "0.4 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2019/2019卷二.pdf" },
+      { level: "THS · 卷二", title: "2020", note: "卷二", size: "0.3 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2020/2020卷二.pdf" },
+      { level: "THS · 卷二", title: "2021", note: "卷二", size: "0.6 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2021/2021卷二.pdf" },
+      { level: "THS · 卷二", title: "2022", note: "卷二", size: "0.6 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2022/2022 卷二.pdf" },
+      { level: "THS · 卷二", title: "2023", note: "卷二", size: "0.7 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2023/2023卷二.pdf" },
+      { level: "THS · 卷二", title: "2024", note: "卷二", size: "0.2 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2024/2024卷二.pdf" },
+
+      /* ── THS · 綜合卷 ── */
+      { level: "THS · 綜合卷", title: "2025", note: "卷一 + 卷二（C 卷）", size: "53.1 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2025/2025 C.pdf" },
+
+      /* ── THS · P1 ── */
+      { level: "THS · P1", title: "2026", note: "P1", size: "0.5 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2026/2026 P1.pdf" },
+
+      /* ── THS · P2 ── */
+      { level: "THS · P2", title: "2026", note: "P2", size: "0.2 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2026/2026 P2.pdf" }
     ]
   },
 
