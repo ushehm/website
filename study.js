@@ -248,11 +248,173 @@
     ]));
   }
 
+  /* ── DSE 倒計時 ───────────────────────────────────────────────────────── */
+  const DAY = 86400000;
+
+  function renderCountdown() {
+    const box = document.getElementById('dse-countdown');
+    if (!box) return;
+
+    const cfg = (D && D.dseCountdown) || null;
+    const target = cfg && cfg.targetISO ? new Date(cfg.targetISO) : null;
+    if (!cfg || !target || isNaN(target.getTime())) return;   /* 沒設定就不顯示 */
+
+    const units = cfg.units || ['天', '時', '分', '秒'];
+
+    /* ── 外框 ── */
+    const wrap = el('div', { class: 'quest' });
+
+    /* 左：標題 */
+    const head = el('div', { class: 'quest__head' });
+    head.appendChild(el('p', { class: 'quest__kicker', text: cfg.kicker || 'MAIN QUEST' }));
+    head.appendChild(el('h2', { class: 'quest__title' }, [
+      el('span', { class: 'quest__icon', 'aria-hidden': 'true', text: cfg.icon || '⚔️' }),
+      el('span', { text: cfg.title || 'DSE 倒數' })
+    ]));
+    head.appendChild(el('p', { class: 'quest__slogan', id: 'quest-slogan' }));
+
+    /* 中：倒數 */
+    const clock = el('div', { class: 'quest__clock' });
+    const cells = [];
+    units.forEach(function (u, i) {
+      const num = el('span', { class: 'quest__num', text: '--' });
+      cells.push(num);
+      clock.appendChild(el('div', { class: 'quest__cell' }, [
+        num,
+        el('span', { class: 'quest__unit', text: u })
+      ]));
+    });
+    /* 螢幕閱讀器用的一句話（每秒更新會很吵，所以用 aria-live 只在分鐘變動時更新） */
+    const sr = el('p', { class: 'visually-hidden', id: 'quest-sr', 'aria-live': 'polite' });
+
+    /* 右：下一科 */
+    const side = el('div', { class: 'quest__side' });
+    const nextBox = el('div', { class: 'quest__next' });
+    nextBox.appendChild(el('p', { class: 'quest__next-label', text: '下一科' }));
+    const nextName = el('p', { class: 'quest__next-name', id: 'quest-next' });
+    const nextWhen = el('p', { class: 'quest__next-when', id: 'quest-next-when' });
+    nextBox.appendChild(nextName);
+    nextBox.appendChild(nextWhen);
+    side.appendChild(nextBox);
+
+    wrap.appendChild(head);
+    wrap.appendChild(clock);
+    wrap.appendChild(side);
+    box.appendChild(wrap);
+    box.appendChild(sr);
+
+    /* ── 任務清單 ── */
+    const exams = (cfg.exams || []).map(function (e) {
+      return { date: new Date(e.date), subject: e.subject, paper: e.paper };
+    }).filter(function (e) { return !isNaN(e.date.getTime()); });
+
+    let list = null;
+    if (exams.length) {
+      list = el('ol', { class: 'quests' });
+      exams.forEach(function (e) {
+        const li = el('li', { class: 'quest-item', dataset: {} }, [
+          el('span', { class: 'quest-item__date', text: fmtDate(e.date) }),
+          el('span', { class: 'quest-item__subject', text: e.subject + (e.paper ? '・' + e.paper : '') }),
+          el('span', { class: 'quest-item__left' })
+        ]);
+        list.appendChild(li);
+        e.el = li;
+      });
+      wrap.appendChild(list);   /* 放進 banner 裡面，跟其他內容同一張卡 */
+    }
+
+    /* ── 更新 ── */
+    const sloganEl = document.getElementById('quest-slogan');
+    let lastMinute = -1;
+
+    function pickSlogan(daysLeft) {
+      const s = (cfg.slogans || []).slice().sort(function (a, b) { return a.untilDays - b.untilDays; });
+      for (let i = 0; i < s.length; i++) {
+        if (daysLeft <= s[i].untilDays) return s[i].text;
+      }
+      return s.length ? s[s.length - 1].text : '';
+    }
+
+    function tick() {
+      const now = Date.now();
+      const ms = target.getTime() - now;
+
+      if (ms <= 0) {
+        cells.forEach(function (c) { c.textContent = '00'; });
+        if (sloganEl) sloganEl.textContent = cfg.doneText || '';
+        if (nextName) nextName.textContent = '—';
+        if (nextWhen) nextWhen.textContent = '';
+      } else {
+        const d = Math.floor(ms / DAY);
+        const h = Math.floor(ms % DAY / 3600000);
+        const m = Math.floor(ms % 3600000 / 60000);
+        const s = Math.floor(ms % 60000 / 1000);
+        const vals = [d, h, m, s];
+        cells.forEach(function (c, i) {
+          const v = vals[i];
+          c.textContent = i === 0 ? String(v) : String(v).padStart(2, '0');
+        });
+        if (sloganEl) sloganEl.textContent = pickSlogan(d);
+
+        /* 螢幕閱讀器：每分鐘更新一次就好 */
+        const minute = Math.floor(ms / 60000);
+        if (minute !== lastMinute) {
+          lastMinute = minute;
+          sr.textContent = '距離 ' + (cfg.targetLabel || '') + ' 開考還有 ' +
+            d + ' 天 ' + h + ' 小時 ' + m + ' 分鐘。';
+        }
+      }
+
+      /* 任務清單：跟大倒數用同一種算法（floor），天數才會一致 */
+      if (list) {
+        let next = null;
+        exams.forEach(function (e) {
+          const start = e.date.getTime();
+          const left = Math.floor((start - now) / DAY);
+          const done = now >= start + DAY;      /* 整日考完之後才算「已考」 */
+          const span = e.el.querySelector('.quest-item__left');
+          if (done) {
+            e.el.classList.add('is-done');
+            e.el.classList.remove('is-today');
+            span.textContent = '已考';
+          } else if (left <= 0) {
+            e.el.classList.remove('is-done');
+            e.el.classList.add('is-today');
+            span.textContent = '今天';
+            if (!next) next = { e: e, left: 0 };
+          } else {
+            e.el.classList.remove('is-done');
+            e.el.classList.remove('is-today');
+            span.textContent = left + ' 天';
+            if (!next) next = { e: e, left: left };
+          }
+        });
+        if (next) {
+          if (nextName) nextName.textContent = next.e.subject + (next.e.paper ? '・' + next.e.paper : '');
+          if (nextWhen) nextWhen.textContent = fmtDate(next.e.date) + '　' +
+            (next.left === 0 ? '就是今天' : '還有 ' + next.left + ' 天');
+        } else {
+          if (nextName) nextName.textContent = '全部考完 ✓';
+          if (nextWhen) nextWhen.textContent = '';
+        }
+      }
+    }
+
+    function fmtDate(d) {
+      return (d.getMonth() + 1) + '/' + d.getDate();
+    }
+
+    tick();
+    /* 每秒更新；分頁在背景時瀏覽器會自動減慢，不影響正確性 */
+    setInterval(tick, 1000);
+  }
+
   /* ── 啟動 ─────────────────────────────────────────────────────────────── */
   function init() {
     if (PAGE === 'hub') {
       const cfg = (D && D.study) || { title: '溫習' };
       renderHeader(cfg, 'index.html', '← 回到主頁');
+      renderCountdown();
       renderHub();
     } else {
       renderHeader(
