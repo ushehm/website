@@ -690,7 +690,7 @@ const SITE_DATA = {
   dse: {
     title: 'DSE 試卷庫',
     subtitle: 'DSE Past Papers',
-    description: '四個科目的歷屆試卷，共 119 份 PDF，可以直接在這裡看。',
+    description: '四個科目的歷屆試卷，共 132 份 PDF，可以直接在這裡看。',
     // 分組標題後面顯示的單位（預設是「本」，試卷用「份」）
     unit: '份',
     // 四個 bucket 的根網址，方便對照（books 裡的 file 要用完整網址）
@@ -839,7 +839,22 @@ const SITE_DATA = {
       { level: "THS · 卷二", title: "2026", note: "卷二", size: "0.2 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2026/2026 P2.pdf" },
 
       /* ── THS · 綜合卷（1 份）── */
-      { level: "THS · 綜合卷", title: "2025", note: "卷一 + 卷二（C 卷）", size: "53.1 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2025/2025 C.pdf" }
+      { level: "THS · 綜合卷", title: "2025", note: "卷一 + 卷二（C 卷）", size: "53.1 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2025/2025 C.pdf" },
+      /* ── THS · 參考答案（13 份）── */
+      { level: "THS · 參考答案", title: "2012", note: "參考答案", size: "0.7 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2012/2012參考答案.pdf" },
+      { level: "THS · 參考答案", title: "2013", note: "參考答案", size: "1.0 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2013/2013參考答案.pdf" },
+      { level: "THS · 參考答案", title: "2014", note: "參考答案", size: "0.8 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2014/2014參考答案.pdf" },
+      { level: "THS · 參考答案", title: "2015", note: "參考答案", size: "0.9 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2015/2015參考答案.pdf" },
+      { level: "THS · 參考答案", title: "2016", note: "參考答案", size: "1.8 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2016/2016參考答案.pdf" },
+      { level: "THS · 參考答案", title: "2017", note: "參考答案", size: "1.6 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2017/2017參考答案.pdf" },
+      { level: "THS · 參考答案", title: "2018", note: "參考答案", size: "1.8 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2018/2018參考答案.pdf" },
+      { level: "THS · 參考答案", title: "2019", note: "參考答案", size: "1.5 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2019/2019參考答案.pdf" },
+      { level: "THS · 參考答案", title: "2020", note: "參考答案", size: "1.4 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2020/2020參考答案.pdf" },
+      { level: "THS · 參考答案", title: "2021", note: "參考答案", size: "5.8 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2021/2021參考答案.pdf" },
+      { level: "THS · 參考答案", title: "2022", note: "參考答案", size: "4.5 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2022/2022參考答案.pdf" },
+      { level: "THS · 參考答案", title: "2023", note: "參考答案", size: "1.1 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2023/2023參考答案.pdf" },
+      { level: "THS · 參考答案", title: "2024", note: "參考答案", size: "1.2 MB", file: "https://pub-b6a78c6633e041af881238b0b9a3e6e1.r2.dev/5. 旅遊與款待/2024/2024參考答案.pdf" }
+
 
     ]
   },
