@@ -1808,6 +1808,30 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
 .subject__go { color: var(--text-dim); font-size: 1.3rem; transition: color .2s, transform .2s; }
 .subject:hover .subject__go { color: var(--accent); transform: translateX(4px); }
 
+/* ── 時間表 ── */
+.timetable { margin: 18px 0 10px; display: grid; justify-items: start; gap: 14px; }
+.timetable__link {
+  display: block;
+  max-width: 860px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--panel);
+  transition: border-color .2s, box-shadow .25s;
+}
+.timetable__link:hover, .timetable__link:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 26px -8px var(--accent);
+  outline: none;
+}
+.timetable__link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.timetable__img { display: block; width: 100%; height: auto; }
+.timetable__cap { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 620px) {
+  .timetable__link { max-width: 100%; }
+  .timetable__cap .btn { flex: 1 1 auto; justify-content: center; text-align: center; }
+}
+
 /* ── 書單 ── */
 .books { display: grid; gap: 10px; }
 /* 份數很多時（例如 DSE 試卷庫 111 份）改成多欄，避免頁面長到一萬多 px */

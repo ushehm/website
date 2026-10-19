@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>時間表 — ciallo</title>
+<meta name="description" content="上課時間表：第 1 至第 6 日，上午 8:00 至下午 3:45。">
+<meta name="theme-color" content="#171a21">
+<meta name="color-scheme" content="dark">
+
+<!--
+  時間表
+  ----------------------------------------------------------------------------
+  從「溫習」專區右上角的「📅 時間表 ↗」按鈕進來。
+
+  圖片放在 images/timetable.jpg（原始檔是 user provide image 裡的 WhatsApp 照片，
+  已複製進來，因為 user provide image/ 被 .gitignore 和 .assetsignore 擋著，
+  放在那裡不會被上傳）。
+
+  這一頁很單純，沒有 JavaScript，純 HTML + CSS。
+-->
+
+<link rel="icon" href="images/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="subhead">
+    <a class="subhead__back" href="study.html">← 回到溫習</a>
+    <h1 class="subhead__title">時間表</h1>
+    <p class="subhead__sub">Timetable</p>
+    <p class="subhead__desc">第 1 至第 6 日，上午 8:00 至下午 3:45。點圖片可以看原圖。</p>
+  </header>
+
+  <main>
+    <figure class="timetable">
+      <!-- 點圖片直接開原圖，手機上可以雙指放大看清楚 -->
+      <a class="timetable__link" href="images/timetable.jpg" target="_blank" rel="noopener noreferrer">
+        <img class="timetable__img"
+             src="images/timetable.jpg"
+             alt="上課時間表：第 1 至第 6 日，由上午 8:00 至下午 3:45，列出每節的科目、老師和房間"
+             width="1179" height="1761"
+             loading="eager" decoding="async">
+      </a>
+
+      <figcaption class="timetable__cap">
+        <a class="btn btn--primary" href="images/timetable.jpg" target="_blank" rel="noopener noreferrer">查看原圖 ↗</a>
+        <a class="btn btn--ghost" href="images/timetable.jpg" download="timetable.jpg">下載圖片</a>
+      </figcaption>
+    </figure>
+
+    <p class="reader__hint">
+      手機上看不清楚的話，按「查看原圖 ↗」再雙指放大。
+    </p>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__credits">時間表僅供個人參考，如有調動以學校公布為準。</p>
+    <p class="footer__row">
+      <a class="footer__link" href="study.html">回到溫習</a>
+      <a class="footer__link" href="index.html">回到主頁</a>
+    </p>
+  </footer>
+</div>
+
+</body>
+</html>

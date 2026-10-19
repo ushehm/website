@@ -500,6 +500,23 @@ if (!allowedInput && (tag === 'INPUT' || tag === 'TEXTAREA' || ...)) return;
 主頁的**分區導覽列最右邊**有一項「**溫習 ↗**」（帶箭頭，表示會離開這一頁）。
 用途是隨時隨地用手機看筆記，不用帶實體書或 USB。
 
+### 時間表（`timetable.html`）
+
+溫習專區**右上角**有一個「**📅 時間表 ↗**」按鈕，點進去是獨立分頁
+`timetable.html`，顯示整張上課時間表。
+
+- 圖片在 **`images/timetable.jpg`**（1179 × 1761，260 KB）
+- 原始檔是 `user provide image/WhatsApp Image 2026-10-19 at 4.49.23 PM.jpeg`。
+  **必須複製進來**，因為 `user provide image/` 被 `.gitignore` 和 `.assetsignore`
+  擋著，放在那裡不會被上傳。
+- 頁面沒有 JavaScript，純 HTML + CSS
+- 點圖片或「查看原圖 ↗」會開原圖，手機可以雙指放大
+- 圖片有明確 `width` / `height`，避免載入時版面跳動
+
+> ⚠️ 這張時間表包含**班別（6C）、班主任姓名、主班房間**，而網站是公開的。
+> 貼上去之前請確認你接受這些資訊公開。要換圖直接覆蓋 `images/timetable.jpg` 就好，
+> 程式不用改。
+
 ### 三個頁面
 
 | 頁面 | 功能 |
