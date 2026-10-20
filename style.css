@@ -1941,6 +1941,12 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
   background: #0a1119;
   border: 1px solid rgba(102, 192, 244, .22);
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, .85);
+  /* 外圈極輕微的呼吸光（9 秒一輪，幅度很小） */
+  animation: questBreath 9s ease-in-out infinite;
+}
+@keyframes questBreath {
+  0%, 100% { box-shadow: inset 0 2px 8px rgba(0, 0, 0, .85), 0 0 0 rgba(255, 71, 71, 0); }
+  50%      { box-shadow: inset 0 2px 8px rgba(0, 0, 0, .85), 0 0 12px -3px rgba(255, 71, 71, .32); }
 }
 /* 填色：警告紅漸層 + 光暈 */
 .quest__bar-fill {
@@ -1951,8 +1957,33 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
   background: linear-gradient(90deg, #b3121b 0%, #ff4747 55%, #ff7b6b 100%);
   box-shadow: 0 0 18px rgba(255, 71, 71, .55), inset 0 1px 0 rgba(255, 255, 255, .28);
   transition: width .6s cubic-bezier(.2, .8, .3, 1);
+  overflow: hidden;
 }
-/* 斜紋質感 */
+/* 流光：一道很淡的白光慢慢掃過去，掃完停一下再掃（7.5 秒一輪） */
+.quest__bar-fill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0) 38%,
+    rgba(255, 255, 255, .15) 50%,
+    rgba(255, 255, 255, 0) 62%,
+    transparent 100%
+  );
+  background-size: 240% 100%;
+  background-repeat: no-repeat;
+  background-position: -140% 0;
+  animation: questSheen 7.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes questSheen {
+  0%   { background-position: -140% 0; }
+  55%  { background-position: 140% 0; }
+  100% { background-position: 140% 0; }   /* 後半段停住，不會一直動 */
+}
+/* 斜紋質感 + 極慢的漂移（14 秒走一格，肉眼幾乎察覺不到，只是不死板） */
 .quest__bar-fill::after {
   content: '';
   position: absolute;
@@ -1964,6 +1995,11 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
     transparent 2px,
     transparent 7px
   );
+  animation: questStripe 14s linear infinite;
+}
+@keyframes questStripe {
+  from { background-position: 0 0; }
+  to   { background-position: 7px 0; }   /* 剛好一個斜紋週期，接回無縫 */
 }
 .quest__bar-foot {
   margin: 0;
