@@ -513,6 +513,33 @@ if (!allowedInput && (tag === 'INPUT' || tag === 'TEXTAREA' || ...)) return;
 
 資料在 `data.js` 的 `dseCountdown`。
 
+#### Boss 血條 / 任務進度條
+
+倒數下方有一條紅色血條，顯示「由中六開學到 DSE 開考」已經走了多少：
+
+```
+QUEST PROGRESS                              22.7%  TIME REMAINING
+████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+已過 49 天 ・ 剩 169 天 ・ 全程 219 天
+```
+
+- 進度 = `(現在 - startISO) / (targetISO - startISO)`
+- `startISO` 是 **2026-09-01**（中六開學），想改「從哪一天開始算」就改這個
+- 填色是警告紅漸層（`#b3121b → #ff4747 → #ff7b6b`）+ 斜紋 + 光暈
+- 有 `role="progressbar"` 與 `aria-valuenow`，讀屏讀得到
+
+#### ⚠️ 抓 DOM 元素要用容器找，不能用 document.getElementById
+
+血條是在 `wrap` 還沒插進文件時就建好的，所以：
+
+```js
+barFill = document.getElementById('quest-fill');   // ✗ 回傳 null
+barFill = wrap.querySelector('#quest-fill');        // ✓
+```
+
+用 `document.getElementById` 會拿到 `null`，血條就永遠停在 `--%`、寬度 0 ——
+畫面上看起來像「進度條壞了」，其實是抓不到元素。
+
 #### ⚠️ 日期一定要寫時區
 
 ```js

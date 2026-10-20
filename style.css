@@ -1899,6 +1899,79 @@ h1, h2, h3 { margin: 0; color: var(--text-bright); line-height: 1.25; }
 .quest__next-name { margin: 0; font-size: .9rem; font-weight: 700; color: var(--bright, #fff); }
 .quest__next-when { margin: 2px 0 0; font-size: .72rem; color: var(--text-dim); }
 
+/* Boss 血條 / 任務進度條 */
+.quest__bar {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 6px;
+  margin-top: 2px;
+}
+.quest__bar-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.quest__bar-label {
+  font-size: .64rem;
+  letter-spacing: .2em;
+  color: var(--text-dim);
+}
+.quest__bar-right { display: flex; align-items: baseline; gap: 8px; }
+.quest__bar-pct {
+  font-size: .92rem;
+  font-weight: 700;
+  color: #ff4747;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 14px rgba(255, 71, 71, .6);
+}
+.quest__bar-suffix {
+  font-size: .6rem;
+  letter-spacing: .14em;
+  color: var(--text-dim);
+  opacity: .8;
+}
+/* 軌道：深灰 + 內陰影，像遊戲血條的底 */
+.quest__bar-track {
+  position: relative;
+  height: 18px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #0a1119;
+  border: 1px solid rgba(102, 192, 244, .22);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, .85);
+}
+/* 填色：警告紅漸層 + 光暈 */
+.quest__bar-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 0;
+  border-radius: 3px 0 0 3px;
+  background: linear-gradient(90deg, #b3121b 0%, #ff4747 55%, #ff7b6b 100%);
+  box-shadow: 0 0 18px rgba(255, 71, 71, .55), inset 0 1px 0 rgba(255, 255, 255, .28);
+  transition: width .6s cubic-bezier(.2, .8, .3, 1);
+}
+/* 斜紋質感 */
+.quest__bar-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, .16) 0px,
+    rgba(255, 255, 255, .16) 2px,
+    transparent 2px,
+    transparent 7px
+  );
+}
+.quest__bar-foot {
+  margin: 0;
+  font-size: .7rem;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
 /* 任務清單 */
 .quests {
   grid-column: 1 / -1;

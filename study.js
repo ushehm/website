@@ -300,6 +300,45 @@
     wrap.appendChild(head);
     wrap.appendChild(clock);
     wrap.appendChild(side);
+
+    /* ── Boss 血條 / 任務進度條 ──
+     * 進度 = (現在 - 起點) / (終點 - 起點)
+     * 起點是中六開學（2026-09-01），終點是第一科開考（2027-04-08）。
+     */
+    const startDate = cfg.startISO ? new Date(cfg.startISO) : null;
+    const hasBar = !!(startDate && !isNaN(startDate.getTime()) && startDate.getTime() < target.getTime());
+    let barFill = null, barPct = null, barFoot = null, barTrack = null;
+    if (hasBar) {
+      const bar = el('div', { class: 'quest__bar' }, [
+        el('div', { class: 'quest__bar-head' }, [
+          el('span', { class: 'quest__bar-label', text: cfg.progressLabel || 'QUEST PROGRESS' }),
+          el('span', { class: 'quest__bar-right' }, [
+            el('span', { class: 'quest__bar-pct', id: 'quest-pct', text: '--%' }),
+            el('span', { class: 'quest__bar-suffix', text: cfg.progressSuffix || '' })
+          ])
+        ]),
+        el('div', {
+          class: 'quest__bar-track',
+          id: 'quest-bar',
+          role: 'progressbar',
+          'aria-label': '由中六開學到 DSE 開考的時間進度',
+          'aria-valuemin': '0',
+          'aria-valuemax': '100',
+          'aria-valuenow': '0'
+        }, [
+          el('div', { class: 'quest__bar-fill', id: 'quest-fill' })
+        ]),
+        el('p', { class: 'quest__bar-foot', id: 'quest-bar-foot' })
+      ]);
+      wrap.appendChild(bar);
+      /* ⚠ 這裡不能用 document.getElementById —— wrap 還沒插進文件，
+         要從 wrap 自己找。 */
+      barFill = wrap.querySelector('#quest-fill');
+      barPct = wrap.querySelector('#quest-pct');
+      barFoot = wrap.querySelector('#quest-bar-foot');
+      barTrack = wrap.querySelector('#quest-bar');
+    }
+
     box.appendChild(wrap);
     box.appendChild(sr);
 
@@ -362,6 +401,27 @@
           lastMinute = minute;
           sr.textContent = '距離 ' + (cfg.targetLabel || '') + ' 開考還有 ' +
             d + ' 天 ' + h + ' 小時 ' + m + ' 分鐘。';
+        }
+      }
+
+      /* ── Boss 血條：由中六開學到今天，佔全程的幾成 ── */
+      if (barFill && barPct && startDate) {
+        const t0 = startDate.getTime();
+        const t1 = target.getTime();
+        const total = t1 - t0;
+        const elapsed = Math.max(0, Math.min(total, now - t0));
+        const ratio = total > 0 ? elapsed / total : 0;
+
+        barFill.style.width = (ratio * 100).toFixed(2) + '%';
+        barPct.textContent = (Math.round(ratio * 1000) / 10) + '%';
+        if (barTrack) barTrack.setAttribute('aria-valuenow', String(Math.round(ratio * 100)));
+        if (barFoot) {
+          /* 天數用 floor，跟大倒數一致 */
+          const totalDays = Math.round(total / DAY);
+          const elapsedDays = Math.floor(elapsed / DAY);
+          const leftDays = Math.max(0, Math.floor((t1 - now) / DAY));
+          barFoot.textContent = '已過 ' + elapsedDays + ' 天　・　剩 ' + leftDays +
+            ' 天　・　全程 ' + totalDays + ' 天';
         }
       }
 
